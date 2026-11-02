@@ -3,3 +3,7 @@ android/.gradle/
 android/build/
 android/app/build/
 .DS_Store
+
+node_modules
+*.apk
+.DS_Store
