@@ -373,6 +373,35 @@ footer{max-width:1100px;margin:10px auto 40px;padding:0 16px;color:var(--muted);
   </div>
 </div>
 </div>
+
+<div id="waModal" class="prem-modal-overlay" style="display:none">
+  <div class="prem-modal" role="dialog" aria-modal="true" style="max-width:440px;">
+    <button type="button" class="prem-modal-close" id="waModalClose" aria-label="Tutup">&times;</button>
+    <h3>📱 Masuk / Aktivasi via WhatsApp</h3>
+    <p style="font-size:13.5px;color:var(--muted);margin-bottom:16px;">
+      Gunakan nomor WhatsApp Anda untuk masuk. Jika sudah memiliki Kode Aktivasi dari Admin, masukkan di bawah.
+    </p>
+
+    <div style="margin-bottom:12px;text-align:left;">
+      <label style="display:block;font-size:13px;font-weight:600;margin-bottom:5px;">Nomor WhatsApp</label>
+      <input type="tel" id="waInputPhone" placeholder="08xxxxxxxxxx" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:var(--card);color:var(--ink);">
+    </div>
+
+    <div style="margin-bottom:14px;text-align:left;">
+      <label style="display:block;font-size:13px;font-weight:600;margin-bottom:5px;">Kode Aktivasi (Opsional / dari Admin)</label>
+      <input type="text" id="waInputCode" placeholder="Contoh: TKA2026" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:var(--card);color:var(--ink);text-transform:uppercase;">
+    </div>
+
+    <div id="waModalMsg" style="font-size:13px;padding:8px 10px;border-radius:8px;margin-bottom:14px;display:none;"></div>
+
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <button type="button" class="prem-btn prem-btn-primary" id="btnWaSubmit" style="width:100%;justify-content:center;padding:11px;font-size:14.5px;">✅ Masuk / Periksa Status</button>
+      <button type="button" class="prem-btn" id="btnWaChatAdmin" style="width:100%;justify-content:center;padding:11px;background:#25D366;color:#fff;border:none;font-size:14.5px;">💬 Chat Admin untuk Aktivasi</button>
+      <button type="button" class="prem-btn prem-btn-gold" id="btnWaBeli" style="width:100%;justify-content:center;padding:11px;font-size:14.5px;">⭐ Beli Langganan (Rp 10.000)</button>
+    </div>
+  </div>
+</div>
+
 <div id="premModal" class="prem-modal-overlay">
   <div class="prem-modal" role="dialog" aria-modal="true" aria-labelledby="premModalTitle">
     <button type="button" class="prem-modal-close" id="premModalClose" aria-label="Tutup">&times;</button>
@@ -386,7 +415,7 @@ footer{max-width:1100px;margin:10px auto 40px;padding:0 16px;color:var(--muted);
     <div id="premModalUserStatus" style="font-size:13.5px;margin-bottom:14px;color:var(--muted)"></div>
     <div class="prem-modal-actions">
       <button type="button" class="prem-btn prem-btn-secondary" id="premModalDismiss">Tutup</button>
-      <button type="button" class="prem-btn prem-btn-primary" id="premModalLogin" style="display:none">🔑 Masuk dengan Google</button>
+      <button type="button" class="prem-btn prem-btn-primary" id="premModalLogin" style="display:none">📱 Masuk via WhatsApp</button>
       <button type="button" class="prem-btn prem-btn-gold" id="premModalCheckout">⭐ Langganan Rp 10.000</button>
     </div>
   </div>
@@ -422,21 +451,134 @@ function checkPremiumStatus(val){
   if (val.isPremium === true || val.is_premium === true || val.tka_premium === true) return !until || until > now;
   return false;
 }
-function namaUser(){ return currentUser ? (currentUser.displayName || currentUser.email) : 'Member'; }
+var WA_ADMIN_NUMBER = "6282170505306";
+var VALID_MASTER_CODES = ["TKA2026", "MATH315", "SOAL150", "315150", "pJEuqfB6H9KVQeUwhvtSgB7Q"];
+
+function normalizePhone(p){
+  if (!p) return '';
+  var clean = String(p).replace(/\D/g, '');
+  if (clean.startsWith('62')) clean = '0' + clean.slice(2);
+  return clean;
+}
+
+function openWaModal(){
+  var m = document.getElementById('waModal');
+  if (m) m.style.display = 'flex';
+  var ph = document.getElementById('waInputPhone');
+  if (ph && !ph.value && currentUser && currentUser.phone) ph.value = currentUser.phone;
+}
+function closeWaModal(){
+  var m = document.getElementById('waModal');
+  if (m) m.style.display = 'none';
+  var msg = document.getElementById('waModalMsg');
+  if (msg) msg.style.display = 'none';
+}
+function showWaMsg(text, type){
+  var el = document.getElementById('waModalMsg');
+  if (!el) return;
+  el.style.display = 'block';
+  el.textContent = text;
+  if (type === 'success') {
+    el.style.background = '#e6fffa'; el.style.color = '#047857'; el.style.border = '1px solid #a7f3d0';
+  } else if (type === 'error') {
+    el.style.background = '#fef2f2'; el.style.color = '#b91c1c'; el.style.border = '1px solid #fecaca';
+  } else {
+    el.style.background = '#eff6ff'; el.style.color = '#1d4ed8'; el.style.border = '1px solid #bfdbfe';
+  }
+}
+
+async function verifyWaUser(phone, code){
+  var clean = normalizePhone(phone);
+  var upperCode = (code || '').trim().toUpperCase();
+
+  // 1. Cek kode master aktivasi
+  if (upperCode && VALID_MASTER_CODES.indexOf(upperCode) !== -1) {
+    var exp = Date.now() + 365 * 24 * 3600 * 1000;
+    var u = { phone: clean || 'VIP', displayName: clean ? ('WA: ' + clean) : 'Member VIP', isPremium: true, premiumUntil: exp };
+    localStorage.setItem('math315_wa_user', JSON.stringify(u));
+    currentUser = u; isPremium = true; premiumUntil = exp;
+    if (db && clean) {
+      try { db.ref('members_wa/' + clean).update({ phone: clean, isPremium: true, premium_until: exp, activated_via: 'code_' + upperCode, last_login: Date.now() }); } catch(e){}
+    }
+    premiumBerubah();
+    return { ok: true, msg: '🎉 Kode Aktivasi valid! Langganan 1 Tahun Aktif.' };
+  }
+
+  // 2. Cek nomor WA di Firebase
+  if (clean) {
+    if (db) {
+      try {
+        var snap = await db.ref('members_wa/' + clean).once('value');
+        var val = snap.val();
+        if (val && checkPremiumStatus(val)) {
+          var u2 = { phone: clean, displayName: val.name || ('WA: ' + clean), isPremium: true, premiumUntil: val.premium_until || null };
+          localStorage.setItem('math315_wa_user', JSON.stringify(u2));
+          currentUser = u2; isPremium = true; premiumUntil = u2.premiumUntil;
+          premiumBerubah();
+          return { ok: true, msg: '🎉 Akun WhatsApp Anda terverifikasi sebagai TKA Premium!' };
+        }
+      } catch(e){ console.warn(e); }
+    }
+    // Jika belum premium tapi nomor ada
+    var reg = { phone: clean, displayName: 'WA: ' + clean, isPremium: false, premiumUntil: null };
+    localStorage.setItem('math315_wa_user', JSON.stringify(reg));
+    currentUser = reg; isPremium = false; premiumUntil = null;
+    premiumBerubah();
+    return { ok: false, msg: 'Nomor WhatsApp tersimpan (Akun Reguler). Silakan beli langganan atau chat Admin untuk aktivasi.' };
+  }
+
+  return { ok: false, msg: 'Harap masukkan nomor WhatsApp atau kode aktivasi.' };
+}
+
+function logoutUser(){
+  localStorage.removeItem('math315_wa_user');
+  currentUser = null;
+  isPremium = false;
+  premiumUntil = null;
+  if (auth) try { auth.signOut(); } catch(e){}
+  premiumBerubah();
+}
+
+function initWaAuth(){
+  var raw = localStorage.getItem('math315_wa_user');
+  if (raw) {
+    try {
+      var u = JSON.parse(raw);
+      currentUser = u;
+      isPremium = checkPremiumStatus(u);
+      premiumUntil = u.premiumUntil || null;
+      if (db && u.phone) {
+        var clean = normalizePhone(u.phone);
+        if (clean) {
+          db.ref('members_wa/' + clean).once('value').then(function(snap){
+            var val = snap.val();
+            if (val) {
+              isPremium = checkPremiumStatus(val);
+              premiumUntil = val.premium_until || null;
+              u.isPremium = isPremium;
+              u.premiumUntil = premiumUntil;
+              localStorage.setItem('math315_wa_user', JSON.stringify(u));
+              premiumBerubah();
+            }
+          }).catch(function(){});
+        }
+      }
+    } catch(e){}
+  }
+}
+
+function namaUser(){
+  if (currentUser) {
+    if (currentUser.displayName) return currentUser.displayName;
+    if (currentUser.phone) return 'WA: ' + currentUser.phone;
+    if (currentUser.email) return currentUser.email;
+  }
+  return 'Member';
+}
 function esc(t){ var d = document.createElement('div'); d.textContent = t == null ? '' : String(t); return d.innerHTML; }
 
 async function loginGoogle(){
-  if (!auth) return;
-  var provider = new firebase.auth.GoogleAuthProvider();
-  provider.setCustomParameters({prompt: 'select_account'});
-  try { await auth.signInWithPopup(provider); }
-  catch (err) {
-    if (err.code === 'auth/popup-blocked' || err.code === 'auth/operation-not-supported-in-this-environment') {
-      alert('Browser ini memblokir jendela login Google. Salin alamat halaman ini dan buka di Chrome, lalu coba masuk lagi.');
-    } else if (err.code !== 'auth/popup-closed-by-user') {
-      alert('Gagal masuk: ' + (err.message || 'Coba lagi'));
-    }
-  }
+  openWaModal();
 }
 function goToCheckout(){
   closePremiumModal();
@@ -454,7 +596,7 @@ function buatKotakKunci(nomor){
   box.innerHTML = '<h4>🔒 Pembahasan rumus (' + nomor + ') khusus Premium</h4><p>Langkah penyelesaian dan jawaban dibuka untuk member <strong>TKA Premium</strong>. Pembahasan rumus nomor 1 sampai ' + FREE_LIMIT + ' gratis.</p>';
   var aksi = document.createElement('div'); aksi.className = 'aksi';
   if (!currentUser) {
-    var bl = document.createElement('button'); bl.type = 'button'; bl.className = 'prem-btn prem-btn-primary'; bl.textContent = '🔑 Masuk dengan Google';
+    var bl = document.createElement('button'); bl.type = 'button'; bl.className = 'prem-btn prem-btn-primary'; bl.textContent = '📱 Masuk via WhatsApp';
     bl.addEventListener('click', loginGoogle); aksi.appendChild(bl);
   }
   var bb = document.createElement('button'); bb.type = 'button'; bb.className = 'prem-btn prem-btn-gold'; bb.textContent = '⭐ Langganan Rp 10.000';
@@ -482,20 +624,20 @@ function renderUserStatus(){
     var exp = premiumUntil ? ' (s/d ' + new Date(premiumUntil).toLocaleDateString('id-ID', {day: 'numeric', month: 'short', year: 'numeric'}) + ')' : '';
     text.innerHTML = 'Halo, <strong>' + esc(namaUser()) + '</strong>' + exp + '. Seluruh pembahasan contoh soal terbuka!';
     actions.innerHTML = '<button type="button" class="prem-btn prem-btn-danger" id="btnLogout">Keluar</button>';
-    bind('btnLogout', function(){ if (auth) auth.signOut(); });
+    bind('btnLogout', logoutUser);
     if (modalLogin) modalLogin.style.display = 'none';
     if (modalStatus && currentUser) modalStatus.innerHTML = 'Akun Anda: <strong>' + esc(currentUser.email) + '</strong> (👑 Premium Aktif)';
   } else if (currentUser) {
     card.className = 'prem-card not-premium'; badge.className = 'prem-badge free'; badge.textContent = 'Akun Reguler';
     text.innerHTML = 'Masuk sebagai <strong>' + esc(namaUser()) + '</strong>. Pembahasan rumus nomor ' + (FREE_LIMIT + 1) + ' dan seterusnya dikunci untuk member Premium.';
     actions.innerHTML = '<button type="button" class="prem-btn prem-btn-gold" id="btnBuyPrem">⭐ Upgrade Premium (Rp 10.000)</button><button type="button" class="prem-btn prem-btn-danger" id="btnLogout">Keluar</button>';
-    bind('btnBuyPrem', goToCheckout); bind('btnLogout', function(){ if (auth) auth.signOut(); });
+    bind('btnBuyPrem', goToCheckout); bind('btnLogout', logoutUser);
     if (modalLogin) modalLogin.style.display = 'none';
     if (modalStatus) modalStatus.innerHTML = 'Anda masuk sebagai <strong>' + esc(currentUser.email) + '</strong> (belum Premium).';
   } else {
     card.className = 'prem-card not-premium'; badge.className = 'prem-badge free'; badge.textContent = '🔒 Belum Login';
     text.innerHTML = 'Pembahasan rumus nomor 1 sampai ' + FREE_LIMIT + ' gratis. Nomor ' + (FREE_LIMIT + 1) + ' dan seterusnya khusus anggota <strong>TKA Premium</strong>.';
-    actions.innerHTML = '<button type="button" class="prem-btn prem-btn-primary" id="btnLoginTop">🔑 Masuk dengan Google</button><button type="button" class="prem-btn prem-btn-gold" id="btnBuyPrem">⭐ Beli Premium (Rp 10.000)</button>';
+    actions.innerHTML = '<button type="button" class="prem-btn prem-btn-primary" id="btnLoginTop">📱 Masuk via WhatsApp</button><button type="button" class="prem-btn prem-btn-gold" id="btnBuyPrem">⭐ Beli Premium (Rp 10.000)</button>';
     bind('btnLoginTop', loginGoogle); bind('btnBuyPrem', goToCheckout);
     if (modalLogin) modalLogin.style.display = 'inline-flex';
     if (modalStatus) modalStatus.textContent = 'Anda belum login. Masuk atau beli paket untuk membuka pembahasan.';
@@ -516,6 +658,43 @@ document.addEventListener('DOMContentLoaded', function(){
   var ov = document.getElementById('premModal');
   if (ov) ov.addEventListener('click', function(e){ if (e.target.id === 'premModal') closePremiumModal(); });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closePremiumModal(); });
+    initWaAuth();
+  on('waModalClose', closeWaModal);
+  var ovWa = document.getElementById('waModal');
+  if (ovWa) ovWa.addEventListener('click', function(e){ if (e.target.id === 'waModal') closeWaModal(); });
+
+  var bSubmit = document.getElementById('btnWaSubmit');
+  if (bSubmit) {
+    bSubmit.addEventListener('click', async function(){
+      var ph = (document.getElementById('waInputPhone').value || '').trim();
+      var cd = (document.getElementById('waInputCode').value || '').trim();
+      bSubmit.disabled = true; bSubmit.textContent = '⏳ Memeriksa...';
+      var res = await verifyWaUser(ph, cd);
+      bSubmit.disabled = false; bSubmit.textContent = '✅ Masuk / Periksa Status';
+      showWaMsg(res.msg, res.ok ? 'success' : 'info');
+      if (res.ok) {
+        setTimeout(function(){ closeWaModal(); closePremiumModal(); }, 1200);
+      }
+    });
+  }
+
+  var bChat = document.getElementById('btnWaChatAdmin');
+  if (bChat) {
+    bChat.addEventListener('click', function(){
+      var ph = (document.getElementById('waInputPhone').value || '').trim();
+      var pesan = "Halo Admin Math315, saya ingin aktivasi paket Soal 150 SMP" + (ph ? (" untuk nomor WA: " + ph) : "");
+      window.open('https://wa.me/' + WA_ADMIN_NUMBER + '?text=' + encodeURIComponent(pesan), '_blank');
+    });
+  }
+
+  var bBeli = document.getElementById('btnWaBeli');
+  if (bBeli) {
+    bBeli.addEventListener('click', function(){
+      closeWaModal();
+      goToCheckout();
+    });
+  }
+
   renderUserStatus();
 });
 
@@ -1011,9 +1190,9 @@ function enableCheckout(user) {
 }
 
 function showLoginRequired() {
-  formEl.style.display = 'none';
-  loginSection.style.display = 'block';
-  setStatus('🔐 Login diperlukan untuk melanjutkan pembayaran', 'warning');
+  formEl.style.display = 'block';
+  loginSection.style.display = 'none';
+  setStatus('📝 Silakan lengkapi data untuk melakukan pembayaran', 'info');
 }
 
 // ============================================================
@@ -1472,24 +1651,47 @@ function listenToTransactionStatus(invoiceNo) {
       setStatus("🎉 Pembayaran berhasil diverifikasi! Langganan Anda telah aktif.", "success");
       const selectedKey = productEl.value;
       const isSub = selectedKey === 'premium_1bulan' || (val.product_id && val.product_id.includes('premium'));
-      setTimeout(() => {
-        if (isSub) {
-          window.tutupCheckout();
-        } else {
-          window.tutupCheckout();
+      if (isSub) {
+        const custPhone = normalizePhone(phoneEl.value || (currentUser && currentUser.phone) || '');
+        const custName = (nameEl.value || '').trim() || 'Member TKA';
+        const exp = Date.now() + 30 * 24 * 3600 * 1000;
+        const u = { phone: custPhone, displayName: custName, isPremium: true, premiumUntil: exp };
+        localStorage.setItem('math315_wa_user', JSON.stringify(u));
+        currentUser = u;
+        isPremium = true;
+        premiumUntil = exp;
+        if (db && custPhone) {
+          try {
+            db.ref('members_wa/' + custPhone).update({
+              phone: custPhone,
+              name: custName,
+              isPremium: true,
+              premium_until: exp,
+              paid_at: Date.now(),
+              invoice: invoiceNo
+            });
+          } catch(e){}
         }
+        premiumBerubah();
+      }
+      setTimeout(() => {
+        window.tutupCheckout();
       }, 2000);
     }
   });
 }
 
 async function savePendingQrisTransaction(invoiceNo, product, selectedKey) {
-  if (!currentUser) return;
   try {
+    const custPhone = normalizePhone(phoneEl.value || (currentUser && currentUser.phone) || '');
+    const custName = (nameEl.value || '').trim() || (currentUser && currentUser.displayName) || 'Customer';
+    const custEmail = (emailEl.value || '').trim() || (currentUser && currentUser.email) || '';
     const isSubscription = selectedKey === 'premium_1bulan' || (selectedKey && selectedKey.includes('premium'));
+    const uidVal = (currentUser && currentUser.uid) ? currentUser.uid : ('wa_' + (custPhone || invoiceNo));
     await db.ref(`transactions/${invoiceNo}`).update({
-      customer_name: nameEl.value.trim() || currentUser.displayName || 'Customer',
-      customer_email: emailEl.value.trim() || currentUser.email || '',
+      customer_name: custName,
+      customer_email: custEmail,
+      customer_phone: custPhone,
       product_name: product.name,
       product_id: selectedKey,
       product_type: isSubscription ? 'subscription' : 'token',
@@ -1499,8 +1701,8 @@ async function savePendingQrisTransaction(invoiceNo, product, selectedKey) {
       payment_provider: 'QRIS_DANA',
       payment_method: 'QRIS',
       status: 'pending',
-      uid: currentUser.uid,
-      user_id: currentUser.uid,
+      uid: uidVal,
+      user_id: uidVal,
       created_at: Date.now()
     });
     listenToTransactionStatus(invoiceNo);
