@@ -12,22 +12,33 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
+
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
+
       - name: Install dependencies
         run: npm install
-      
+
       - name: Sync web assets
         run: npx cap sync android
+
+      - name: Restore debug keystore
+        run: |
+          mkdir -p ~/.android
+          echo "${{ secrets.DEBUG_KEYSTORE_BASE64 }}" | base64 -d > ~/.android/debug.keystore
+          ls -l ~/.android/debug.keystore
+
       - name: Build debug APK
         run: cd android && ./gradlew assembleDebug
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
