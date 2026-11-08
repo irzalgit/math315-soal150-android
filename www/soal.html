@@ -1,0 +1,1788 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rumus Matematika SMP</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
+<style>
+:root{
+  --bg:#f6f7fb; --card:#ffffff; --ink:#1b1f2a; --muted:#5b6475; --line:#e3e6ef; --accent:#4f46e5;
+  --shadow:0 1px 2px rgba(20,24,40,.06),0 4px 14px rgba(20,24,40,.05);
+  --biru:#58c4dd; --hijau:#83c167; --kuning:#ffd84a; --oranye:#ff862f; --merah:#fc6255; --papan:#0b0c12;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1220; --card:#181c2e; --ink:#eef0f7; --muted:#9aa3b8; --line:#2a3050; --accent:#8b86ff;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1220; --card:#181c2e; --ink:#eef0f7; --muted:#9aa3b8; --line:#2a3050; --accent:#8b86ff;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 16px}
+.wrap{max-width:1100px;margin:0 auto}
+h1{font-size:1.25rem;margin:0}
+.sub{color:var(--muted);font-size:.85rem}
+.tools{display:flex;gap:8px;align-items:center;margin-top:10px;flex-wrap:wrap}
+input[type=search]{flex:1 1 220px;min-width:0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit}
+button{font:inherit;color:inherit}
+button.theme{padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);cursor:pointer}
+.tabs{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding-bottom:2px;scrollbar-width:thin}
+.tab{flex:0 0 auto;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:.9rem;cursor:pointer;white-space:nowrap}
+.tab[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.tab small{opacity:.75;margin-left:4px}
+main{padding:16px}
+.elemen{margin:26px 0 6px;font-size:1.2rem;padding-left:10px;border-left:5px solid var(--accent)}
+.subel{margin:18px 0 8px;font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.rumus{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:14px 14px 12px;display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;border-bottom:4px solid hsl(var(--h) 72% 52%)}
+.rumus.buka{grid-column:1/-1}
+.nomor{flex:0 0 auto;min-width:46px;text-align:center;font-weight:800;font-size:.95rem;color:#fff;background:hsl(var(--h) 70% 44%);border-radius:10px;padding:5px 6px}
+.isi{min-width:0;flex:1 1 200px}
+.isi h3{margin:2px 0 6px;font-size:.98rem;font-weight:650}
+.math{overflow-x:auto;overflow-y:hidden;padding:4px 0;font-size:1.05rem}
+.math .katex-display{margin:.2em 0}
+.raw{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.85rem;white-space:pre-wrap;word-break:break-word}
+.ket{margin:6px 0 0;color:var(--muted);font-size:.85rem}
+.btn-contoh{margin-top:10px;padding:7px 12px;border-radius:999px;border:1px solid hsl(var(--h) 60% 50%);background:transparent;color:hsl(var(--h) 60% 40%);font-size:.85rem;font-weight:600;cursor:pointer}
+.btn-contoh[aria-expanded="true"]{background:hsl(var(--h) 70% 44%);color:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn-contoh{color:hsl(var(--h) 80% 72%)} :root:not([data-theme="light"]) .btn-contoh[aria-expanded="true"]{color:#fff}}
+:root[data-theme="dark"] .btn-contoh{color:hsl(var(--h) 80% 72%)} :root[data-theme="dark"] .btn-contoh[aria-expanded="true"]{color:#fff}
+.kosong{text-align:center;color:var(--muted);padding:40px 0}
+[hidden]{display:none!important}
+footer{max-width:1100px;margin:10px auto 40px;padding:0 16px;color:var(--muted);font-size:.8rem}
+
+/* ===== papan animasi (gaya manim) ===== */
+.papan{flex:1 1 100%;background:var(--papan);color:#f3f4f8;border-radius:12px;padding:14px;box-shadow:inset 0 0 0 1px #23263a}
+.papan-bar{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.papan-bar .judul{font-weight:700;font-size:.85rem;color:var(--biru);margin-right:auto;letter-spacing:.04em;text-transform:uppercase}
+.papan-bar button{padding:6px 10px;border-radius:8px;border:1px solid #2c3050;background:#14172a;color:#e8eaf6;font-size:.8rem;cursor:pointer}
+.papan-bar button:hover{background:#1d2140}
+.step{opacity:0;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease;margin:10px 0}
+.step.show{opacity:1;transform:none}
+.step .label{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:6px;margin-bottom:4px}
+.soal .label{background:var(--kuning);color:#1a1500}
+.soal p{margin:2px 0 0;font-size:1.02rem}
+.langkah{display:flex;gap:10px;align-items:flex-start}
+.langkah .no{flex:0 0 auto;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.8rem;color:#0b0c12;background:var(--c,var(--biru))}
+.langkah .badan{min-width:0;flex:1}
+.langkah p{margin:1px 0 2px;color:#c9cde0;font-size:.92rem}
+.papan .math{color:#fff;font-size:1.15rem;padding:2px 0}
+.papan .katex-display{margin:.15em 0}
+.step.show .tulis{animation:tulis 1.3s cubic-bezier(.3,.1,.2,1) .35s both}
+@keyframes tulis{
+  from{clip-path:inset(-8px 100% -8px -8px);color:var(--kuning);text-shadow:0 0 14px rgba(255,216,74,.55)}
+  70%{color:var(--kuning)}
+  to{clip-path:inset(-8px -8px -8px -8px);color:#fff;text-shadow:none}
+}
+.jawab .kotak{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 14px;border:2px solid var(--hijau);border-radius:10px;background:rgba(131,193,103,.08)}
+.jawab .label{background:var(--hijau);color:#0b1405;margin:0}
+.jawab .nilai{font-size:1.2rem}
+.step.show .kotak{animation:pop .7s cubic-bezier(.2,1.4,.4,1) both,sorot 1.6s ease .7s}
+@keyframes pop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes sorot{0%,100%{box-shadow:0 0 0 rgba(131,193,103,0)}40%{box-shadow:0 0 22px rgba(131,193,103,.55)}}
+@media (prefers-reduced-motion: reduce){
+  .step{transition:none;transform:none}
+  .step.show .tulis,.step.show .kotak{animation:none}
+}
+@media print{header,.tools,.tabs,.btn-contoh,.papan{display:none} body{background:#fff} .rumus{box-shadow:none;break-inside:avoid}}
+
+/* ===== Premium ===== */
+.prem-card{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;background:var(--card);border:1.5px solid var(--line);border-radius:12px;padding:12px 16px;margin:0 0 8px;box-shadow:var(--shadow)}
+.prem-card.is-premium{border-color:#10b981;background:color-mix(in srgb,#10b981 8%,var(--card))}
+.prem-card.not-premium{border-color:#f59e0b;background:color-mix(in srgb,#f59e0b 6%,var(--card))}
+.prem-info{display:flex;align-items:center;gap:12px;font-size:.9rem;min-width:0}
+.prem-info-text{min-width:0;line-height:1.4}
+.prem-badge{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;font-weight:700;text-transform:uppercase;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.prem-badge.prem{background:#10b981;color:#fff}.prem-badge.free{background:#f59e0b;color:#1e293b}.prem-badge.load{background:var(--line);color:var(--muted)}
+.prem-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.prem-btn{font:inherit;font-size:.85rem;font-weight:600;padding:7px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.prem-btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.prem-btn-gold{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;border-color:#d97706}
+.prem-btn-secondary{background:var(--bg);color:var(--ink)}
+.prem-btn-danger{background:transparent;color:#ef4444;border-color:rgba(239,68,68,.4)}
+.lock-tag{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11px;background:#f59e0b;color:#111;padding:2px 7px;border-radius:4px;font-weight:700;margin-left:4px}
+.kunci{margin:12px 0 2px;padding:14px;border:1.5px dashed #f59e0b;border-radius:10px;background:rgba(245,158,11,.08)}
+.kunci h4{margin:0 0 6px;font-size:.95rem;color:#fbbf24}
+.kunci p{margin:0 0 10px;color:#c9cde0;font-size:.88rem}
+.kunci .aksi{display:flex;flex-wrap:wrap;gap:8px}
+.prem-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px}
+.prem-modal{background:var(--card);color:var(--ink);border:2px solid var(--accent);border-radius:14px;max-width:480px;width:100%;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.35);position:relative}
+.prem-modal h3{margin:0 0 12px;font-size:1.2rem}
+.prem-modal p{color:var(--muted);font-size:.92rem;margin:0 0 14px}
+.prem-modal-perks{list-style:none;padding:0;margin:0 0 16px;display:grid;gap:8px;font-size:.9rem}
+.prem-modal-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px}
+.prem-modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:22px;line-height:1;cursor:pointer;color:var(--muted)}
+#checkoutView,#checkoutView *{ box-sizing: border-box; }#checkoutView{
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+}#checkoutView .card{
+  background: #ffffff;
+  padding: 30px 25px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease;
+}#checkoutView .card:hover{ transform: translateY(-5px); }#checkoutView h2{ margin: 0 0 20px 0; color: #333; text-align: center; font-weight: 600; font-size: 24px; }#checkoutView label{ display: block; margin-top: 12px; margin-bottom: 4px; color: #555; font-weight: 500; font-size: 14px; }#checkoutView input,#checkoutView select,#checkoutView button{
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 4px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  background: #fafafa;
+}#checkoutView input:focus,#checkoutView select:focus{
+  outline: none;
+  border-color: #667eea;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}#checkoutView input[readonly]{ background: #f0f0f0; color: #666; cursor: default; }#checkoutView button{
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  margin-top: 24px;
+  padding: 14px;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}#checkoutView button:hover{ transform: scale(1.02); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4); }#checkoutView button:disabled{ background: #cccccc; cursor: not-allowed; transform: none; box-shadow: none; }#checkoutView #price{
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 14px;
+  border-radius: 10px;
+  margin-top: 12px;
+  font-weight: bold;
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+  border: 1px solid #d4d4d4;
+}#checkoutView .status{
+  margin-top: 20px;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+  animation: fadeIn 0.3s ease;
+}#checkoutView .status strong{ font-weight: 700; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }#checkoutView .success{ background: #d4edda; color: #155724; border-left: 4px solid #28a745; }#checkoutView .error{ background: #f8d7da; color: #721c24; border-left: 4px solid #dc3545; }#checkoutView .info{ background: #d1ecf1; color: #0c5460; border-left: 4px solid #17a2b8; }#checkoutView .warning{ background: #fff3cd; color: #856404; border-left: 4px solid #ffc107; }#checkoutView .loading{
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }#checkoutView small{ display: block; margin-top: 4px; color: #888; font-size: 12px; }#checkoutView .google-btn{
+  display: inline-block;
+  background: #4285f4;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}#checkoutView .google-btn:hover{ background: #357ae8; }#checkoutView .google-btn:disabled{ background: #aaa; cursor: not-allowed; }
+
+#checkoutView{display:none;position:fixed;inset:0;z-index:10000;overflow-y:auto;-webkit-overflow-scrolling:touch;align-items:flex-start;justify-content:center}
+#checkoutView .card{margin:auto}
+@media print{#checkoutView{display:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div>
+      <h1>Rumus Matematika SMP</h1>
+      <div class="sub" id="sub"></div>
+    </div>
+    <div class="tools">
+      <input type="search" id="q" placeholder="Cari rumus, mis. kerucut, gradien, 45" aria-label="Cari rumus">
+      <button class="theme" id="tema" type="button" aria-label="Ganti tema terang atau gelap">Tema</button>
+    </div>
+    <div class="tabs" id="tabs" role="group" aria-label="Filter elemen"></div>
+  </div>
+</header>
+<main><div class="wrap">
+<div id="premiumStatusBar" class="prem-card not-premium"><div class="prem-info"><span id="premBadge" class="prem-badge load">Memeriksa</span><div class="prem-info-text" id="premText">Memeriksa status akun dan langganan Anda...</div></div><div class="prem-actions" id="premActions"></div></div>
+<div id="isi"></div></div></main>
+<footer>Mengacu kisi-kisi TKA SMP 2026. Klik "Contoh soal" pada tiap rumus untuk melihat pembahasan beranimasi. Pembahasan rumus nomor 1 sampai 5 gratis; nomor 6 dan seterusnya khusus member Premium. Rumus ditampilkan dengan KaTeX; butuh internet saat pertama dibuka.</footer>
+
+<script type="application/json" id="data">{"judul": "Kumpulan Rumus Matematika SMP/MTs dengan Contoh Soal (mengacu kisi-kisi TKA SMP 2026)", "jumlah_rumus": 155, "catatan": "Rumus ditulis dengan sintaks LaTeX agar dapat dirender KaTeX. Field 'rumus' berisi LaTeX tanpa tanda $; bungkus dengan $...$ saat ditampilkan. Field 'keterangan' dapat berisi $...$ inline. Setiap rumus memiliki 'contoh': soal, langkah (teks + tex), dan jawaban (tex).", "ringkasan_per_elemen": [{"elemen": "Bilangan", "jumlah": 31}, {"elemen": "Aljabar", "jumlah": 43}, {"elemen": "Geometri dan Pengukuran", "jumlah": 66}, {"elemen": "Data dan Peluang", "jumlah": 15}], "rumus": [{"nomor": 1, "elemen": "Bilangan", "subelemen": "Operasi pecahan", "nama": "Penjumlahan pecahan", "rumus": "\\frac{a}{b} + \\frac{c}{d} = \\frac{ad + bc}{bd}", "keterangan": "Samakan penyebut terlebih dahulu.", "contoh": {"soal": "Hitunglah $\\frac{2}{3} + \\frac{3}{4}$.", "langkah": [{"teks": "Tulis rumus penjumlahan pecahan.", "tex": "\\frac{a}{b} + \\frac{c}{d} = \\frac{ad + bc}{bd}"}, {"teks": "Masukkan $a=2$, $b=3$, $c=3$, $d=4$.", "tex": "\\frac{2}{3} + \\frac{3}{4} = \\frac{2 \\times 4 + 3 \\times 3}{3 \\times 4}"}, {"teks": "Hitung pembilang dan penyebut.", "tex": "= \\frac{8 + 9}{12} = \\frac{17}{12}"}, {"teks": "Ubah ke pecahan campuran.", "tex": "= 1\\frac{5}{12}"}], "jawaban": "1\\frac{5}{12}"}}, {"nomor": 2, "elemen": "Bilangan", "subelemen": "Operasi pecahan", "nama": "Pengurangan pecahan", "rumus": "\\frac{a}{b} - \\frac{c}{d} = \\frac{ad - bc}{bd}", "keterangan": "Samakan penyebut terlebih dahulu.", "contoh": {"soal": "Hitunglah $\\frac{5}{6} - \\frac{1}{4}$.", "langkah": [{"teks": "Tulis rumus pengurangan pecahan.", "tex": "\\frac{a}{b} - \\frac{c}{d} = \\frac{ad - bc}{bd}"}, {"teks": "Masukkan $a=5$, $b=6$, $c=1$, $d=4$.", "tex": "\\frac{5}{6} - \\frac{1}{4} = \\frac{5 \\times 4 - 1 \\times 6}{6 \\times 4}"}, {"teks": "Hitung.", "tex": "= \\frac{20 - 6}{24} = \\frac{14}{24}"}, {"teks": "Sederhanakan dengan membagi 2.", "tex": "= \\frac{7}{12}"}], "jawaban": "\\frac{7}{12}"}}, {"nomor": 3, "elemen": "Bilangan", "subelemen": "Operasi pecahan", "nama": "Perkalian pecahan", "rumus": "\\frac{a}{b} \\times \\frac{c}{d} = \\frac{ac}{bd}", "keterangan": "Pembilang dikali pembilang, penyebut dikali penyebut.", "contoh": {"soal": "Hitunglah $\\frac{3}{5} \\times \\frac{10}{9}$.", "langkah": [{"teks": "Tulis rumus perkalian pecahan.", "tex": "\\frac{a}{b} \\times \\frac{c}{d} = \\frac{ac}{bd}"}, {"teks": "Kalikan pembilang dan penyebut.", "tex": "\\frac{3}{5} \\times \\frac{10}{9} = \\frac{3 \\times 10}{5 \\times 9} = \\frac{30}{45}"}, {"teks": "Sederhanakan dengan membagi 15.", "tex": "= \\frac{2}{3}"}], "jawaban": "\\frac{2}{3}"}}, {"nomor": 4, "elemen": "Bilangan", "subelemen": "Operasi pecahan", "nama": "Pembagian pecahan", "rumus": "\\frac{a}{b} : \\frac{c}{d} = \\frac{a}{b} \\times \\frac{d}{c} = \\frac{ad}{bc}", "keterangan": "Kalikan dengan kebalikan pecahan pembagi.", "contoh": {"soal": "Hitunglah $\\frac{5}{6} : \\frac{10}{9}$.", "langkah": [{"teks": "Tulis rumus pembagian pecahan.", "tex": "\\frac{a}{b} : \\frac{c}{d} = \\frac{a}{b} \\times \\frac{d}{c}"}, {"teks": "Balik pecahan pembagi lalu kalikan.", "tex": "\\frac{5}{6} : \\frac{10}{9} = \\frac{5}{6} \\times \\frac{9}{10} = \\frac{45}{60}"}, {"teks": "Sederhanakan dengan membagi 15.", "tex": "= \\frac{3}{4}"}], "jawaban": "\\frac{3}{4}"}}, {"nomor": 5, "elemen": "Bilangan", "subelemen": "Bilangan berpangkat", "nama": "Perkalian pangkat", "rumus": "a^m \\times a^n = a^{m+n}", "keterangan": "Basis sama: pangkat dijumlahkan.", "contoh": {"soal": "Hitunglah $3^4 \\times 3^2$.", "langkah": [{"teks": "Basis sama, jumlahkan pangkatnya.", "tex": "a^m \\times a^n = a^{m+n}"}, {"teks": "Masukkan nilai.", "tex": "3^4 \\times 3^2 = 3^{4+2} = 3^6"}, {"teks": "Hitung nilai pangkat.", "tex": "3^6 = 729"}], "jawaban": "729"}}, {"nomor": 6, "elemen": "Bilangan", "subelemen": "Bilangan berpangkat", "nama": "Pembagian pangkat", "rumus": "a^m : a^n = a^{m-n}", "keterangan": "Basis sama, $a \\neq 0$: pangkat dikurangkan.", "contoh": {"soal": "Hitunglah $2^9 : 2^5$.", "langkah": [{"teks": "Basis sama, kurangkan pangkatnya.", "tex": "a^m : a^n = a^{m-n}"}, {"teks": "Masukkan nilai.", "tex": "2^9 : 2^5 = 2^{9-5} = 2^4"}, {"teks": "Hitung nilai pangkat.", "tex": "2^4 = 16"}], "jawaban": "16"}}, {"nomor": 7, "elemen": "Bilangan", "subelemen": "Bilangan berpangkat", "nama": "Pangkat dari pangkat", "rumus": "(a^m)^n = a^{m \\times n}", "keterangan": "Pangkat dikalikan.", "contoh": {"soal": "Hitunglah $(5^2)^3$.", "langkah": [{"teks": "Pangkat dari pangkat dikalikan.", "tex": "(a^m)^n = a^{m \\times n}"}, {"teks": "Masukkan nilai.", "tex": "(5^2)^3 = 5^{2 \\times 3} = 5^6"}, {"teks": "Hitung nilai pangkat.", "tex": "5^6 = 15.625"}], "jawaban": "15.625"}}, {"nomor": 8, "elemen": "Bilangan", "subelemen": "Bilangan berpangkat", "nama": "Pangkat perkalian", "rumus": "(ab)^n = a^n b^n", "keterangan": "Pangkat dibagikan ke tiap faktor.", "contoh": {"soal": "Sederhanakan $(2x^3)^4$.", "langkah": [{"teks": "Pangkatkan setiap faktor.", "tex": "(ab)^n = a^n b^n"}, {"teks": "Dengan $a=2$, $b=x^3$, $n=4$.", "tex": "(2x^3)^4 = 2^4 \\times (x^3)^4"}, {"teks": "Pangkat dari pangkat dikalikan.", "tex": "= 16 \\times x^{12}"}], "jawaban": "16x^{12}"}}, {"nomor": 9, "elemen": "Bilangan", "subelemen": "Bilangan berpangkat", "nama": "Pangkat pembagian", "rumus": "\\left(\\frac{a}{b}\\right)^n = \\frac{a^n}{b^n}", "keterangan": "Dengan $b \\neq 0$.", "contoh": {"soal": "Hitunglah $\\left(\\frac{2}{3}\\right)^4$.", "langkah": [{"teks": "Pangkatkan pembilang dan penyebut.", "tex": "\\left(\\frac{a}{b}\\right)^n = \\frac{a^n}{b^n}"}, {"teks": "Masukkan nilai.", "tex": "\\left(\\frac{2}{3}\\right)^4 = \\frac{2^4}{3^4}"}, {"teks": "Hitung.", "tex": "= \\frac{16}{81}"}], "jawaban": "\\frac{16}{81}"}}, {"nomor": 10, "elemen": "Bilangan", "subelemen": "Bilangan berpangkat", "nama": "Pangkat nol", "rumus": "a^0 = 1", "keterangan": "Dengan $a \\neq 0$.", "contoh": {"soal": "Hitunglah $9^0 + 2^3$.", "langkah": [{"teks": "Bilangan tidak nol berpangkat nol bernilai 1.", "tex": "a^0 = 1"}, {"teks": "Masukkan nilai.", "tex": "9^0 + 2^3 = 1 + 8"}, {"teks": "Jumlahkan.", "tex": "= 9"}], "jawaban": "9"}}, {"nomor": 11, "elemen": "Bilangan", "subelemen": "Bilangan berpangkat", "nama": "Pangkat negatif", "rumus": "a^{-n} = \\frac{1}{a^n}", "keterangan": "Dengan $a \\neq 0$.", "contoh": {"soal": "Hitunglah $2^{-3} \\times 16$.", "langkah": [{"teks": "Pangkat negatif menjadi kebalikan.", "tex": "a^{-n} = \\frac{1}{a^n}"}, {"teks": "Ubah $2^{-3}$.", "tex": "2^{-3} = \\frac{1}{2^3} = \\frac{1}{8}"}, {"teks": "Kalikan dengan 16.", "tex": "\\frac{1}{8} \\times 16 = 2"}], "jawaban": "2"}}, {"nomor": 12, "elemen": "Bilangan", "subelemen": "Bilangan berpangkat", "nama": "Pangkat pecahan", "rumus": "a^{\\frac{m}{n}} = \\sqrt[n]{a^m}", "keterangan": "Mengubah pangkat pecahan menjadi bentuk akar.", "contoh": {"soal": "Hitunglah $27^{\\frac{2}{3}}$.", "langkah": [{"teks": "Ubah pangkat pecahan ke bentuk akar.", "tex": "a^{\\frac{m}{n}} = \\sqrt[n]{a^m}"}, {"teks": "Dengan $m=2$ dan $n=3$.", "tex": "27^{\\frac{2}{3}} = \\left(\\sqrt[3]{27}\\right)^2"}, {"teks": "Akar pangkat tiga dari 27 adalah 3.", "tex": "= 3^2 = 9"}], "jawaban": "9"}}, {"nomor": 13, "elemen": "Bilangan", "subelemen": "Bentuk akar", "nama": "Perkalian akar", "rumus": "\\sqrt{a} \\times \\sqrt{b} = \\sqrt{ab}", "keterangan": "Untuk $a, b \\geq 0$.", "contoh": {"soal": "Hitunglah $\\sqrt{6} \\times \\sqrt{24}$.", "langkah": [{"teks": "Kalikan bilangan di dalam akar.", "tex": "\\sqrt{a} \\times \\sqrt{b} = \\sqrt{ab}"}, {"teks": "Masukkan nilai.", "tex": "\\sqrt{6} \\times \\sqrt{24} = \\sqrt{6 \\times 24} = \\sqrt{144}"}, {"teks": "Hitung akarnya.", "tex": "= 12"}], "jawaban": "12"}}, {"nomor": 14, "elemen": "Bilangan", "subelemen": "Bentuk akar", "nama": "Pembagian akar", "rumus": "\\frac{\\sqrt{a}}{\\sqrt{b}} = \\sqrt{\\frac{a}{b}}", "keterangan": "Untuk $a \\geq 0$, $b > 0$.", "contoh": {"soal": "Hitunglah $\\frac{\\sqrt{72}}{\\sqrt{2}}$.", "langkah": [{"teks": "Gabungkan menjadi satu akar.", "tex": "\\frac{\\sqrt{a}}{\\sqrt{b}} = \\sqrt{\\frac{a}{b}}"}, {"teks": "Masukkan nilai.", "tex": "\\frac{\\sqrt{72}}{\\sqrt{2}} = \\sqrt{\\frac{72}{2}} = \\sqrt{36}"}, {"teks": "Hitung akarnya.", "tex": "= 6"}], "jawaban": "6"}}, {"nomor": 15, "elemen": "Bilangan", "subelemen": "Bentuk akar", "nama": "Menyederhanakan akar", "rumus": "\\sqrt{a^2 \\times b} = a\\sqrt{b}", "keterangan": "Keluarkan faktor kuadrat sempurna dari dalam akar.", "contoh": {"soal": "Sederhanakan $\\sqrt{75}$.", "langkah": [{"teks": "Cari faktor kuadrat sempurna.", "tex": "75 = 25 \\times 3"}, {"teks": "Pakai rumus penyederhanaan akar.", "tex": "\\sqrt{a^2 \\times b} = a\\sqrt{b}"}, {"teks": "Masukkan nilai.", "tex": "\\sqrt{75} = \\sqrt{5^2 \\times 3} = 5\\sqrt{3}"}], "jawaban": "5\\sqrt{3}"}}, {"nomor": 16, "elemen": "Bilangan", "subelemen": "Bentuk akar", "nama": "Penjumlahan akar sejenis", "rumus": "a\\sqrt{c} + b\\sqrt{c} = (a+b)\\sqrt{c}", "keterangan": "Hanya untuk akar sejenis.", "contoh": {"soal": "Hitunglah $\\sqrt{12} + \\sqrt{27}$.", "langkah": [{"teks": "Sederhanakan setiap akar dahulu.", "tex": "\\sqrt{12} = 2\\sqrt{3}, \\quad \\sqrt{27} = 3\\sqrt{3}"}, {"teks": "Akar sudah sejenis, pakai rumus.", "tex": "a\\sqrt{c} + b\\sqrt{c} = (a+b)\\sqrt{c}"}, {"teks": "Jumlahkan koefisiennya.", "tex": "2\\sqrt{3} + 3\\sqrt{3} = 5\\sqrt{3}"}], "jawaban": "5\\sqrt{3}"}}, {"nomor": 17, "elemen": "Bilangan", "subelemen": "Bentuk akar", "nama": "Pengurangan akar sejenis", "rumus": "a\\sqrt{c} - b\\sqrt{c} = (a-b)\\sqrt{c}", "keterangan": "Hanya untuk akar sejenis.", "contoh": {"soal": "Hitunglah $\\sqrt{50} - \\sqrt{18}$.", "langkah": [{"teks": "Sederhanakan setiap akar dahulu.", "tex": "\\sqrt{50} = 5\\sqrt{2}, \\quad \\sqrt{18} = 3\\sqrt{2}"}, {"teks": "Akar sudah sejenis, pakai rumus.", "tex": "a\\sqrt{c} - b\\sqrt{c} = (a-b)\\sqrt{c}"}, {"teks": "Kurangkan koefisiennya.", "tex": "5\\sqrt{2} - 3\\sqrt{2} = 2\\sqrt{2}"}], "jawaban": "2\\sqrt{2}"}}, {"nomor": 18, "elemen": "Bilangan", "subelemen": "Bentuk akar", "nama": "Merasionalkan penyebut bentuk akar tunggal", "rumus": "\\frac{a}{\\sqrt{b}} = \\frac{a\\sqrt{b}}{b}", "keterangan": "Kalikan pembilang dan penyebut dengan $\\sqrt{b}$.", "contoh": {"soal": "Rasionalkan penyebut $\\frac{6}{\\sqrt{3}}$.", "langkah": [{"teks": "Kalikan pembilang dan penyebut dengan $\\sqrt{3}$.", "tex": "\\frac{a}{\\sqrt{b}} = \\frac{a\\sqrt{b}}{b}"}, {"teks": "Masukkan nilai.", "tex": "\\frac{6}{\\sqrt{3}} = \\frac{6\\sqrt{3}}{3}"}, {"teks": "Sederhanakan.", "tex": "= 2\\sqrt{3}"}], "jawaban": "2\\sqrt{3}"}}, {"nomor": 19, "elemen": "Bilangan", "subelemen": "Bentuk akar", "nama": "Merasionalkan penyebut bentuk akar sekawan", "rumus": "\\frac{a}{\\sqrt{b} + \\sqrt{c}} = \\frac{a(\\sqrt{b} - \\sqrt{c})}{b - c}", "keterangan": "Kalikan dengan sekawan penyebut.", "contoh": {"soal": "Rasionalkan penyebut $\\frac{6}{\\sqrt{5} + \\sqrt{2}}$.", "langkah": [{"teks": "Kalikan dengan sekawan penyebut.", "tex": "\\frac{a}{\\sqrt{b} + \\sqrt{c}} = \\frac{a(\\sqrt{b} - \\sqrt{c})}{b - c}"}, {"teks": "Dengan $a=6$, $b=5$, $c=2$.", "tex": "\\frac{6}{\\sqrt{5} + \\sqrt{2}} = \\frac{6(\\sqrt{5} - \\sqrt{2})}{5 - 2}"}, {"teks": "Sederhanakan.", "tex": "= \\frac{6(\\sqrt{5} - \\sqrt{2})}{3} = 2(\\sqrt{5} - \\sqrt{2})"}], "jawaban": "2\\sqrt{5} - 2\\sqrt{2}"}}, {"nomor": 20, "elemen": "Bilangan", "subelemen": "Notasi ilmiah", "nama": "Bentuk baku", "rumus": "a \\times 10^n, \\quad 1 \\leq a < 10", "keterangan": "$n$ bilangan bulat; $n$ positif untuk bilangan besar, negatif untuk bilangan kecil.", "contoh": {"soal": "Nyatakan $36.000.000$ dalam bentuk baku.", "langkah": [{"teks": "Rumus bentuk baku.", "tex": "a \\times 10^n, \\quad 1 \\leq a < 10"}, {"teks": "Geser koma 7 tempat ke kiri agar $a$ di antara 1 dan 10.", "tex": "36.000.000 = 3{,}6 \\times 10.000.000"}, {"teks": "Tulis dengan pangkat sepuluh.", "tex": "= 3{,}6 \\times 10^7"}], "jawaban": "3{,}6 \\times 10^7"}}, {"nomor": 21, "elemen": "Bilangan", "subelemen": "Perbandingan", "nama": "Perbandingan senilai", "rumus": "\\frac{a_1}{a_2} = \\frac{b_1}{b_2}", "keterangan": "Jika satu besaran naik, besaran lain ikut naik.", "contoh": {"soal": "Harga 5 kg apel Rp60.000. Berapa harga 8 kg apel?", "langkah": [{"teks": "Semakin banyak apel, semakin mahal: senilai.", "tex": "\\frac{a_1}{a_2} = \\frac{b_1}{b_2}"}, {"teks": "Susun perbandingan.", "tex": "\\frac{5}{8} = \\frac{60.000}{x}"}, {"teks": "Kali silang.", "tex": "x = \\frac{8 \\times 60.000}{5}"}, {"teks": "Hitung.", "tex": "x = 96.000"}], "jawaban": "\\text{Rp}96.000"}}, {"nomor": 22, "elemen": "Bilangan", "subelemen": "Perbandingan", "nama": "Perbandingan berbalik nilai", "rumus": "a_1 \\times b_1 = a_2 \\times b_2", "keterangan": "Jika satu besaran naik, besaran lain turun.", "contoh": {"soal": "Enam pekerja menyelesaikan proyek dalam 20 hari. Jika dikerjakan 8 pekerja, berapa hari selesai?", "langkah": [{"teks": "Semakin banyak pekerja, semakin singkat: berbalik nilai.", "tex": "a_1 \\times b_1 = a_2 \\times b_2"}, {"teks": "Masukkan nilai.", "tex": "6 \\times 20 = 8 \\times x"}, {"teks": "Hitung.", "tex": "x = \\frac{120}{8} = 15"}], "jawaban": "15 \\text{ hari}"}}, {"nomor": 23, "elemen": "Bilangan", "subelemen": "Perbandingan", "nama": "Skala", "rumus": "\\text{Skala} = \\frac{\\text{jarak pada peta}}{\\text{jarak sebenarnya}}", "keterangan": "Satuan jarak keduanya harus sama.", "contoh": {"soal": "Jarak dua kota pada peta 4 cm dan skala peta $1 : 500.000$. Berapa jarak sebenarnya?", "langkah": [{"teks": "Rumus skala.", "tex": "\\text{Skala} = \\frac{\\text{jarak pada peta}}{\\text{jarak sebenarnya}}"}, {"teks": "Masukkan nilai.", "tex": "\\frac{1}{500.000} = \\frac{4}{x}"}, {"teks": "Hitung dalam cm.", "tex": "x = 4 \\times 500.000 = 2.000.000 \\text{ cm}"}, {"teks": "Ubah ke km (100.000 cm = 1 km).", "tex": "= 20 \\text{ km}"}], "jawaban": "20 \\text{ km}"}}, {"nomor": 24, "elemen": "Bilangan", "subelemen": "Aritmetika sosial", "nama": "Persentase", "rumus": "P\\% \\text{ dari } N = \\frac{P}{100} \\times N", "keterangan": "Menghitung $P$ persen dari suatu nilai $N$.", "contoh": {"soal": "Berapa $15\\%$ dari 240?", "langkah": [{"teks": "Rumus persentase.", "tex": "P\\% \\text{ dari } N = \\frac{P}{100} \\times N"}, {"teks": "Masukkan nilai.", "tex": "15\\% \\text{ dari } 240 = \\frac{15}{100} \\times 240"}, {"teks": "Hitung.", "tex": "= 36"}], "jawaban": "36"}}, {"nomor": 25, "elemen": "Bilangan", "subelemen": "Aritmetika sosial", "nama": "Untung", "rumus": "\\text{Untung} = \\text{Harga jual} - \\text{Harga beli}", "keterangan": "Terjadi jika harga jual lebih besar dari harga beli.", "contoh": {"soal": "Pedagang membeli sepatu Rp80.000 dan menjualnya Rp95.000. Berapa untungnya?", "langkah": [{"teks": "Rumus untung.", "tex": "\\text{Untung} = \\text{Harga jual} - \\text{Harga beli}"}, {"teks": "Masukkan nilai.", "tex": "\\text{Untung} = 95.000 - 80.000"}, {"teks": "Hitung.", "tex": "= 15.000"}], "jawaban": "\\text{Rp}15.000"}}, {"nomor": 26, "elemen": "Bilangan", "subelemen": "Aritmetika sosial", "nama": "Rugi", "rumus": "\\text{Rugi} = \\text{Harga beli} - \\text{Harga jual}", "keterangan": "Terjadi jika harga jual lebih kecil dari harga beli.", "contoh": {"soal": "Sebuah radio dibeli Rp250.000 dan dijual Rp230.000. Berapa ruginya?", "langkah": [{"teks": "Rumus rugi.", "tex": "\\text{Rugi} = \\text{Harga beli} - \\text{Harga jual}"}, {"teks": "Masukkan nilai.", "tex": "\\text{Rugi} = 250.000 - 230.000"}, {"teks": "Hitung.", "tex": "= 20.000"}], "jawaban": "\\text{Rp}20.000"}}, {"nomor": 27, "elemen": "Bilangan", "subelemen": "Aritmetika sosial", "nama": "Persentase untung", "rumus": "\\%\\text{Untung} = \\frac{\\text{Untung}}{\\text{Harga beli}} \\times 100\\%", "keterangan": "Dihitung terhadap harga beli.", "contoh": {"soal": "Sebuah tas dibeli Rp80.000 dan dijual Rp100.000. Berapa persentase untungnya?", "langkah": [{"teks": "Hitung untung dahulu.", "tex": "\\text{Untung} = 100.000 - 80.000 = 20.000"}, {"teks": "Rumus persentase untung.", "tex": "\\%\\text{Untung} = \\frac{\\text{Untung}}{\\text{Harga beli}} \\times 100\\%"}, {"teks": "Masukkan nilai.", "tex": "= \\frac{20.000}{80.000} \\times 100\\% = 25\\%"}], "jawaban": "25\\%"}}, {"nomor": 28, "elemen": "Bilangan", "subelemen": "Aritmetika sosial", "nama": "Persentase rugi", "rumus": "\\%\\text{Rugi} = \\frac{\\text{Rugi}}{\\text{Harga beli}} \\times 100\\%", "keterangan": "Dihitung terhadap harga beli.", "contoh": {"soal": "Sebuah jam dibeli Rp200.000 dan dijual Rp170.000. Berapa persentase ruginya?", "langkah": [{"teks": "Hitung rugi dahulu.", "tex": "\\text{Rugi} = 200.000 - 170.000 = 30.000"}, {"teks": "Rumus persentase rugi.", "tex": "\\%\\text{Rugi} = \\frac{\\text{Rugi}}{\\text{Harga beli}} \\times 100\\%"}, {"teks": "Masukkan nilai.", "tex": "= \\frac{30.000}{200.000} \\times 100\\% = 15\\%"}], "jawaban": "15\\%"}}, {"nomor": 29, "elemen": "Bilangan", "subelemen": "Aritmetika sosial", "nama": "Harga setelah diskon", "rumus": "\\text{Harga bayar} = \\text{Harga awal} - \\left(\\frac{d}{100} \\times \\text{Harga awal}\\right)", "keterangan": "$d$ adalah persentase diskon.", "contoh": {"soal": "Sebuah baju berharga Rp150.000 mendapat diskon $20\\%$. Berapa harga yang dibayar?", "langkah": [{"teks": "Rumus harga setelah diskon.", "tex": "\\text{Harga bayar} = \\text{Harga awal} - \\left(\\frac{d}{100} \\times \\text{Harga awal}\\right)"}, {"teks": "Hitung potongan harga.", "tex": "\\frac{20}{100} \\times 150.000 = 30.000"}, {"teks": "Kurangkan dari harga awal.", "tex": "150.000 - 30.000 = 120.000"}], "jawaban": "\\text{Rp}120.000"}}, {"nomor": 30, "elemen": "Bilangan", "subelemen": "Aritmetika sosial", "nama": "Bunga tunggal", "rumus": "B = M \\times \\frac{p}{100} \\times t", "keterangan": "$M$ modal, $p$ persen bunga per tahun, $t$ lama menabung dalam tahun.", "contoh": {"soal": "Rina menabung Rp3.000.000 dengan bunga tunggal $8\\%$ per tahun. Berapa bunga setelah 9 bulan?", "langkah": [{"teks": "Rumus bunga tunggal.", "tex": "B = M \\times \\frac{p}{100} \\times t"}, {"teks": "Ubah 9 bulan menjadi tahun.", "tex": "t = \\frac{9}{12} = 0{,}75"}, {"teks": "Masukkan nilai.", "tex": "B = 3.000.000 \\times \\frac{8}{100} \\times 0{,}75"}, {"teks": "Hitung.", "tex": "B = 180.000"}], "jawaban": "\\text{Rp}180.000"}}, {"nomor": 31, "elemen": "Bilangan", "subelemen": "Aritmetika sosial", "nama": "Bunga majemuk", "rumus": "M_n = M\\left(1 + \\frac{p}{100}\\right)^n", "keterangan": "$M_n$ modal akhir setelah $n$ periode.", "contoh": {"soal": "Modal Rp1.000.000 dibungakan majemuk $10\\%$ per tahun. Berapa modal setelah 2 tahun?", "langkah": [{"teks": "Rumus bunga majemuk.", "tex": "M_n = M\\left(1 + \\frac{p}{100}\\right)^n"}, {"teks": "Masukkan nilai.", "tex": "M_2 = 1.000.000 \\times (1 + 0{,}1)^2 = 1.000.000 \\times 1{,}1^2"}, {"teks": "Hitung pangkat.", "tex": "= 1.000.000 \\times 1{,}21"}, {"teks": "Kalikan.", "tex": "= 1.210.000"}], "jawaban": "\\text{Rp}1.210.000"}}, {"nomor": 32, "elemen": "Aljabar", "subelemen": "Operasi dan identitas aljabar", "nama": "Kuadrat jumlah", "rumus": "(a + b)^2 = a^2 + 2ab + b^2", "keterangan": "", "contoh": {"soal": "Jabarkan $(2x + 3)^2$.", "langkah": [{"teks": "Rumus kuadrat jumlah.", "tex": "(a + b)^2 = a^2 + 2ab + b^2"}, {"teks": "Dengan $a = 2x$ dan $b = 3$.", "tex": "(2x + 3)^2 = (2x)^2 + 2(2x)(3) + 3^2"}, {"teks": "Hitung tiap suku.", "tex": "= 4x^2 + 12x + 9"}], "jawaban": "4x^2 + 12x + 9"}}, {"nomor": 33, "elemen": "Aljabar", "subelemen": "Operasi dan identitas aljabar", "nama": "Kuadrat selisih", "rumus": "(a - b)^2 = a^2 - 2ab + b^2", "keterangan": "", "contoh": {"soal": "Jabarkan $(3x - 2)^2$.", "langkah": [{"teks": "Rumus kuadrat selisih.", "tex": "(a - b)^2 = a^2 - 2ab + b^2"}, {"teks": "Dengan $a = 3x$ dan $b = 2$.", "tex": "(3x - 2)^2 = (3x)^2 - 2(3x)(2) + 2^2"}, {"teks": "Hitung tiap suku.", "tex": "= 9x^2 - 12x + 4"}], "jawaban": "9x^2 - 12x + 4"}}, {"nomor": 34, "elemen": "Aljabar", "subelemen": "Operasi dan identitas aljabar", "nama": "Selisih kuadrat", "rumus": "a^2 - b^2 = (a + b)(a - b)", "keterangan": "", "contoh": {"soal": "Faktorkan $49x^2 - 25$.", "langkah": [{"teks": "Rumus selisih kuadrat.", "tex": "a^2 - b^2 = (a + b)(a - b)"}, {"teks": "Tulis sebagai kuadrat.", "tex": "49x^2 - 25 = (7x)^2 - 5^2"}, {"teks": "Faktorkan.", "tex": "= (7x + 5)(7x - 5)"}], "jawaban": "(7x + 5)(7x - 5)"}}, {"nomor": 35, "elemen": "Aljabar", "subelemen": "Operasi dan identitas aljabar", "nama": "Perkalian dua suku", "rumus": "(a + b)(c + d) = ac + ad + bc + bd", "keterangan": "Sifat distributif.", "contoh": {"soal": "Jabarkan $(x + 3)(2x - 4)$.", "langkah": [{"teks": "Rumus perkalian dua suku.", "tex": "(a + b)(c + d) = ac + ad + bc + bd"}, {"teks": "Kalikan tiap suku.", "tex": "(x + 3)(2x - 4) = 2x^2 - 4x + 6x - 12"}, {"teks": "Gabungkan suku sejenis.", "tex": "= 2x^2 + 2x - 12"}], "jawaban": "2x^2 + 2x - 12"}}, {"nomor": 36, "elemen": "Aljabar", "subelemen": "Operasi dan identitas aljabar", "nama": "Faktorisasi trinomial", "rumus": "x^2 + (p+q)x + pq = (x + p)(x + q)", "keterangan": "Cari dua bilangan yang hasil kalinya $pq$ dan jumlahnya $p+q$.", "contoh": {"soal": "Faktorkan $x^2 + 7x + 12$.", "langkah": [{"teks": "Rumus faktorisasi.", "tex": "x^2 + (p+q)x + pq = (x + p)(x + q)"}, {"teks": "Cari $p$ dan $q$: hasil kali 12, jumlah 7.", "tex": "p = 3, \\quad q = 4"}, {"teks": "Tulis faktornya.", "tex": "x^2 + 7x + 12 = (x + 3)(x + 4)"}], "jawaban": "(x + 3)(x + 4)"}}, {"nomor": 37, "elemen": "Aljabar", "subelemen": "Operasi dan identitas aljabar", "nama": "Faktorisasi faktor persekutuan", "rumus": "ax + ay = a(x + y)", "keterangan": "Keluarkan faktor yang sama.", "contoh": {"soal": "Faktorkan $6x + 9y$.", "langkah": [{"teks": "Rumus faktor persekutuan.", "tex": "ax + ay = a(x + y)"}, {"teks": "FPB dari 6 dan 9 adalah 3.", "tex": "6x + 9y = 3 \\cdot 2x + 3 \\cdot 3y"}, {"teks": "Keluarkan 3.", "tex": "= 3(2x + 3y)"}], "jawaban": "3(2x + 3y)"}}, {"nomor": 38, "elemen": "Aljabar", "subelemen": "Persamaan dan pertidaksamaan linear", "nama": "Penyelesaian PLSV", "rumus": "ax + b = c \\;\\Rightarrow\\; x = \\frac{c - b}{a}", "keterangan": "Dengan $a \\neq 0$.", "contoh": {"soal": "Selesaikan $3x + 7 = 22$.", "langkah": [{"teks": "Rumus penyelesaian PLSV.", "tex": "ax + b = c \\;\\Rightarrow\\; x = \\frac{c - b}{a}"}, {"teks": "Dengan $a=3$, $b=7$, $c=22$.", "tex": "x = \\frac{22 - 7}{3}"}, {"teks": "Hitung.", "tex": "x = \\frac{15}{3} = 5"}], "jawaban": "x = 5"}}, {"nomor": 39, "elemen": "Aljabar", "subelemen": "Persamaan dan pertidaksamaan linear", "nama": "Sifat pertidaksamaan", "rumus": "a < b \\;\\Rightarrow\\; ac > bc \\quad (c < 0)", "keterangan": "Tanda pertidaksamaan berbalik jika dikali atau dibagi bilangan negatif.", "contoh": {"soal": "Selesaikan $-2x + 3 > 11$.", "langkah": [{"teks": "Pindahkan 3 ke ruas kanan.", "tex": "-2x > 11 - 3 \\;\\Rightarrow\\; -2x > 8"}, {"teks": "Bagi dengan $-2$: tanda berbalik.", "tex": "a < b \\;\\Rightarrow\\; ac > bc \\quad (c < 0)"}, {"teks": "Hasil.", "tex": "x < -4"}], "jawaban": "x < -4"}}, {"nomor": 40, "elemen": "Aljabar", "subelemen": "Sistem persamaan linear dua variabel", "nama": "Bentuk umum SPLDV", "rumus": "a_1 x + b_1 y = c_1, \\quad a_2 x + b_2 y = c_2", "keterangan": "Diselesaikan dengan eliminasi, substitusi, atau gabungan.", "contoh": {"soal": "Jumlah dua bilangan 10 dan selisihnya 4. Tentukan kedua bilangan itu.", "langkah": [{"teks": "Bentuk umum SPLDV.", "tex": "a_1 x + b_1 y = c_1, \\quad a_2 x + b_2 y = c_2"}, {"teks": "Susun persamaan.", "tex": "x + y = 10, \\quad x - y = 4"}, {"teks": "Eliminasi $y$ dengan menjumlahkan.", "tex": "2x = 14 \\;\\Rightarrow\\; x = 7"}, {"teks": "Substitusi ke persamaan pertama.", "tex": "7 + y = 10 \\;\\Rightarrow\\; y = 3"}], "jawaban": "x = 7, \\; y = 3"}}, {"nomor": 41, "elemen": "Aljabar", "subelemen": "Sistem persamaan linear dua variabel", "nama": "Penyelesaian SPLDV untuk x", "rumus": "x = \\frac{c_1 b_2 - c_2 b_1}{a_1 b_2 - a_2 b_1}", "keterangan": "Berlaku jika penyebut tidak nol.", "contoh": {"soal": "Selesaikan $3x + 2y = 16$ dan $x + y = 6$ untuk $x$.", "langkah": [{"teks": "Rumus nilai $x$.", "tex": "x = \\frac{c_1 b_2 - c_2 b_1}{a_1 b_2 - a_2 b_1}"}, {"teks": "Dengan $a_1=3, b_1=2, c_1=16, a_2=1, b_2=1, c_2=6$.", "tex": "x = \\frac{16 \\times 1 - 6 \\times 2}{3 \\times 1 - 1 \\times 2}"}, {"teks": "Hitung.", "tex": "x = \\frac{16 - 12}{3 - 2} = 4"}], "jawaban": "x = 4"}}, {"nomor": 42, "elemen": "Aljabar", "subelemen": "Sistem persamaan linear dua variabel", "nama": "Penyelesaian SPLDV untuk y", "rumus": "y = \\frac{a_1 c_2 - a_2 c_1}{a_1 b_2 - a_2 b_1}", "keterangan": "Berlaku jika penyebut tidak nol.", "contoh": {"soal": "Selesaikan $2x + 3y = 12$ dan $x + y = 5$ untuk $y$.", "langkah": [{"teks": "Rumus nilai $y$.", "tex": "y = \\frac{a_1 c_2 - a_2 c_1}{a_1 b_2 - a_2 b_1}"}, {"teks": "Dengan $a_1=2, b_1=3, c_1=12, a_2=1, b_2=1, c_2=5$.", "tex": "y = \\frac{2 \\times 5 - 1 \\times 12}{2 \\times 1 - 1 \\times 3}"}, {"teks": "Hitung.", "tex": "y = \\frac{10 - 12}{2 - 3} = \\frac{-2}{-1} = 2"}], "jawaban": "y = 2"}}, {"nomor": 43, "elemen": "Aljabar", "subelemen": "Persamaan kuadrat", "nama": "Bentuk umum persamaan kuadrat", "rumus": "ax^2 + bx + c = 0, \\quad a \\neq 0", "keterangan": "", "contoh": {"soal": "Ubah $2x^2 = 5x - 3$ ke bentuk umum, lalu tentukan $a$, $b$, $c$.", "langkah": [{"teks": "Bentuk umum persamaan kuadrat.", "tex": "ax^2 + bx + c = 0"}, {"teks": "Pindahkan semua suku ke ruas kiri.", "tex": "2x^2 - 5x + 3 = 0"}, {"teks": "Baca koefisiennya.", "tex": "a = 2, \\quad b = -5, \\quad c = 3"}], "jawaban": "a = 2, \\; b = -5, \\; c = 3"}}, {"nomor": 44, "elemen": "Aljabar", "subelemen": "Persamaan kuadrat", "nama": "Rumus kuadrat (rumus abc)", "rumus": "x_{1,2} = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}", "keterangan": "Mencari akar-akar persamaan kuadrat.", "contoh": {"soal": "Tentukan akar-akar $2x^2 - 7x + 3 = 0$.", "langkah": [{"teks": "Rumus abc.", "tex": "x_{1,2} = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}"}, {"teks": "Dengan $a=2$, $b=-7$, $c=3$.", "tex": "x_{1,2} = \\frac{7 \\pm \\sqrt{49 - 24}}{4} = \\frac{7 \\pm 5}{4}"}, {"teks": "Hitung kedua akar.", "tex": "x_1 = \\frac{12}{4} = 3, \\quad x_2 = \\frac{2}{4} = \\frac{1}{2}"}], "jawaban": "x = 3 \\text{ atau } x = \\frac{1}{2}"}}, {"nomor": 45, "elemen": "Aljabar", "subelemen": "Persamaan kuadrat", "nama": "Diskriminan", "rumus": "D = b^2 - 4ac", "keterangan": "Menentukan jenis akar.", "contoh": {"soal": "Hitung diskriminan $3x^2 - 2x - 5 = 0$.", "langkah": [{"teks": "Rumus diskriminan.", "tex": "D = b^2 - 4ac"}, {"teks": "Dengan $a=3$, $b=-2$, $c=-5$.", "tex": "D = (-2)^2 - 4(3)(-5)"}, {"teks": "Hitung.", "tex": "D = 4 + 60 = 64"}], "jawaban": "D = 64"}}, {"nomor": 46, "elemen": "Aljabar", "subelemen": "Persamaan kuadrat", "nama": "Dua akar real berbeda", "rumus": "D > 0", "keterangan": "Persamaan memiliki dua akar real yang berbeda.", "contoh": {"soal": "Tentukan jenis akar $x^2 - 6x + 5 = 0$.", "langkah": [{"teks": "Hitung diskriminan.", "tex": "D = (-6)^2 - 4(1)(5) = 36 - 20 = 16"}, {"teks": "Bandingkan dengan syarat.", "tex": "D > 0"}, {"teks": "Kesimpulan.", "tex": "\\text{Dua akar real yang berbeda}"}], "jawaban": "\\text{Dua akar real berbeda}"}}, {"nomor": 47, "elemen": "Aljabar", "subelemen": "Persamaan kuadrat", "nama": "Dua akar real kembar", "rumus": "D = 0", "keterangan": "Persamaan memiliki satu akar real (kembar).", "contoh": {"soal": "Tentukan nilai $k$ agar $x^2 + kx + 9 = 0$ memiliki akar kembar.", "langkah": [{"teks": "Syarat akar kembar.", "tex": "D = 0"}, {"teks": "Hitung diskriminan.", "tex": "D = k^2 - 4(1)(9) = k^2 - 36"}, {"teks": "Samakan dengan nol.", "tex": "k^2 - 36 = 0 \\;\\Rightarrow\\; k^2 = 36"}, {"teks": "Akarkan.", "tex": "k = 6 \\text{ atau } k = -6"}], "jawaban": "k = 6 \\text{ atau } k = -6"}}, {"nomor": 48, "elemen": "Aljabar", "subelemen": "Persamaan kuadrat", "nama": "Tidak ada akar real", "rumus": "D < 0", "keterangan": "Persamaan tidak memiliki akar real.", "contoh": {"soal": "Tentukan jenis akar $2x^2 + x + 3 = 0$.", "langkah": [{"teks": "Hitung diskriminan.", "tex": "D = 1^2 - 4(2)(3) = 1 - 24 = -23"}, {"teks": "Bandingkan dengan syarat.", "tex": "D < 0"}, {"teks": "Kesimpulan.", "tex": "\\text{Tidak ada akar real}"}], "jawaban": "\\text{Tidak ada akar real}"}}, {"nomor": 49, "elemen": "Aljabar", "subelemen": "Persamaan kuadrat", "nama": "Jumlah akar-akar", "rumus": "x_1 + x_2 = -\\frac{b}{a}", "keterangan": "", "contoh": {"soal": "Tentukan jumlah akar-akar $x^2 - 7x + 10 = 0$.", "langkah": [{"teks": "Rumus jumlah akar.", "tex": "x_1 + x_2 = -\\frac{b}{a}"}, {"teks": "Dengan $a=1$, $b=-7$.", "tex": "x_1 + x_2 = -\\frac{-7}{1}"}, {"teks": "Hitung.", "tex": "x_1 + x_2 = 7"}], "jawaban": "7"}}, {"nomor": 50, "elemen": "Aljabar", "subelemen": "Persamaan kuadrat", "nama": "Hasil kali akar-akar", "rumus": "x_1 \\cdot x_2 = \\frac{c}{a}", "keterangan": "", "contoh": {"soal": "Tentukan hasil kali akar-akar $2x^2 - 5x + 3 = 0$.", "langkah": [{"teks": "Rumus hasil kali akar.", "tex": "x_1 \\cdot x_2 = \\frac{c}{a}"}, {"teks": "Dengan $a=2$, $c=3$.", "tex": "x_1 \\cdot x_2 = \\frac{3}{2}"}], "jawaban": "\\frac{3}{2}"}}, {"nomor": 51, "elemen": "Aljabar", "subelemen": "Persamaan kuadrat", "nama": "Persamaan kuadrat dari akar-akarnya", "rumus": "x^2 - (x_1 + x_2)x + x_1 x_2 = 0", "keterangan": "Menyusun persamaan kuadrat jika akar-akarnya diketahui.", "contoh": {"soal": "Susun persamaan kuadrat yang akar-akarnya $2$ dan $-3$.", "langkah": [{"teks": "Rumus menyusun persamaan kuadrat.", "tex": "x^2 - (x_1 + x_2)x + x_1 x_2 = 0"}, {"teks": "Hitung jumlah dan hasil kali.", "tex": "x_1 + x_2 = 2 + (-3) = -1, \\quad x_1 x_2 = 2 \\times (-3) = -6"}, {"teks": "Masukkan.", "tex": "x^2 - (-1)x + (-6) = 0"}, {"teks": "Sederhanakan.", "tex": "x^2 + x - 6 = 0"}], "jawaban": "x^2 + x - 6 = 0"}}, {"nomor": 52, "elemen": "Aljabar", "subelemen": "Fungsi", "nama": "Fungsi linear", "rumus": "f(x) = ax + b", "keterangan": "", "contoh": {"soal": "Diketahui $f(x) = 3x - 5$. Tentukan $f(4)$.", "langkah": [{"teks": "Bentuk fungsi linear.", "tex": "f(x) = ax + b"}, {"teks": "Substitusi $x = 4$.", "tex": "f(4) = 3(4) - 5"}, {"teks": "Hitung.", "tex": "f(4) = 12 - 5 = 7"}], "jawaban": "7"}}, {"nomor": 53, "elemen": "Aljabar", "subelemen": "Fungsi", "nama": "Banyak pemetaan", "rumus": "n(B)^{n(A)}", "keterangan": "Banyak pemetaan dari himpunan $A$ ke $B$.", "contoh": {"soal": "Diketahui $A = \\{a, b, c\\}$ dan $B = \\{1, 2\\}$. Berapa banyak pemetaan dari $A$ ke $B$?", "langkah": [{"teks": "Rumus banyak pemetaan.", "tex": "n(B)^{n(A)}"}, {"teks": "Dengan $n(A) = 3$ dan $n(B) = 2$.", "tex": "2^3"}, {"teks": "Hitung.", "tex": "= 8"}], "jawaban": "8"}}, {"nomor": 54, "elemen": "Aljabar", "subelemen": "Fungsi", "nama": "Fungsi kuadrat", "rumus": "f(x) = ax^2 + bx + c", "keterangan": "", "contoh": {"soal": "Diketahui $f(x) = x^2 - 2x - 3$. Tentukan $f(4)$.", "langkah": [{"teks": "Bentuk fungsi kuadrat.", "tex": "f(x) = ax^2 + bx + c"}, {"teks": "Substitusi $x = 4$.", "tex": "f(4) = 4^2 - 2(4) - 3"}, {"teks": "Hitung.", "tex": "f(4) = 16 - 8 - 3 = 5"}], "jawaban": "5"}}, {"nomor": 55, "elemen": "Aljabar", "subelemen": "Fungsi", "nama": "Sumbu simetri parabola", "rumus": "x_p = -\\frac{b}{2a}", "keterangan": "", "contoh": {"soal": "Tentukan sumbu simetri grafik $f(x) = x^2 - 6x + 5$.", "langkah": [{"teks": "Rumus sumbu simetri.", "tex": "x_p = -\\frac{b}{2a}"}, {"teks": "Dengan $a=1$, $b=-6$.", "tex": "x_p = -\\frac{-6}{2(1)}"}, {"teks": "Hitung.", "tex": "x_p = 3"}], "jawaban": "x = 3"}}, {"nomor": 56, "elemen": "Aljabar", "subelemen": "Fungsi", "nama": "Nilai ekstrem fungsi kuadrat", "rumus": "y_p = -\\frac{D}{4a}", "keterangan": "Nilai maksimum jika $a < 0$, minimum jika $a > 0$.", "contoh": {"soal": "Tentukan nilai maksimum $f(x) = -x^2 + 4x + 5$.", "langkah": [{"teks": "Hitung diskriminan.", "tex": "D = 4^2 - 4(-1)(5) = 16 + 20 = 36"}, {"teks": "Rumus nilai ekstrem.", "tex": "y_p = -\\frac{D}{4a}"}, {"teks": "Masukkan nilai.", "tex": "y_p = -\\frac{36}{4(-1)} = -\\frac{36}{-4}"}, {"teks": "Hitung. Karena $a < 0$, ini nilai maksimum.", "tex": "y_p = 9"}], "jawaban": "9"}}, {"nomor": 57, "elemen": "Aljabar", "subelemen": "Gradien dan persamaan garis", "nama": "Gradien dari dua titik", "rumus": "m = \\frac{y_2 - y_1}{x_2 - x_1}", "keterangan": "", "contoh": {"soal": "Tentukan gradien garis yang melalui $A(1, 2)$ dan $B(4, 11)$.", "langkah": [{"teks": "Rumus gradien.", "tex": "m = \\frac{y_2 - y_1}{x_2 - x_1}"}, {"teks": "Masukkan nilai.", "tex": "m = \\frac{11 - 2}{4 - 1}"}, {"teks": "Hitung.", "tex": "m = \\frac{9}{3} = 3"}], "jawaban": "m = 3"}}, {"nomor": 58, "elemen": "Aljabar", "subelemen": "Gradien dan persamaan garis", "nama": "Gradien dari y = mx + c", "rumus": "m = \\text{koefisien } x", "keterangan": "Pada bentuk $y = mx + c$.", "contoh": {"soal": "Tentukan gradien garis $y = -2x + 7$.", "langkah": [{"teks": "Pada bentuk $y = mx + c$, gradien adalah koefisien $x$.", "tex": "y = mx + c"}, {"teks": "Baca koefisien $x$.", "tex": "y = -2x + 7 \\;\\Rightarrow\\; m = -2"}], "jawaban": "m = -2"}}, {"nomor": 59, "elemen": "Aljabar", "subelemen": "Gradien dan persamaan garis", "nama": "Gradien dari ax + by + c = 0", "rumus": "m = -\\frac{a}{b}", "keterangan": "", "contoh": {"soal": "Tentukan gradien garis $3x + 4y - 12 = 0$.", "langkah": [{"teks": "Rumus gradien dari bentuk umum.", "tex": "m = -\\frac{a}{b}"}, {"teks": "Dengan $a = 3$ dan $b = 4$.", "tex": "m = -\\frac{3}{4}"}], "jawaban": "m = -\\frac{3}{4}"}}, {"nomor": 60, "elemen": "Aljabar", "subelemen": "Gradien dan persamaan garis", "nama": "Garis sejajar", "rumus": "m_1 = m_2", "keterangan": "", "contoh": {"soal": "Tentukan gradien garis yang sejajar dengan $4x - 2y + 6 = 0$.", "langkah": [{"teks": "Cari gradien garis itu.", "tex": "m = -\\frac{a}{b} = -\\frac{4}{-2} = 2"}, {"teks": "Garis sejajar punya gradien sama.", "tex": "m_1 = m_2"}, {"teks": "Kesimpulan.", "tex": "m_2 = 2"}], "jawaban": "m = 2"}}, {"nomor": 61, "elemen": "Aljabar", "subelemen": "Gradien dan persamaan garis", "nama": "Garis tegak lurus", "rumus": "m_1 \\times m_2 = -1", "keterangan": "", "contoh": {"soal": "Tentukan gradien garis yang tegak lurus dengan $y = 3x - 1$.", "langkah": [{"teks": "Gradien garis pertama.", "tex": "m_1 = 3"}, {"teks": "Rumus garis tegak lurus.", "tex": "m_1 \\times m_2 = -1"}, {"teks": "Masukkan nilai.", "tex": "3 \\times m_2 = -1"}, {"teks": "Hitung.", "tex": "m_2 = -\\frac{1}{3}"}], "jawaban": "m = -\\frac{1}{3}"}}, {"nomor": 62, "elemen": "Aljabar", "subelemen": "Gradien dan persamaan garis", "nama": "Persamaan garis bergradien m dan melalui titik asal", "rumus": "y = mx", "keterangan": "", "contoh": {"soal": "Tentukan persamaan garis yang melalui titik asal dan titik $(2, 6)$.", "langkah": [{"teks": "Hitung gradien dengan titik asal $(0,0)$.", "tex": "m = \\frac{6 - 0}{2 - 0} = 3"}, {"teks": "Rumus garis melalui titik asal.", "tex": "y = mx"}, {"teks": "Masukkan gradien.", "tex": "y = 3x"}], "jawaban": "y = 3x"}}, {"nomor": 63, "elemen": "Aljabar", "subelemen": "Gradien dan persamaan garis", "nama": "Persamaan garis bergradien m dan memotong sumbu y", "rumus": "y = mx + c", "keterangan": "", "contoh": {"soal": "Tentukan persamaan garis bergradien 2 yang memotong sumbu $y$ di $(0, 5)$.", "langkah": [{"teks": "Rumus persamaan garis.", "tex": "y = mx + c"}, {"teks": "Dengan $m = 2$ dan $c = 5$.", "tex": "y = 2x + 5"}], "jawaban": "y = 2x + 5"}}, {"nomor": 64, "elemen": "Aljabar", "subelemen": "Gradien dan persamaan garis", "nama": "Persamaan garis melalui satu titik", "rumus": "y - y_1 = m(x - x_1)", "keterangan": "", "contoh": {"soal": "Tentukan persamaan garis bergradien 3 yang melalui $(2, 1)$.", "langkah": [{"teks": "Rumus persamaan garis.", "tex": "y - y_1 = m(x - x_1)"}, {"teks": "Masukkan nilai.", "tex": "y - 1 = 3(x - 2)"}, {"teks": "Jabarkan.", "tex": "y - 1 = 3x - 6"}, {"teks": "Sederhanakan.", "tex": "y = 3x - 5"}], "jawaban": "y = 3x - 5"}}, {"nomor": 65, "elemen": "Aljabar", "subelemen": "Gradien dan persamaan garis", "nama": "Persamaan garis melalui dua titik", "rumus": "\\frac{y - y_1}{y_2 - y_1} = \\frac{x - x_1}{x_2 - x_1}", "keterangan": "", "contoh": {"soal": "Tentukan persamaan garis yang melalui $(1, 2)$ dan $(3, 6)$.", "langkah": [{"teks": "Rumus persamaan garis melalui dua titik.", "tex": "\\frac{y - y_1}{y_2 - y_1} = \\frac{x - x_1}{x_2 - x_1}"}, {"teks": "Masukkan nilai.", "tex": "\\frac{y - 2}{6 - 2} = \\frac{x - 1}{3 - 1}"}, {"teks": "Sederhanakan.", "tex": "\\frac{y - 2}{4} = \\frac{x - 1}{2} \\;\\Rightarrow\\; y - 2 = 2(x - 1)"}, {"teks": "Selesaikan.", "tex": "y = 2x"}], "jawaban": "y = 2x"}}, {"nomor": 66, "elemen": "Aljabar", "subelemen": "Barisan dan deret", "nama": "Suku ke-n barisan aritmetika", "rumus": "U_n = a + (n-1)b", "keterangan": "$a$ suku pertama, $b$ beda.", "contoh": {"soal": "Barisan $3, 7, 11, \\dots$. Tentukan suku ke-10.", "langkah": [{"teks": "Rumus suku ke-$n$.", "tex": "U_n = a + (n-1)b"}, {"teks": "Dengan $a = 3$, $b = 4$, $n = 10$.", "tex": "U_{10} = 3 + (10 - 1) \\times 4"}, {"teks": "Hitung.", "tex": "U_{10} = 3 + 36 = 39"}], "jawaban": "39"}}, {"nomor": 67, "elemen": "Aljabar", "subelemen": "Barisan dan deret", "nama": "Jumlah n suku deret aritmetika", "rumus": "S_n = \\frac{n}{2}\\left(2a + (n-1)b\\right)", "keterangan": "", "contoh": {"soal": "Deret $2 + 5 + 8 + \\dots$. Tentukan jumlah 10 suku pertama.", "langkah": [{"teks": "Rumus jumlah $n$ suku.", "tex": "S_n = \\frac{n}{2}\\left(2a + (n-1)b\\right)"}, {"teks": "Dengan $a = 2$, $b = 3$, $n = 10$.", "tex": "S_{10} = \\frac{10}{2}\\left(2(2) + 9(3)\\right)"}, {"teks": "Hitung.", "tex": "S_{10} = 5 \\times 31 = 155"}], "jawaban": "155"}}, {"nomor": 68, "elemen": "Aljabar", "subelemen": "Barisan dan deret", "nama": "Jumlah deret aritmetika dari suku awal dan akhir", "rumus": "S_n = \\frac{n}{2}(a + U_n)", "keterangan": "", "contoh": {"soal": "Hitung $5 + 8 + 11 + \\dots + 29$.", "langkah": [{"teks": "Cari banyak suku dari $U_n = a + (n-1)b$.", "tex": "29 = 5 + (n-1) \\times 3 \\;\\Rightarrow\\; n = 9"}, {"teks": "Rumus jumlah dari suku awal dan akhir.", "tex": "S_n = \\frac{n}{2}(a + U_n)"}, {"teks": "Masukkan nilai.", "tex": "S_9 = \\frac{9}{2}(5 + 29) = \\frac{9}{2} \\times 34"}, {"teks": "Hitung.", "tex": "S_9 = 153"}], "jawaban": "153"}}, {"nomor": 69, "elemen": "Aljabar", "subelemen": "Barisan dan deret", "nama": "Suku tengah barisan aritmetika", "rumus": "U_t = \\frac{a + U_n}{2}", "keterangan": "Berlaku jika banyak suku ganjil.", "contoh": {"soal": "Barisan aritmetika dengan banyak suku ganjil memiliki suku pertama 4 dan suku terakhir 24. Tentukan suku tengahnya.", "langkah": [{"teks": "Rumus suku tengah.", "tex": "U_t = \\frac{a + U_n}{2}"}, {"teks": "Masukkan nilai.", "tex": "U_t = \\frac{4 + 24}{2}"}, {"teks": "Hitung.", "tex": "U_t = 14"}], "jawaban": "14"}}, {"nomor": 70, "elemen": "Aljabar", "subelemen": "Barisan dan deret", "nama": "Suku ke-n barisan geometri", "rumus": "U_n = a r^{n-1}", "keterangan": "$r$ rasio.", "contoh": {"soal": "Barisan $2, 6, 18, \\dots$. Tentukan suku ke-5.", "langkah": [{"teks": "Cari rasio.", "tex": "r = \\frac{6}{2} = 3"}, {"teks": "Rumus suku ke-$n$ geometri.", "tex": "U_n = a r^{n-1}"}, {"teks": "Masukkan nilai.", "tex": "U_5 = 2 \\times 3^{4} = 2 \\times 81"}, {"teks": "Hitung.", "tex": "U_5 = 162"}], "jawaban": "162"}}, {"nomor": 71, "elemen": "Aljabar", "subelemen": "Barisan dan deret", "nama": "Jumlah n suku deret geometri", "rumus": "S_n = \\frac{a(r^n - 1)}{r - 1}, \\quad r > 1", "keterangan": "", "contoh": {"soal": "Hitung $3 + 6 + 12 + 24 + 48$.", "langkah": [{"teks": "Cari $a$, $r$, dan $n$.", "tex": "a = 3, \\quad r = 2, \\quad n = 5"}, {"teks": "Rumus jumlah deret geometri.", "tex": "S_n = \\frac{a(r^n - 1)}{r - 1}"}, {"teks": "Masukkan nilai.", "tex": "S_5 = \\frac{3(2^5 - 1)}{2 - 1} = 3 \\times 31"}, {"teks": "Hitung.", "tex": "S_5 = 93"}], "jawaban": "93"}}, {"nomor": 72, "elemen": "Aljabar", "subelemen": "Barisan dan deret", "nama": "Suku ke-n dari jumlah suku", "rumus": "U_n = S_n - S_{n-1}", "keterangan": "", "contoh": {"soal": "Jumlah $n$ suku suatu deret adalah $S_n = n^2 + 2n$. Tentukan $U_5$.", "langkah": [{"teks": "Rumus suku dari jumlah.", "tex": "U_n = S_n - S_{n-1}"}, {"teks": "Hitung $S_5$ dan $S_4$.", "tex": "S_5 = 25 + 10 = 35, \\quad S_4 = 16 + 8 = 24"}, {"teks": "Kurangkan.", "tex": "U_5 = 35 - 24 = 11"}], "jawaban": "11"}}, {"nomor": 73, "elemen": "Aljabar", "subelemen": "Barisan dan deret", "nama": "Pola bilangan persegi", "rumus": "U_n = n^2", "keterangan": "", "contoh": {"soal": "Pola bilangan persegi: $1, 4, 9, 16, \\dots$. Tentukan suku ke-12.", "langkah": [{"teks": "Rumus pola bilangan persegi.", "tex": "U_n = n^2"}, {"teks": "Substitusi $n = 12$.", "tex": "U_{12} = 12^2"}, {"teks": "Hitung.", "tex": "U_{12} = 144"}], "jawaban": "144"}}, {"nomor": 74, "elemen": "Aljabar", "subelemen": "Barisan dan deret", "nama": "Pola bilangan segitiga", "rumus": "U_n = \\frac{n(n+1)}{2}", "keterangan": "", "contoh": {"soal": "Pola bilangan segitiga: $1, 3, 6, 10, \\dots$. Tentukan suku ke-10.", "langkah": [{"teks": "Rumus pola bilangan segitiga.", "tex": "U_n = \\frac{n(n+1)}{2}"}, {"teks": "Substitusi $n = 10$.", "tex": "U_{10} = \\frac{10 \\times 11}{2}"}, {"teks": "Hitung.", "tex": "U_{10} = 55"}], "jawaban": "55"}}, {"nomor": 75, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Keliling persegi", "rumus": "K = 4s", "keterangan": "$s$ panjang sisi.", "contoh": {"soal": "Sebuah persegi bersisi 9 cm. Hitung kelilingnya.", "langkah": [{"teks": "Rumus keliling persegi.", "tex": "K = 4s"}, {"teks": "Masukkan nilai.", "tex": "K = 4 \\times 9"}, {"teks": "Hitung.", "tex": "K = 36 \\text{ cm}"}], "jawaban": "36 \\text{ cm}"}}, {"nomor": 76, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Luas persegi", "rumus": "L = s^2", "keterangan": "", "contoh": {"soal": "Keliling sebuah persegi 40 cm. Hitung luasnya.", "langkah": [{"teks": "Cari sisi dari keliling.", "tex": "s = \\frac{K}{4} = \\frac{40}{4} = 10"}, {"teks": "Rumus luas persegi.", "tex": "L = s^2"}, {"teks": "Hitung.", "tex": "L = 10^2 = 100 \\text{ cm}^2"}], "jawaban": "100 \\text{ cm}^2"}}, {"nomor": 77, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Keliling persegi panjang", "rumus": "K = 2(p + l)", "keterangan": "", "contoh": {"soal": "Persegi panjang berukuran $14$ cm $\\times$ $9$ cm. Hitung kelilingnya.", "langkah": [{"teks": "Rumus keliling persegi panjang.", "tex": "K = 2(p + l)"}, {"teks": "Masukkan nilai.", "tex": "K = 2(14 + 9)"}, {"teks": "Hitung.", "tex": "K = 2 \\times 23 = 46 \\text{ cm}"}], "jawaban": "46 \\text{ cm}"}}, {"nomor": 78, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Luas persegi panjang", "rumus": "L = p \\times l", "keterangan": "", "contoh": {"soal": "Lantai berukuran $8$ m $\\times$ $6$ m. Hitung luasnya.", "langkah": [{"teks": "Rumus luas persegi panjang.", "tex": "L = p \\times l"}, {"teks": "Masukkan nilai.", "tex": "L = 8 \\times 6"}, {"teks": "Hitung.", "tex": "L = 48 \\text{ m}^2"}], "jawaban": "48 \\text{ m}^2"}}, {"nomor": 79, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Keliling segitiga", "rumus": "K = a + b + c", "keterangan": "", "contoh": {"soal": "Segitiga memiliki sisi 7 cm, 8 cm, dan 10 cm. Hitung kelilingnya.", "langkah": [{"teks": "Rumus keliling segitiga.", "tex": "K = a + b + c"}, {"teks": "Masukkan nilai.", "tex": "K = 7 + 8 + 10"}, {"teks": "Hitung.", "tex": "K = 25 \\text{ cm}"}], "jawaban": "25 \\text{ cm}"}}, {"nomor": 80, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Luas segitiga", "rumus": "L = \\frac{1}{2} \\times a \\times t", "keterangan": "$a$ alas, $t$ tinggi.", "contoh": {"soal": "Segitiga beralas 12 cm dan tinggi 7 cm. Hitung luasnya.", "langkah": [{"teks": "Rumus luas segitiga.", "tex": "L = \\frac{1}{2} \\times a \\times t"}, {"teks": "Masukkan nilai.", "tex": "L = \\frac{1}{2} \\times 12 \\times 7"}, {"teks": "Hitung.", "tex": "L = 42 \\text{ cm}^2"}], "jawaban": "42 \\text{ cm}^2"}}, {"nomor": 81, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Keliling jajar genjang", "rumus": "K = 2(a + b)", "keterangan": "", "contoh": {"soal": "Jajar genjang memiliki sisi 10 cm dan 6 cm. Hitung kelilingnya.", "langkah": [{"teks": "Rumus keliling jajar genjang.", "tex": "K = 2(a + b)"}, {"teks": "Masukkan nilai.", "tex": "K = 2(10 + 6)"}, {"teks": "Hitung.", "tex": "K = 32 \\text{ cm}"}], "jawaban": "32 \\text{ cm}"}}, {"nomor": 82, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Luas jajar genjang", "rumus": "L = a \\times t", "keterangan": "", "contoh": {"soal": "Jajar genjang beralas 15 cm dan tinggi 8 cm. Hitung luasnya.", "langkah": [{"teks": "Rumus luas jajar genjang.", "tex": "L = a \\times t"}, {"teks": "Masukkan nilai.", "tex": "L = 15 \\times 8"}, {"teks": "Hitung.", "tex": "L = 120 \\text{ cm}^2"}], "jawaban": "120 \\text{ cm}^2"}}, {"nomor": 83, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Keliling trapesium", "rumus": "K = \\text{jumlah keempat sisi}", "keterangan": "", "contoh": {"soal": "Trapesium memiliki sisi sejajar 8 cm dan 14 cm, serta kaki 5 cm dan 5 cm. Hitung kelilingnya.", "langkah": [{"teks": "Rumus keliling trapesium.", "tex": "K = \\text{jumlah keempat sisi}"}, {"teks": "Masukkan nilai.", "tex": "K = 8 + 14 + 5 + 5"}, {"teks": "Hitung.", "tex": "K = 32 \\text{ cm}"}], "jawaban": "32 \\text{ cm}"}}, {"nomor": 84, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Luas trapesium", "rumus": "L = \\frac{1}{2}(a + b) \\times t", "keterangan": "$a$ dan $b$ sisi sejajar.", "contoh": {"soal": "Trapesium memiliki sisi sejajar 9 cm dan 15 cm serta tinggi 8 cm. Hitung luasnya.", "langkah": [{"teks": "Rumus luas trapesium.", "tex": "L = \\frac{1}{2}(a + b) \\times t"}, {"teks": "Masukkan nilai.", "tex": "L = \\frac{1}{2}(9 + 15) \\times 8"}, {"teks": "Hitung.", "tex": "L = 12 \\times 8 = 96 \\text{ cm}^2"}], "jawaban": "96 \\text{ cm}^2"}}, {"nomor": 85, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Keliling layang-layang", "rumus": "K = 2(a + b)", "keterangan": "$a$ dan $b$ dua sisi yang berbeda panjang.", "contoh": {"soal": "Layang-layang memiliki sisi 5 cm dan 8 cm. Hitung kelilingnya.", "langkah": [{"teks": "Rumus keliling layang-layang.", "tex": "K = 2(a + b)"}, {"teks": "Masukkan nilai.", "tex": "K = 2(5 + 8)"}, {"teks": "Hitung.", "tex": "K = 26 \\text{ cm}"}], "jawaban": "26 \\text{ cm}"}}, {"nomor": 86, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Luas layang-layang", "rumus": "L = \\frac{1}{2} d_1 d_2", "keterangan": "$d_1$ dan $d_2$ diagonal.", "contoh": {"soal": "Diagonal layang-layang 16 cm dan 10 cm. Hitung luasnya.", "langkah": [{"teks": "Rumus luas layang-layang.", "tex": "L = \\frac{1}{2} d_1 d_2"}, {"teks": "Masukkan nilai.", "tex": "L = \\frac{1}{2} \\times 16 \\times 10"}, {"teks": "Hitung.", "tex": "L = 80 \\text{ cm}^2"}], "jawaban": "80 \\text{ cm}^2"}}, {"nomor": 87, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Keliling belah ketupat", "rumus": "K = 4s", "keterangan": "", "contoh": {"soal": "Belah ketupat bersisi 13 cm. Hitung kelilingnya.", "langkah": [{"teks": "Rumus keliling belah ketupat.", "tex": "K = 4s"}, {"teks": "Masukkan nilai.", "tex": "K = 4 \\times 13"}, {"teks": "Hitung.", "tex": "K = 52 \\text{ cm}"}], "jawaban": "52 \\text{ cm}"}}, {"nomor": 88, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Luas belah ketupat", "rumus": "L = \\frac{1}{2} d_1 d_2", "keterangan": "", "contoh": {"soal": "Diagonal belah ketupat 24 cm dan 10 cm. Hitung luasnya.", "langkah": [{"teks": "Rumus luas belah ketupat.", "tex": "L = \\frac{1}{2} d_1 d_2"}, {"teks": "Masukkan nilai.", "tex": "L = \\frac{1}{2} \\times 24 \\times 10"}, {"teks": "Hitung.", "tex": "L = 120 \\text{ cm}^2"}], "jawaban": "120 \\text{ cm}^2"}}, {"nomor": 89, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Keliling lingkaran", "rumus": "K = 2\\pi r = \\pi d", "keterangan": "", "contoh": {"soal": "Lingkaran berjari-jari 14 cm. Hitung kelilingnya ($\\pi = \\frac{22}{7}$).", "langkah": [{"teks": "Rumus keliling lingkaran.", "tex": "K = 2\\pi r"}, {"teks": "Masukkan nilai.", "tex": "K = 2 \\times \\frac{22}{7} \\times 14"}, {"teks": "Hitung.", "tex": "K = 88 \\text{ cm}"}], "jawaban": "88 \\text{ cm}"}}, {"nomor": 90, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun datar", "nama": "Luas lingkaran", "rumus": "L = \\pi r^2", "keterangan": "", "contoh": {"soal": "Lingkaran berjari-jari 21 cm. Hitung luasnya ($\\pi = \\frac{22}{7}$).", "langkah": [{"teks": "Rumus luas lingkaran.", "tex": "L = \\pi r^2"}, {"teks": "Masukkan nilai.", "tex": "L = \\frac{22}{7} \\times 21 \\times 21"}, {"teks": "Hitung.", "tex": "L = 22 \\times 3 \\times 21 = 1.386 \\text{ cm}^2"}], "jawaban": "1.386 \\text{ cm}^2"}}, {"nomor": 91, "elemen": "Geometri dan Pengukuran", "subelemen": "Sudut", "nama": "Sudut berpelurus", "rumus": "\\alpha + \\beta = 180^\\circ", "keterangan": "", "contoh": {"soal": "Dua sudut berpelurus besarnya $(3x + 20)^\\circ$ dan $(2x + 10)^\\circ$. Tentukan kedua sudut.", "langkah": [{"teks": "Rumus sudut berpelurus.", "tex": "\\alpha + \\beta = 180^\\circ"}, {"teks": "Susun persamaan.", "tex": "(3x + 20) + (2x + 10) = 180"}, {"teks": "Selesaikan.", "tex": "5x + 30 = 180 \\;\\Rightarrow\\; x = 30"}, {"teks": "Hitung kedua sudut.", "tex": "3(30) + 20 = 110^\\circ, \\quad 2(30) + 10 = 70^\\circ"}], "jawaban": "110^\\circ \\text{ dan } 70^\\circ"}}, {"nomor": 92, "elemen": "Geometri dan Pengukuran", "subelemen": "Sudut", "nama": "Sudut berpenyiku", "rumus": "\\alpha + \\beta = 90^\\circ", "keterangan": "", "contoh": {"soal": "Dua sudut berpenyiku. Sudut pertama dua kali sudut kedua. Tentukan kedua sudut.", "langkah": [{"teks": "Rumus sudut berpenyiku.", "tex": "\\alpha + \\beta = 90^\\circ"}, {"teks": "Misal sudut kedua $\\beta$, sudut pertama $2\\beta$.", "tex": "2\\beta + \\beta = 90^\\circ"}, {"teks": "Selesaikan.", "tex": "3\\beta = 90^\\circ \\;\\Rightarrow\\; \\beta = 30^\\circ"}, {"teks": "Sudut pertama.", "tex": "\\alpha = 2 \\times 30^\\circ = 60^\\circ"}], "jawaban": "60^\\circ \\text{ dan } 30^\\circ"}}, {"nomor": 93, "elemen": "Geometri dan Pengukuran", "subelemen": "Sudut", "nama": "Jumlah sudut dalam segitiga", "rumus": "\\angle A + \\angle B + \\angle C = 180^\\circ", "keterangan": "", "contoh": {"soal": "Dua sudut segitiga besarnya $65^\\circ$ dan $50^\\circ$. Tentukan sudut ketiga.", "langkah": [{"teks": "Rumus jumlah sudut segitiga.", "tex": "\\angle A + \\angle B + \\angle C = 180^\\circ"}, {"teks": "Masukkan nilai.", "tex": "65^\\circ + 50^\\circ + \\angle C = 180^\\circ"}, {"teks": "Hitung.", "tex": "\\angle C = 180^\\circ - 115^\\circ = 65^\\circ"}], "jawaban": "65^\\circ"}}, {"nomor": 94, "elemen": "Geometri dan Pengukuran", "subelemen": "Sudut", "nama": "Jumlah sudut dalam segi-n", "rumus": "(n - 2) \\times 180^\\circ", "keterangan": "", "contoh": {"soal": "Berapa jumlah sudut dalam segi-8?", "langkah": [{"teks": "Rumus jumlah sudut dalam segi-$n$.", "tex": "(n - 2) \\times 180^\\circ"}, {"teks": "Dengan $n = 8$.", "tex": "(8 - 2) \\times 180^\\circ = 6 \\times 180^\\circ"}, {"teks": "Hitung.", "tex": "= 1.080^\\circ"}], "jawaban": "1.080^\\circ"}}, {"nomor": 95, "elemen": "Geometri dan Pengukuran", "subelemen": "Sudut", "nama": "Besar tiap sudut segi-n beraturan", "rumus": "\\frac{(n - 2) \\times 180^\\circ}{n}", "keterangan": "", "contoh": {"soal": "Berapa besar setiap sudut dalam segi-6 beraturan?", "langkah": [{"teks": "Rumus besar tiap sudut.", "tex": "\\frac{(n - 2) \\times 180^\\circ}{n}"}, {"teks": "Dengan $n = 6$.", "tex": "\\frac{(6 - 2) \\times 180^\\circ}{6} = \\frac{720^\\circ}{6}"}, {"teks": "Hitung.", "tex": "= 120^\\circ"}], "jawaban": "120^\\circ"}}, {"nomor": 96, "elemen": "Geometri dan Pengukuran", "subelemen": "Sudut", "nama": "Sudut pusat dan sudut keliling", "rumus": "\\angle \\text{pusat} = 2 \\times \\angle \\text{keliling}", "keterangan": "Menghadap busur yang sama.", "contoh": {"soal": "Sudut keliling suatu lingkaran $35^\\circ$. Tentukan sudut pusat yang menghadap busur sama.", "langkah": [{"teks": "Hubungan sudut pusat dan sudut keliling.", "tex": "\\angle \\text{pusat} = 2 \\times \\angle \\text{keliling}"}, {"teks": "Masukkan nilai.", "tex": "\\angle \\text{pusat} = 2 \\times 35^\\circ"}, {"teks": "Hitung.", "tex": "= 70^\\circ"}], "jawaban": "70^\\circ"}}, {"nomor": 97, "elemen": "Geometri dan Pengukuran", "subelemen": "Sudut", "nama": "Sudut keliling menghadap diameter", "rumus": "\\angle = 90^\\circ", "keterangan": "", "contoh": {"soal": "Pada lingkaran, $AB$ diameter dan $C$ pada keliling. Jika $\\angle A = 40^\\circ$, tentukan $\\angle B$.", "langkah": [{"teks": "Sudut keliling yang menghadap diameter.", "tex": "\\angle C = 90^\\circ"}, {"teks": "Jumlah sudut segitiga $ABC$.", "tex": "40^\\circ + \\angle B + 90^\\circ = 180^\\circ"}, {"teks": "Hitung.", "tex": "\\angle B = 50^\\circ"}], "jawaban": "50^\\circ"}}, {"nomor": 98, "elemen": "Geometri dan Pengukuran", "subelemen": "Sudut", "nama": "Segiempat tali busur", "rumus": "\\angle A + \\angle C = 180^\\circ", "keterangan": "Sudut-sudut yang berhadapan berjumlah $180^\\circ$.", "contoh": {"soal": "$ABCD$ segiempat tali busur dengan $\\angle A = 105^\\circ$. Tentukan $\\angle C$.", "langkah": [{"teks": "Sudut yang berhadapan berjumlah $180^\\circ$.", "tex": "\\angle A + \\angle C = 180^\\circ"}, {"teks": "Masukkan nilai.", "tex": "105^\\circ + \\angle C = 180^\\circ"}, {"teks": "Hitung.", "tex": "\\angle C = 75^\\circ"}], "jawaban": "75^\\circ"}}, {"nomor": 99, "elemen": "Geometri dan Pengukuran", "subelemen": "Teorema Pythagoras", "nama": "Teorema Pythagoras", "rumus": "c^2 = a^2 + b^2", "keterangan": "$c$ sisi miring.", "contoh": {"soal": "Sisi siku-siku suatu segitiga 6 cm dan 8 cm. Hitung sisi miringnya.", "langkah": [{"teks": "Rumus Pythagoras.", "tex": "c^2 = a^2 + b^2"}, {"teks": "Masukkan nilai.", "tex": "c^2 = 6^2 + 8^2 = 36 + 64 = 100"}, {"teks": "Akarkan.", "tex": "c = \\sqrt{100} = 10 \\text{ cm}"}], "jawaban": "10 \\text{ cm}"}}, {"nomor": 100, "elemen": "Geometri dan Pengukuran", "subelemen": "Teorema Pythagoras", "nama": "Mencari sisi siku-siku", "rumus": "a^2 = c^2 - b^2", "keterangan": "", "contoh": {"soal": "Sisi miring segitiga siku-siku 17 cm dan salah satu sisi sikunya 8 cm. Hitung sisi siku yang lain.", "langkah": [{"teks": "Rumus mencari sisi siku-siku.", "tex": "a^2 = c^2 - b^2"}, {"teks": "Masukkan nilai.", "tex": "a^2 = 17^2 - 8^2 = 289 - 64 = 225"}, {"teks": "Akarkan.", "tex": "a = \\sqrt{225} = 15 \\text{ cm}"}], "jawaban": "15 \\text{ cm}"}}, {"nomor": 101, "elemen": "Geometri dan Pengukuran", "subelemen": "Teorema Pythagoras", "nama": "Segitiga siku-siku sama kaki", "rumus": "a : a : a\\sqrt{2}", "keterangan": "Sudut $45^\\circ$, $45^\\circ$, $90^\\circ$.", "contoh": {"soal": "Segitiga siku-siku sama kaki memiliki kaki 5 cm. Hitung sisi miringnya.", "langkah": [{"teks": "Perbandingan sisi segitiga $45^\\circ$-$45^\\circ$-$90^\\circ$.", "tex": "a : a : a\\sqrt{2}"}, {"teks": "Dengan $a = 5$.", "tex": "\\text{sisi miring} = 5\\sqrt{2} \\text{ cm}"}], "jawaban": "5\\sqrt{2} \\text{ cm}"}}, {"nomor": 102, "elemen": "Geometri dan Pengukuran", "subelemen": "Teorema Pythagoras", "nama": "Segitiga siku-siku 30-60-90", "rumus": "a : a\\sqrt{3} : 2a", "keterangan": "Sudut $30^\\circ$, $60^\\circ$, $90^\\circ$.", "contoh": {"soal": "Pada segitiga $30^\\circ$-$60^\\circ$-$90^\\circ$, sisi terpendek 6 cm. Tentukan dua sisi lainnya.", "langkah": [{"teks": "Perbandingan sisi.", "tex": "a : a\\sqrt{3} : 2a"}, {"teks": "Dengan $a = 6$.", "tex": "6 : 6\\sqrt{3} : 12"}, {"teks": "Kesimpulan.", "tex": "\\text{sisi menghadap } 60^\\circ = 6\\sqrt{3} \\text{ cm}, \\quad \\text{sisi miring} = 12 \\text{ cm}"}], "jawaban": "6\\sqrt{3} \\text{ cm dan } 12 \\text{ cm}"}}, {"nomor": 103, "elemen": "Geometri dan Pengukuran", "subelemen": "Teorema Pythagoras", "nama": "Jarak dua titik", "rumus": "d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}", "keterangan": "", "contoh": {"soal": "Hitung jarak titik $A(1, 2)$ ke $B(7, 10)$.", "langkah": [{"teks": "Rumus jarak dua titik.", "tex": "d = \\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}"}, {"teks": "Masukkan nilai.", "tex": "d = \\sqrt{(7 - 1)^2 + (10 - 2)^2} = \\sqrt{36 + 64}"}, {"teks": "Hitung.", "tex": "d = \\sqrt{100} = 10"}], "jawaban": "10"}}, {"nomor": 104, "elemen": "Geometri dan Pengukuran", "subelemen": "Kesebangunan dan kekongruenan", "nama": "Perbandingan sisi bangun sebangun", "rumus": "\\frac{a}{a'} = \\frac{b}{b'} = \\frac{c}{c'}", "keterangan": "Sisi-sisi yang bersesuaian.", "contoh": {"soal": "Segitiga $ABC$ sebangun dengan $DEF$. $AB = 6$, $DE = 9$, $BC = 8$. Tentukan $EF$.", "langkah": [{"teks": "Perbandingan sisi bersesuaian.", "tex": "\\frac{a}{a'} = \\frac{b}{b'}"}, {"teks": "Masukkan nilai.", "tex": "\\frac{6}{9} = \\frac{8}{EF}"}, {"teks": "Kali silang.", "tex": "EF = \\frac{9 \\times 8}{6}"}, {"teks": "Hitung.", "tex": "EF = 12"}], "jawaban": "12"}}, {"nomor": 105, "elemen": "Geometri dan Pengukuran", "subelemen": "Kesebangunan dan kekongruenan", "nama": "Perbandingan luas bangun sebangun", "rumus": "\\frac{L_1}{L_2} = k^2", "keterangan": "$k$ adalah skala perbandingan sisi.", "contoh": {"soal": "Dua bangun sebangun memiliki perbandingan sisi $2 : 3$. Jika luas bangun kecil $20$ cm$^2$, tentukan luas bangun besar.", "langkah": [{"teks": "Perbandingan luas adalah kuadrat perbandingan sisi.", "tex": "\\frac{L_1}{L_2} = k^2"}, {"teks": "Masukkan nilai.", "tex": "\\frac{20}{L_2} = \\left(\\frac{2}{3}\\right)^2 = \\frac{4}{9}"}, {"teks": "Selesaikan.", "tex": "L_2 = \\frac{20 \\times 9}{4} = 45"}], "jawaban": "45 \\text{ cm}^2"}}, {"nomor": 106, "elemen": "Geometri dan Pengukuran", "subelemen": "Kesebangunan dan kekongruenan", "nama": "Tinggi segitiga siku-siku", "rumus": "t^2 = p \\times q", "keterangan": "$p$ dan $q$ potongan sisi miring oleh garis tinggi.", "contoh": {"soal": "Segitiga $ABC$ siku-siku di $C$. $CD$ garis tinggi ke $AB$, $AD = 4$ dan $DB = 9$. Tentukan $CD$.", "langkah": [{"teks": "Rumus tinggi segitiga siku-siku.", "tex": "t^2 = p \\times q"}, {"teks": "Masukkan nilai.", "tex": "CD^2 = 4 \\times 9 = 36"}, {"teks": "Akarkan.", "tex": "CD = 6"}], "jawaban": "6"}}, {"nomor": 107, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi datar", "nama": "Volume kubus", "rumus": "V = s^3", "keterangan": "", "contoh": {"soal": "Kubus berusuk 7 cm. Hitung volumenya.", "langkah": [{"teks": "Rumus volume kubus.", "tex": "V = s^3"}, {"teks": "Masukkan nilai.", "tex": "V = 7^3"}, {"teks": "Hitung.", "tex": "V = 343 \\text{ cm}^3"}], "jawaban": "343 \\text{ cm}^3"}}, {"nomor": 108, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi datar", "nama": "Luas permukaan kubus", "rumus": "L = 6s^2", "keterangan": "", "contoh": {"soal": "Kubus berusuk 5 cm. Hitung luas permukaannya.", "langkah": [{"teks": "Rumus luas permukaan kubus.", "tex": "L = 6s^2"}, {"teks": "Masukkan nilai.", "tex": "L = 6 \\times 5^2 = 6 \\times 25"}, {"teks": "Hitung.", "tex": "L = 150 \\text{ cm}^2"}], "jawaban": "150 \\text{ cm}^2"}}, {"nomor": 109, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi datar", "nama": "Diagonal sisi kubus", "rumus": "d = s\\sqrt{2}", "keterangan": "", "contoh": {"soal": "Kubus berusuk 8 cm. Hitung panjang diagonal sisinya.", "langkah": [{"teks": "Rumus diagonal sisi.", "tex": "d = s\\sqrt{2}"}, {"teks": "Masukkan nilai.", "tex": "d = 8\\sqrt{2} \\text{ cm}"}], "jawaban": "8\\sqrt{2} \\text{ cm}"}}, {"nomor": 110, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi datar", "nama": "Diagonal ruang kubus", "rumus": "d = s\\sqrt{3}", "keterangan": "", "contoh": {"soal": "Kubus berusuk 6 cm. Hitung panjang diagonal ruangnya.", "langkah": [{"teks": "Rumus diagonal ruang.", "tex": "d = s\\sqrt{3}"}, {"teks": "Masukkan nilai.", "tex": "d = 6\\sqrt{3} \\text{ cm}"}], "jawaban": "6\\sqrt{3} \\text{ cm}"}}, {"nomor": 111, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi datar", "nama": "Panjang kerangka kubus", "rumus": "12s", "keterangan": "", "contoh": {"soal": "Sebuah kerangka kubus berusuk 15 cm dibuat dari kawat. Berapa panjang kawat yang diperlukan?", "langkah": [{"teks": "Kubus memiliki 12 rusuk.", "tex": "\\text{Panjang kerangka} = 12s"}, {"teks": "Masukkan nilai.", "tex": "12 \\times 15"}, {"teks": "Hitung.", "tex": "= 180 \\text{ cm}"}], "jawaban": "180 \\text{ cm}"}}, {"nomor": 112, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi datar", "nama": "Volume balok", "rumus": "V = p \\times l \\times t", "keterangan": "", "contoh": {"soal": "Balok berukuran $15 \\times 8 \\times 5$ cm. Hitung volumenya.", "langkah": [{"teks": "Rumus volume balok.", "tex": "V = p \\times l \\times t"}, {"teks": "Masukkan nilai.", "tex": "V = 15 \\times 8 \\times 5"}, {"teks": "Hitung.", "tex": "V = 600 \\text{ cm}^3"}], "jawaban": "600 \\text{ cm}^3"}}, {"nomor": 113, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi datar", "nama": "Luas permukaan balok", "rumus": "L = 2(pl + pt + lt)", "keterangan": "", "contoh": {"soal": "Balok berukuran $8 \\times 5 \\times 3$ cm. Hitung luas permukaannya.", "langkah": [{"teks": "Rumus luas permukaan balok.", "tex": "L = 2(pl + pt + lt)"}, {"teks": "Masukkan nilai.", "tex": "L = 2(8 \\cdot 5 + 8 \\cdot 3 + 5 \\cdot 3) = 2(40 + 24 + 15)"}, {"teks": "Hitung.", "tex": "L = 2 \\times 79 = 158 \\text{ cm}^2"}], "jawaban": "158 \\text{ cm}^2"}}, {"nomor": 114, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi datar", "nama": "Diagonal ruang balok", "rumus": "d = \\sqrt{p^2 + l^2 + t^2}", "keterangan": "", "contoh": {"soal": "Balok berukuran $12 \\times 4 \\times 3$ cm. Hitung panjang diagonal ruangnya.", "langkah": [{"teks": "Rumus diagonal ruang balok.", "tex": "d = \\sqrt{p^2 + l^2 + t^2}"}, {"teks": "Masukkan nilai.", "tex": "d = \\sqrt{12^2 + 4^2 + 3^2} = \\sqrt{144 + 16 + 9}"}, {"teks": "Hitung.", "tex": "d = \\sqrt{169} = 13 \\text{ cm}"}], "jawaban": "13 \\text{ cm}"}}, {"nomor": 115, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi datar", "nama": "Panjang kerangka balok", "rumus": "4(p + l + t)", "keterangan": "", "contoh": {"soal": "Kerangka balok berukuran $10 \\times 6 \\times 5$ cm dibuat dari kawat. Berapa panjang kawatnya?", "langkah": [{"teks": "Rumus panjang kerangka balok.", "tex": "4(p + l + t)"}, {"teks": "Masukkan nilai.", "tex": "4(10 + 6 + 5) = 4 \\times 21"}, {"teks": "Hitung.", "tex": "= 84 \\text{ cm}"}], "jawaban": "84 \\text{ cm}"}}, {"nomor": 116, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi datar", "nama": "Volume prisma", "rumus": "V = L_{\\text{alas}} \\times t", "keterangan": "", "contoh": {"soal": "Prisma beralas segitiga (alas 6 cm, tinggi 4 cm) dan tinggi prisma 10 cm. Hitung volumenya.", "langkah": [{"teks": "Luas alas segitiga.", "tex": "L_{\\text{alas}} = \\frac{1}{2} \\times 6 \\times 4 = 12 \\text{ cm}^2"}, {"teks": "Rumus volume prisma.", "tex": "V = L_{\\text{alas}} \\times t"}, {"teks": "Masukkan nilai.", "tex": "V = 12 \\times 10 = 120 \\text{ cm}^3"}], "jawaban": "120 \\text{ cm}^3"}}, {"nomor": 117, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi datar", "nama": "Luas permukaan prisma", "rumus": "L = 2 L_{\\text{alas}} + K_{\\text{alas}} \\times t", "keterangan": "", "contoh": {"soal": "Prisma beralas segitiga siku-siku (sisi 3, 4, 5 cm) dengan tinggi 10 cm. Hitung luas permukaannya.", "langkah": [{"teks": "Luas dan keliling alas.", "tex": "L_{\\text{alas}} = \\frac{1}{2} \\times 3 \\times 4 = 6, \\quad K_{\\text{alas}} = 3 + 4 + 5 = 12"}, {"teks": "Rumus luas permukaan prisma.", "tex": "L = 2 L_{\\text{alas}} + K_{\\text{alas}} \\times t"}, {"teks": "Masukkan nilai.", "tex": "L = 2(6) + 12 \\times 10 = 12 + 120"}, {"teks": "Hitung.", "tex": "L = 132 \\text{ cm}^2"}], "jawaban": "132 \\text{ cm}^2"}}, {"nomor": 118, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi datar", "nama": "Volume limas", "rumus": "V = \\frac{1}{3} \\times L_{\\text{alas}} \\times t", "keterangan": "", "contoh": {"soal": "Limas beralas persegi berukuran $6 \\times 6$ cm dan tinggi 9 cm. Hitung volumenya.", "langkah": [{"teks": "Luas alas.", "tex": "L_{\\text{alas}} = 6 \\times 6 = 36 \\text{ cm}^2"}, {"teks": "Rumus volume limas.", "tex": "V = \\frac{1}{3} \\times L_{\\text{alas}} \\times t"}, {"teks": "Masukkan nilai.", "tex": "V = \\frac{1}{3} \\times 36 \\times 9"}, {"teks": "Hitung.", "tex": "V = 108 \\text{ cm}^3"}], "jawaban": "108 \\text{ cm}^3"}}, {"nomor": 119, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi datar", "nama": "Luas permukaan limas", "rumus": "L = L_{\\text{alas}} + \\text{jumlah luas sisi tegak}", "keterangan": "", "contoh": {"soal": "Limas beralas persegi bersisi 6 cm. Tinggi sisi tegaknya 5 cm. Hitung luas permukaannya.", "langkah": [{"teks": "Luas alas.", "tex": "L_{\\text{alas}} = 6^2 = 36"}, {"teks": "Luas satu sisi tegak (segitiga).", "tex": "\\frac{1}{2} \\times 6 \\times 5 = 15, \\quad \\text{ada 4 sisi: } 4 \\times 15 = 60"}, {"teks": "Rumus luas permukaan limas.", "tex": "L = L_{\\text{alas}} + \\text{jumlah luas sisi tegak}"}, {"teks": "Hitung.", "tex": "L = 36 + 60 = 96 \\text{ cm}^2"}], "jawaban": "96 \\text{ cm}^2"}}, {"nomor": 120, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi lengkung", "nama": "Volume tabung", "rumus": "V = \\pi r^2 t", "keterangan": "", "contoh": {"soal": "Tabung berjari-jari 14 cm dan tinggi 5 cm. Hitung volumenya ($\\pi = \\frac{22}{7}$).", "langkah": [{"teks": "Rumus volume tabung.", "tex": "V = \\pi r^2 t"}, {"teks": "Masukkan nilai.", "tex": "V = \\frac{22}{7} \\times 14 \\times 14 \\times 5"}, {"teks": "Hitung.", "tex": "V = 22 \\times 2 \\times 14 \\times 5 = 3.080 \\text{ cm}^3"}], "jawaban": "3.080 \\text{ cm}^3"}}, {"nomor": 121, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi lengkung", "nama": "Luas selimut tabung", "rumus": "L_s = 2\\pi r t", "keterangan": "", "contoh": {"soal": "Tabung berjari-jari 7 cm dan tinggi 12 cm. Hitung luas selimutnya ($\\pi = \\frac{22}{7}$).", "langkah": [{"teks": "Rumus luas selimut tabung.", "tex": "L_s = 2\\pi r t"}, {"teks": "Masukkan nilai.", "tex": "L_s = 2 \\times \\frac{22}{7} \\times 7 \\times 12"}, {"teks": "Hitung.", "tex": "L_s = 528 \\text{ cm}^2"}], "jawaban": "528 \\text{ cm}^2"}}, {"nomor": 122, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi lengkung", "nama": "Luas permukaan tabung", "rumus": "L = 2\\pi r (r + t)", "keterangan": "", "contoh": {"soal": "Tabung berjari-jari 7 cm dan tinggi 10 cm. Hitung luas permukaannya ($\\pi = \\frac{22}{7}$).", "langkah": [{"teks": "Rumus luas permukaan tabung.", "tex": "L = 2\\pi r (r + t)"}, {"teks": "Masukkan nilai.", "tex": "L = 2 \\times \\frac{22}{7} \\times 7 \\times (7 + 10)"}, {"teks": "Hitung.", "tex": "L = 44 \\times 17 = 748 \\text{ cm}^2"}], "jawaban": "748 \\text{ cm}^2"}}, {"nomor": 123, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi lengkung", "nama": "Garis pelukis kerucut", "rumus": "s = \\sqrt{r^2 + t^2}", "keterangan": "", "contoh": {"soal": "Kerucut berjari-jari 5 cm dan tinggi 12 cm. Hitung panjang garis pelukisnya.", "langkah": [{"teks": "Rumus garis pelukis.", "tex": "s = \\sqrt{r^2 + t^2}"}, {"teks": "Masukkan nilai.", "tex": "s = \\sqrt{5^2 + 12^2} = \\sqrt{25 + 144}"}, {"teks": "Hitung.", "tex": "s = \\sqrt{169} = 13 \\text{ cm}"}], "jawaban": "13 \\text{ cm}"}}, {"nomor": 124, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi lengkung", "nama": "Volume kerucut", "rumus": "V = \\frac{1}{3}\\pi r^2 t", "keterangan": "", "contoh": {"soal": "Kerucut berjari-jari 10 cm dan tinggi 12 cm. Hitung volumenya ($\\pi = 3{,}14$).", "langkah": [{"teks": "Rumus volume kerucut.", "tex": "V = \\frac{1}{3}\\pi r^2 t"}, {"teks": "Masukkan nilai.", "tex": "V = \\frac{1}{3} \\times 3{,}14 \\times 100 \\times 12"}, {"teks": "Hitung.", "tex": "V = 3{,}14 \\times 100 \\times 4 = 1.256 \\text{ cm}^3"}], "jawaban": "1.256 \\text{ cm}^3"}}, {"nomor": 125, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi lengkung", "nama": "Luas selimut kerucut", "rumus": "L_s = \\pi r s", "keterangan": "", "contoh": {"soal": "Kerucut berjari-jari 7 cm dan garis pelukis 25 cm. Hitung luas selimutnya ($\\pi = \\frac{22}{7}$).", "langkah": [{"teks": "Rumus luas selimut kerucut.", "tex": "L_s = \\pi r s"}, {"teks": "Masukkan nilai.", "tex": "L_s = \\frac{22}{7} \\times 7 \\times 25"}, {"teks": "Hitung.", "tex": "L_s = 550 \\text{ cm}^2"}], "jawaban": "550 \\text{ cm}^2"}}, {"nomor": 126, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi lengkung", "nama": "Luas permukaan kerucut", "rumus": "L = \\pi r (r + s)", "keterangan": "", "contoh": {"soal": "Kerucut berjari-jari 7 cm dan garis pelukis 25 cm. Hitung luas permukaannya ($\\pi = \\frac{22}{7}$).", "langkah": [{"teks": "Rumus luas permukaan kerucut.", "tex": "L = \\pi r (r + s)"}, {"teks": "Masukkan nilai.", "tex": "L = \\frac{22}{7} \\times 7 \\times (7 + 25)"}, {"teks": "Hitung.", "tex": "L = 22 \\times 32 = 704 \\text{ cm}^2"}], "jawaban": "704 \\text{ cm}^2"}}, {"nomor": 127, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi lengkung", "nama": "Volume bola", "rumus": "V = \\frac{4}{3}\\pi r^3", "keterangan": "", "contoh": {"soal": "Bola berjari-jari 21 cm. Hitung volumenya ($\\pi = \\frac{22}{7}$).", "langkah": [{"teks": "Rumus volume bola.", "tex": "V = \\frac{4}{3}\\pi r^3"}, {"teks": "Masukkan nilai.", "tex": "V = \\frac{4}{3} \\times \\frac{22}{7} \\times 21^3"}, {"teks": "Sederhanakan.", "tex": "V = 4 \\times 22 \\times 21 \\times 21 = 38.808 \\text{ cm}^3"}], "jawaban": "38.808 \\text{ cm}^3"}}, {"nomor": 128, "elemen": "Geometri dan Pengukuran", "subelemen": "Bangun ruang sisi lengkung", "nama": "Luas permukaan bola", "rumus": "L = 4\\pi r^2", "keterangan": "", "contoh": {"soal": "Bola berjari-jari 14 cm. Hitung luas permukaannya ($\\pi = \\frac{22}{7}$).", "langkah": [{"teks": "Rumus luas permukaan bola.", "tex": "L = 4\\pi r^2"}, {"teks": "Masukkan nilai.", "tex": "L = 4 \\times \\frac{22}{7} \\times 14 \\times 14"}, {"teks": "Hitung.", "tex": "L = 4 \\times 22 \\times 28 = 2.464 \\text{ cm}^2"}], "jawaban": "2.464 \\text{ cm}^2"}}, {"nomor": 129, "elemen": "Geometri dan Pengukuran", "subelemen": "Unsur lingkaran", "nama": "Panjang busur", "rumus": "\\text{Panjang busur} = \\frac{\\theta}{360^\\circ} \\times 2\\pi r", "keterangan": "$\\theta$ sudut pusat.", "contoh": {"soal": "Lingkaran berjari-jari 14 cm. Hitung panjang busur dengan sudut pusat $90^\\circ$ ($\\pi = \\frac{22}{7}$).", "langkah": [{"teks": "Rumus panjang busur.", "tex": "\\text{Panjang busur} = \\frac{\\theta}{360^\\circ} \\times 2\\pi r"}, {"teks": "Masukkan nilai.", "tex": "= \\frac{90}{360} \\times 2 \\times \\frac{22}{7} \\times 14"}, {"teks": "Hitung.", "tex": "= \\frac{1}{4} \\times 88 = 22 \\text{ cm}"}], "jawaban": "22 \\text{ cm}"}}, {"nomor": 130, "elemen": "Geometri dan Pengukuran", "subelemen": "Unsur lingkaran", "nama": "Luas juring", "rumus": "L_{\\text{juring}} = \\frac{\\theta}{360^\\circ} \\times \\pi r^2", "keterangan": "", "contoh": {"soal": "Lingkaran berjari-jari 21 cm. Hitung luas juring bersudut pusat $60^\\circ$ ($\\pi = \\frac{22}{7}$).", "langkah": [{"teks": "Rumus luas juring.", "tex": "L_{\\text{juring}} = \\frac{\\theta}{360^\\circ} \\times \\pi r^2"}, {"teks": "Masukkan nilai.", "tex": "= \\frac{60}{360} \\times \\frac{22}{7} \\times 21 \\times 21"}, {"teks": "Hitung.", "tex": "= \\frac{1}{6} \\times 1.386 = 231 \\text{ cm}^2"}], "jawaban": "231 \\text{ cm}^2"}}, {"nomor": 131, "elemen": "Geometri dan Pengukuran", "subelemen": "Unsur lingkaran", "nama": "Luas tembereng", "rumus": "L_{\\text{tembereng}} = L_{\\text{juring}} - L_{\\text{segitiga}}", "keterangan": "", "contoh": {"soal": "Lingkaran berjari-jari 10 cm. Hitung luas tembereng yang dibatasi tali busur untuk sudut pusat $90^\\circ$ ($\\pi = 3{,}14$).", "langkah": [{"teks": "Luas juring $90^\\circ$.", "tex": "L_{\\text{juring}} = \\frac{90}{360} \\times 3{,}14 \\times 100 = 78{,}5"}, {"teks": "Luas segitiga (dua jari-jari sebagai sisi siku).", "tex": "L_{\\text{segitiga}} = \\frac{1}{2} \\times 10 \\times 10 = 50"}, {"teks": "Rumus luas tembereng.", "tex": "L_{\\text{tembereng}} = L_{\\text{juring}} - L_{\\text{segitiga}}"}, {"teks": "Hitung.", "tex": "= 78{,}5 - 50 = 28{,}5 \\text{ cm}^2"}], "jawaban": "28{,}5 \\text{ cm}^2"}}, {"nomor": 132, "elemen": "Geometri dan Pengukuran", "subelemen": "Unsur lingkaran", "nama": "Garis singgung dari titik di luar lingkaran", "rumus": "l = \\sqrt{d^2 - r^2}", "keterangan": "$d$ jarak titik ke pusat.", "contoh": {"soal": "Titik $P$ berjarak 13 cm dari pusat lingkaran berjari-jari 5 cm. Hitung panjang garis singgung dari $P$.", "langkah": [{"teks": "Rumus panjang garis singgung.", "tex": "l = \\sqrt{d^2 - r^2}"}, {"teks": "Masukkan nilai.", "tex": "l = \\sqrt{13^2 - 5^2} = \\sqrt{169 - 25}"}, {"teks": "Hitung.", "tex": "l = \\sqrt{144} = 12 \\text{ cm}"}], "jawaban": "12 \\text{ cm}"}}, {"nomor": 133, "elemen": "Geometri dan Pengukuran", "subelemen": "Unsur lingkaran", "nama": "Garis singgung persekutuan luar", "rumus": "l = \\sqrt{p^2 - (R - r)^2}", "keterangan": "$p$ jarak kedua pusat.", "contoh": {"soal": "Dua lingkaran berjari-jari 8 cm dan 3 cm. Jarak kedua pusat 13 cm. Hitung panjang garis singgung persekutuan luar.", "langkah": [{"teks": "Rumus garis singgung persekutuan luar.", "tex": "l = \\sqrt{p^2 - (R - r)^2}"}, {"teks": "Masukkan nilai.", "tex": "l = \\sqrt{13^2 - (8 - 3)^2} = \\sqrt{169 - 25}"}, {"teks": "Hitung.", "tex": "l = \\sqrt{144} = 12 \\text{ cm}"}], "jawaban": "12 \\text{ cm}"}}, {"nomor": 134, "elemen": "Geometri dan Pengukuran", "subelemen": "Unsur lingkaran", "nama": "Garis singgung persekutuan dalam", "rumus": "l = \\sqrt{p^2 - (R + r)^2}", "keterangan": "$p$ jarak kedua pusat.", "contoh": {"soal": "Dua lingkaran berjari-jari 5 cm dan 3 cm. Jarak kedua pusat 17 cm. Hitung panjang garis singgung persekutuan dalam.", "langkah": [{"teks": "Rumus garis singgung persekutuan dalam.", "tex": "l = \\sqrt{p^2 - (R + r)^2}"}, {"teks": "Masukkan nilai.", "tex": "l = \\sqrt{17^2 - (5 + 3)^2} = \\sqrt{289 - 64}"}, {"teks": "Hitung.", "tex": "l = \\sqrt{225} = 15 \\text{ cm}"}], "jawaban": "15 \\text{ cm}"}}, {"nomor": 135, "elemen": "Geometri dan Pengukuran", "subelemen": "Transformasi geometri", "nama": "Translasi", "rumus": "(x, y) \\to (x + a,\\; y + b)", "keterangan": "", "contoh": {"soal": "Titik $A(2, 3)$ ditranslasi oleh $(4, -1)$. Tentukan bayangannya.", "langkah": [{"teks": "Rumus translasi.", "tex": "(x, y) \\to (x + a,\\; y + b)"}, {"teks": "Masukkan nilai.", "tex": "(2, 3) \\to (2 + 4,\\; 3 + (-1))"}, {"teks": "Hitung.", "tex": "A' = (6, 2)"}], "jawaban": "A'(6, 2)"}}, {"nomor": 136, "elemen": "Geometri dan Pengukuran", "subelemen": "Transformasi geometri", "nama": "Refleksi terhadap sumbu x", "rumus": "(x, y) \\to (x, -y)", "keterangan": "", "contoh": {"soal": "Tentukan bayangan titik $B(5, -2)$ oleh refleksi terhadap sumbu $x$.", "langkah": [{"teks": "Rumus refleksi terhadap sumbu $x$.", "tex": "(x, y) \\to (x, -y)"}, {"teks": "Masukkan nilai.", "tex": "(5, -2) \\to (5, -(-2))"}, {"teks": "Hitung.", "tex": "B' = (5, 2)"}], "jawaban": "B'(5, 2)"}}, {"nomor": 137, "elemen": "Geometri dan Pengukuran", "subelemen": "Transformasi geometri", "nama": "Refleksi terhadap sumbu y", "rumus": "(x, y) \\to (-x, y)", "keterangan": "", "contoh": {"soal": "Tentukan bayangan titik $C(3, 4)$ oleh refleksi terhadap sumbu $y$.", "langkah": [{"teks": "Rumus refleksi terhadap sumbu $y$.", "tex": "(x, y) \\to (-x, y)"}, {"teks": "Masukkan nilai.", "tex": "(3, 4) \\to (-3, 4)"}, {"teks": "Hasil.", "tex": "C' = (-3, 4)"}], "jawaban": "C'(-3, 4)"}}, {"nomor": 138, "elemen": "Geometri dan Pengukuran", "subelemen": "Transformasi geometri", "nama": "Refleksi terhadap garis y = x", "rumus": "(x, y) \\to (y, x)", "keterangan": "", "contoh": {"soal": "Tentukan bayangan titik $D(2, 7)$ oleh refleksi terhadap garis $y = x$.", "langkah": [{"teks": "Rumus refleksi terhadap $y = x$.", "tex": "(x, y) \\to (y, x)"}, {"teks": "Tukar koordinatnya.", "tex": "(2, 7) \\to (7, 2)"}, {"teks": "Hasil.", "tex": "D' = (7, 2)"}], "jawaban": "D'(7, 2)"}}, {"nomor": 139, "elemen": "Geometri dan Pengukuran", "subelemen": "Transformasi geometri", "nama": "Rotasi 90 derajat berlawanan arah jarum jam terhadap titik asal", "rumus": "(x, y) \\to (-y, x)", "keterangan": "", "contoh": {"soal": "Tentukan bayangan titik $E(3, 2)$ oleh rotasi $90^\\circ$ berlawanan arah jarum jam terhadap titik asal.", "langkah": [{"teks": "Rumus rotasi $90^\\circ$.", "tex": "(x, y) \\to (-y, x)"}, {"teks": "Masukkan nilai.", "tex": "(3, 2) \\to (-2, 3)"}, {"teks": "Hasil.", "tex": "E' = (-2, 3)"}], "jawaban": "E'(-2, 3)"}}, {"nomor": 140, "elemen": "Geometri dan Pengukuran", "subelemen": "Transformasi geometri", "nama": "Dilatasi terhadap titik asal", "rumus": "(x, y) \\to (kx, ky)", "keterangan": "$k$ faktor skala.", "contoh": {"soal": "Tentukan bayangan titik $F(2, -3)$ oleh dilatasi terhadap titik asal dengan faktor skala 3.", "langkah": [{"teks": "Rumus dilatasi.", "tex": "(x, y) \\to (kx, ky)"}, {"teks": "Masukkan nilai dengan $k = 3$.", "tex": "(2, -3) \\to (3 \\times 2,\\; 3 \\times (-3))"}, {"teks": "Hitung.", "tex": "F' = (6, -9)"}], "jawaban": "F'(6, -9)"}}, {"nomor": 141, "elemen": "Data dan Peluang", "subelemen": "Statistika", "nama": "Rata-rata (mean)", "rumus": "\\bar{x} = \\frac{x_1 + x_2 + \\cdots + x_n}{n}", "keterangan": "", "contoh": {"soal": "Nilai lima siswa: $70, 80, 75, 90, 85$. Hitung rata-ratanya.", "langkah": [{"teks": "Rumus rata-rata.", "tex": "\\bar{x} = \\frac{x_1 + x_2 + \\cdots + x_n}{n}"}, {"teks": "Jumlahkan semua nilai.", "tex": "70 + 80 + 75 + 90 + 85 = 400"}, {"teks": "Bagi dengan banyak data $n = 5$.", "tex": "\\bar{x} = \\frac{400}{5} = 80"}], "jawaban": "80"}}, {"nomor": 142, "elemen": "Data dan Peluang", "subelemen": "Statistika", "nama": "Rata-rata gabungan", "rumus": "\\bar{x}_{gab} = \\frac{n_1 \\bar{x}_1 + n_2 \\bar{x}_2}{n_1 + n_2}", "keterangan": "", "contoh": {"soal": "Kelas A (20 siswa) rata-rata nilainya 70, kelas B (30 siswa) rata-rata nilainya 80. Hitung rata-rata gabungan.", "langkah": [{"teks": "Rumus rata-rata gabungan.", "tex": "\\bar{x}_{gab} = \\frac{n_1 \\bar{x}_1 + n_2 \\bar{x}_2}{n_1 + n_2}"}, {"teks": "Masukkan nilai.", "tex": "\\bar{x}_{gab} = \\frac{20 \\times 70 + 30 \\times 80}{20 + 30}"}, {"teks": "Hitung.", "tex": "= \\frac{1.400 + 2.400}{50} = \\frac{3.800}{50} = 76"}], "jawaban": "76"}}, {"nomor": 143, "elemen": "Data dan Peluang", "subelemen": "Statistika", "nama": "Median data ganjil", "rumus": "Me = x_{\\frac{n+1}{2}}", "keterangan": "Data harus terurut.", "contoh": {"soal": "Tentukan median data $7, 3, 9, 5, 11, 4, 8$.", "langkah": [{"teks": "Urutkan data.", "tex": "3, 4, 5, 7, 8, 9, 11"}, {"teks": "Rumus median data ganjil ($n = 7$).", "tex": "Me = x_{\\frac{n+1}{2}} = x_4"}, {"teks": "Ambil data ke-4.", "tex": "Me = 7"}], "jawaban": "7"}}, {"nomor": 144, "elemen": "Data dan Peluang", "subelemen": "Statistika", "nama": "Median data genap", "rumus": "Me = \\frac{x_{\\frac{n}{2}} + x_{\\frac{n}{2}+1}}{2}", "keterangan": "Data harus terurut.", "contoh": {"soal": "Tentukan median data $12, 7, 9, 15, 10, 8$.", "langkah": [{"teks": "Urutkan data.", "tex": "7, 8, 9, 10, 12, 15"}, {"teks": "Rumus median data genap ($n = 6$).", "tex": "Me = \\frac{x_3 + x_4}{2}"}, {"teks": "Masukkan nilai.", "tex": "Me = \\frac{9 + 10}{2} = 9{,}5"}], "jawaban": "9{,}5"}}, {"nomor": 145, "elemen": "Data dan Peluang", "subelemen": "Statistika", "nama": "Modus", "rumus": "Mo = \\text{nilai dengan frekuensi terbesar}", "keterangan": "", "contoh": {"soal": "Tentukan modus data $5, 6, 6, 7, 8, 6, 9, 5$.", "langkah": [{"teks": "Hitung frekuensi tiap nilai.", "tex": "5 \\to 2, \\quad 6 \\to 3, \\quad 7 \\to 1, \\quad 8 \\to 1, \\quad 9 \\to 1"}, {"teks": "Modus adalah nilai dengan frekuensi terbesar.", "tex": "Mo = 6"}], "jawaban": "6"}}, {"nomor": 146, "elemen": "Data dan Peluang", "subelemen": "Statistika", "nama": "Jangkauan (range)", "rumus": "J = x_{\\max} - x_{\\min}", "keterangan": "", "contoh": {"soal": "Tentukan jangkauan data $12, 25, 9, 31, 18$.", "langkah": [{"teks": "Rumus jangkauan.", "tex": "J = x_{\\max} - x_{\\min}"}, {"teks": "Nilai terbesar 31 dan terkecil 9.", "tex": "J = 31 - 9"}, {"teks": "Hitung.", "tex": "J = 22"}], "jawaban": "22"}}, {"nomor": 147, "elemen": "Data dan Peluang", "subelemen": "Statistika", "nama": "Jangkauan antarkuartil", "rumus": "H = Q_3 - Q_1", "keterangan": "", "contoh": {"soal": "Data terurut: $2, 4, 6, 8, 10, 12, 14, 16$. Tentukan jangkauan antarkuartil.", "langkah": [{"teks": "Bagi data menjadi dua bagian sama banyak.", "tex": "\\underbrace{2, 4, 6, 8}_{\\text{bawah}}, \\; \\underbrace{10, 12, 14, 16}_{\\text{atas}}"}, {"teks": "Median tiap bagian.", "tex": "Q_1 = \\frac{4 + 6}{2} = 5, \\quad Q_3 = \\frac{12 + 14}{2} = 13"}, {"teks": "Rumus jangkauan antarkuartil.", "tex": "H = Q_3 - Q_1"}, {"teks": "Hitung.", "tex": "H = 13 - 5 = 8"}], "jawaban": "8"}}, {"nomor": 148, "elemen": "Data dan Peluang", "subelemen": "Peluang", "nama": "Peluang suatu kejadian", "rumus": "P(A) = \\frac{n(A)}{n(S)}", "keterangan": "", "contoh": {"soal": "Sebuah dadu dilempar sekali. Tentukan peluang muncul mata dadu genap.", "langkah": [{"teks": "Rumus peluang.", "tex": "P(A) = \\frac{n(A)}{n(S)}"}, {"teks": "Kejadian genap $A = \\{2, 4, 6\\}$ dan ruang sampel $S = \\{1, 2, 3, 4, 5, 6\\}$.", "tex": "n(A) = 3, \\quad n(S) = 6"}, {"teks": "Hitung.", "tex": "P(A) = \\frac{3}{6} = \\frac{1}{2}"}], "jawaban": "\\frac{1}{2}"}}, {"nomor": 149, "elemen": "Data dan Peluang", "subelemen": "Peluang", "nama": "Batas nilai peluang", "rumus": "0 \\leq P(A) \\leq 1", "keterangan": "", "contoh": {"soal": "Manakah yang tidak mungkin menjadi nilai peluang: $0{,}8$; $\\frac{5}{4}$; $0$; $1$?", "langkah": [{"teks": "Syarat nilai peluang.", "tex": "0 \\leq P(A) \\leq 1"}, {"teks": "Periksa tiap nilai.", "tex": "0{,}8 \\;\\text{(ya)}, \\quad \\frac{5}{4} = 1{,}25 > 1 \\;\\text{(tidak)}, \\quad 0 \\;\\text{(ya)}, \\quad 1 \\;\\text{(ya)}"}, {"teks": "Kesimpulan.", "tex": "\\frac{5}{4} \\text{ tidak mungkin}"}], "jawaban": "\\frac{5}{4}"}}, {"nomor": 150, "elemen": "Data dan Peluang", "subelemen": "Peluang", "nama": "Peluang komplemen", "rumus": "P(A') = 1 - P(A)", "keterangan": "", "contoh": {"soal": "Peluang seorang siswa lulus ujian adalah $0{,}85$. Tentukan peluang tidak lulus.", "langkah": [{"teks": "Rumus peluang komplemen.", "tex": "P(A') = 1 - P(A)"}, {"teks": "Masukkan nilai.", "tex": "P(A') = 1 - 0{,}85"}, {"teks": "Hitung.", "tex": "P(A') = 0{,}15"}], "jawaban": "0{,}15"}}, {"nomor": 151, "elemen": "Data dan Peluang", "subelemen": "Peluang", "nama": "Frekuensi harapan", "rumus": "F_h = P(A) \\times n", "keterangan": "$n$ banyak percobaan.", "contoh": {"soal": "Sebuah dadu dilempar 120 kali. Berapa frekuensi harapan muncul mata 6?", "langkah": [{"teks": "Rumus frekuensi harapan.", "tex": "F_h = P(A) \\times n"}, {"teks": "Peluang mata 6 dan banyak percobaan.", "tex": "P(A) = \\frac{1}{6}, \\quad n = 120"}, {"teks": "Hitung.", "tex": "F_h = \\frac{1}{6} \\times 120 = 20"}], "jawaban": "20"}}, {"nomor": 152, "elemen": "Data dan Peluang", "subelemen": "Peluang", "nama": "Ruang sampel n koin", "rumus": "n(S) = 2^n", "keterangan": "", "contoh": {"soal": "Empat koin dilempar bersamaan. Berapa banyak anggota ruang sampelnya?", "langkah": [{"teks": "Rumus ruang sampel $n$ koin.", "tex": "n(S) = 2^n"}, {"teks": "Dengan $n = 4$.", "tex": "n(S) = 2^4"}, {"teks": "Hitung.", "tex": "n(S) = 16"}], "jawaban": "16"}}, {"nomor": 153, "elemen": "Data dan Peluang", "subelemen": "Peluang", "nama": "Ruang sampel dua dadu", "rumus": "n(S) = 6 \\times 6 = 36", "keterangan": "", "contoh": {"soal": "Dua dadu dilempar bersamaan. Tentukan peluang jumlah mata dadu 7.", "langkah": [{"teks": "Ruang sampel dua dadu.", "tex": "n(S) = 6 \\times 6 = 36"}, {"teks": "Pasangan berjumlah 7.", "tex": "(1,6), (2,5), (3,4), (4,3), (5,2), (6,1) \\;\\Rightarrow\\; n(A) = 6"}, {"teks": "Rumus peluang.", "tex": "P(A) = \\frac{n(A)}{n(S)} = \\frac{6}{36} = \\frac{1}{6}"}], "jawaban": "\\frac{1}{6}"}}, {"nomor": 154, "elemen": "Data dan Peluang", "subelemen": "Peluang", "nama": "Kejadian saling lepas", "rumus": "P(A \\cup B) = P(A) + P(B)", "keterangan": "", "contoh": {"soal": "Sebuah kartu diambil dari kartu bernomor 1 sampai 10. Tentukan peluang terambil nomor kurang dari 3 atau lebih dari 8.", "langkah": [{"teks": "Kedua kejadian tidak mungkin terjadi bersamaan, jadi saling lepas.", "tex": "P(A \\cup B) = P(A) + P(B)"}, {"teks": "Kejadian $A = \\{1, 2\\}$ dan $B = \\{9, 10\\}$.", "tex": "P(A) = \\frac{2}{10}, \\quad P(B) = \\frac{2}{10}"}, {"teks": "Jumlahkan.", "tex": "P(A \\cup B) = \\frac{2}{10} + \\frac{2}{10} = \\frac{4}{10} = \\frac{2}{5}"}], "jawaban": "\\frac{2}{5}"}}, {"nomor": 155, "elemen": "Data dan Peluang", "subelemen": "Peluang", "nama": "Kejadian saling bebas", "rumus": "P(A \\cap B) = P(A) \\times P(B)", "keterangan": "", "contoh": {"soal": "Sebuah koin dan sebuah dadu dilempar bersamaan. Tentukan peluang muncul angka pada koin dan mata 6 pada dadu.", "langkah": [{"teks": "Hasil koin dan dadu tidak saling memengaruhi, jadi saling bebas.", "tex": "P(A \\cap B) = P(A) \\times P(B)"}, {"teks": "Masukkan nilai.", "tex": "P(\\text{angka}) = \\frac{1}{2}, \\quad P(6) = \\frac{1}{6}"}, {"teks": "Kalikan.", "tex": "P(A \\cap B) = \\frac{1}{2} \\times \\frac{1}{6} = \\frac{1}{12}"}], "jawaban": "\\frac{1}{12}"}}]}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js"></script>
+
+<div id="checkoutView">
+<div class="card">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+    <a href="#" id="backLink" style="font-size: 13px; color: #4f46e5; text-decoration: none; font-weight: 600;">← Kembali ke Rumus</a>
+  </div>
+  <div id="creditBadge" class="info" style="margin-top:4px;"></div>
+  <h2>🚀 Checkout Pembayaran</h2>
+
+  <form id="form" style="display: none;">
+    <label>👤 Nama</label>
+    <input id="name" readonly placeholder="Nama Anda">
+    <label>📧 Email</label>
+    <input id="email" readonly placeholder="Email Anda">
+    <label>📦 Pilih Produk</label>
+    <select id="product"><option value="">Memuat produk...</option></select>
+    <div id="price">Rp -</div>
+    <label>📱 Nomor WhatsApp</label>
+    <input id="phone" type="tel" placeholder="081234567890" required>
+    <small>Contoh: 081234567890</small>
+
+    <label class="mt-3">💳 Pilih Metode Pembayaran</label>
+    <div style="display: flex; gap: 10px; margin-top: 6px;">
+      <label style="flex: 1; border: 2px solid #667eea; border-radius: 10px; padding: 10px 8px; text-align: center; cursor: pointer; background: #f0f4ff; margin: 0;">
+        <input type="radio" name="payment_channel" value="qris" checked style="width: auto; margin-right: 6px;">
+        <strong style="color: #4338ca;">⚡ QRIS DANA</strong>
+        <div style="font-size: 11px; color: #64748b;">Semua Bank & e-Wallet</div>
+      </label>
+      <label style="flex: 1; border: 1.5px solid #e0e0e0; border-radius: 10px; padding: 10px 8px; text-align: center; cursor: pointer; background: #fafafa; margin: 0;">
+        <input type="radio" name="payment_channel" value="gateway" style="width: auto; margin-right: 6px;">
+        <strong style="color: #334155;">🏦 Virtual Account</strong>
+        <div style="font-size: 11px; color: #64748b;">Faspay Gateway</div>
+      </label>
+    </div>
+
+    <!-- OPSI PENGIRIMAN FISIK (RAJAONGKIR) -->
+    <div id="shippingToggleSection" style="margin-top: 14px; background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid #e2e8f0;">
+      <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; margin: 0; font-weight: 600; color: #1e293b; font-size: 14px;">
+        <input type="checkbox" id="needShipping" style="width: 18px; height: 18px; accent-color: #667eea; cursor: pointer;">
+        🚚 Butuh Pengiriman Fisik? (Poster/Barang)
+      </label>
+    </div>
+
+    <div id="shippingSection" style="display: none; margin-top: 10px; padding: 14px; background: #f1f5f9; border-radius: 12px; border: 1.5px solid #cbd5e1;">
+      <div style="font-weight: 700; color: #1e293b; font-size: 14px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+        📍 Hitung Ongkos Kirim (RajaOngkir)
+      </div>
+
+      <label for="shippingProvince">Provinsi Tujuan</label>
+      <select id="shippingProvince">
+        <option value="">-- Pilih Provinsi --</option>
+      </select>
+
+      <label for="shippingCity">Kota / Kabupaten Tujuan</label>
+      <select id="shippingCity" disabled>
+        <option value="">-- Pilih Kota --</option>
+      </select>
+
+      <label for="shippingCourier">Pilihan Kurir</label>
+      <select id="shippingCourier">
+        <option value="jne">JNE (Reguler / OKE / YES)</option>
+        <option value="pos">POS Indonesia</option>
+        <option value="tiki">TIKI</option>
+      </select>
+
+      <label for="shippingService">Layanan & Ongkir</label>
+      <select id="shippingService" disabled>
+        <option value="">-- Pilih Layanan Kurir --</option>
+      </select>
+
+      <div id="shippingCostSummary" style="margin-top: 10px; font-size: 13px; color: #334155; display: none; background: white; padding: 8px 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
+        <div style="display: flex; justify-content: space-between;">
+          <span>Harga Barang:</span>
+          <strong id="summaryProductPrice">Rp 0</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 4px;">
+          <span>Ongkos Kirim:</span>
+          <strong id="summaryShippingCost" style="color: #0284c7;">+ Rp 0</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 6px; padding-top: 6px; border-top: 1px dashed #cbd5e1; font-size: 14px;">
+          <strong>Total Bayar:</strong>
+          <strong id="summaryTotalPrice" style="color: #4338ca;">Rp 0</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOX TAMPILAN QRIS DANA DINAMIS -->
+    <div id="qrisContainer" style="display: none; margin-top: 18px; padding: 16px; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 12px; text-align: center;">
+      <div style="font-weight: bold; color: #1e293b; font-size: 15px;">⚡ QRIS DANA Math315</div>
+      <small style="color: #64748b; display: block; margin-bottom: 10px;">Scan langsung atau simpan QR ke galeri jika membuka dari HP.</small>
+      
+      <div style="background: white; padding: 12px; border-radius: 10px; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">
+        <div id="qrisQrDisplay"></div>
+      </div>
+
+      <div style="margin-top: 10px; font-weight: bold; font-size: 18px; color: #0284c7;" id="qrisAmountDisplay">Rp 0</div>
+      <div style="font-size: 12px; color: #64748b; font-family: monospace; margin-top: 2px;" id="qrisInvoiceDisplay">INV-QRIS-XXXXX</div>
+
+      <!-- PANDUAN SINGKAT BAYAR DARI HP -->
+      <div style="margin-top: 14px; padding: 10px; background: #eff6ff; border-radius: 8px; text-align: left; font-size: 12px; color: #1e40af; border-left: 3px solid #3b82f6;">
+        <strong>📱 Cara Bayar dari HP (Solusi Galeri):</strong>
+        <ol style="margin: 4px 0 0 16px; padding: 0; line-height: 1.5;">
+          <li>Klik tombol <b>"📥 Simpan QRIS ke Galeri"</b> di bawah.</li>
+          <li>Buka aplikasi <b>DANA / GoPay / BCA / m-Banking</b> Anda.</li>
+          <li>Pilih menu <b>Scan QRIS</b>, lalu klik ikon <b>Galeri / Foto</b> dan pilih gambar QR tadi.</li>
+          <li>Selesaikan pembayaran, lalu klik <b>Konfirmasi WhatsApp</b>.</li>
+        </ol>
+      </div>
+
+      <!-- ACTION BUTTONS SOLUSI A -->
+      <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 8px;">
+        <!-- Tombol Simpan QRIS ke Galeri -->
+        <button type="button" id="downloadQrisBtn" style="background: #2563eb; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; margin-top: 0;">
+          📥 Simpan QRIS ke Galeri (HP)
+        </button>
+
+        <!-- Shortcut Buka Aplikasi E-Wallet -->
+        <div style="display: grid; grid-cols: 2; grid-template-columns: 1fr 1fr; gap: 6px;">
+          <a href="dana://" id="openDanaAppBtn" style="background: #118eea; color: white; text-decoration: none; padding: 9px; border-radius: 8px; font-size: 12px; font-weight: bold; text-align: center; display: block;">
+            ⚡ Buka DANA
+          </a>
+          <a href="gojek://" id="openGojekAppBtn" style="background: #00880f; color: white; text-decoration: none; padding: 9px; border-radius: 8px; font-size: 12px; font-weight: bold; text-align: center; display: block;">
+            🟢 Buka Gojek/GoPay
+          </a>
+        </div>
+
+        <!-- Konfirmasi WhatsApp -->
+        <button type="button" id="confirmWaBtn" style="background: #16a34a; color: white; border: none; margin-top: 4px; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: bold; cursor: pointer;">
+          📱 Konfirmasi ke WhatsApp Admin
+        </button>
+      </div>
+    </div>
+
+    <button id="pay" disabled style="display: block;">💰 Bayar Sekarang</button>
+  </form>
+
+  <div id="status" class="status info"><span class="loading"></span>Memeriksa login...</div>
+
+  <div id="loginSection" style="display: none; text-align: center; margin-top: 20px;">
+    <p style="color: #333; margin-bottom: 15px;">🔐 Silakan login untuk melanjutkan pembayaran</p>
+    <button id="loginBtn" class="google-btn">Login dengan Google</button>
+  </div>
+</div>
+</div>
+<div id="premModal" class="prem-modal-overlay">
+  <div class="prem-modal" role="dialog" aria-modal="true" aria-labelledby="premModalTitle">
+    <button type="button" class="prem-modal-close" id="premModalClose" aria-label="Tutup">&times;</button>
+    <h3 id="premModalTitle">🔒 Pembahasan Khusus Member Premium</h3>
+    <p>Langkah pembahasan dan jawaban contoh soal untuk rumus nomor 6 sampai 155 hanya dapat dibuka oleh anggota <strong>TKA Premium</strong>. Nomor 1 sampai 5 gratis.</p>
+    <ul class="prem-modal-perks">
+      <li>✅ <strong>Pembahasan beranimasi</strong> langkah demi langkah</li>
+      <li>✅ <strong>Akses penuh</strong> materi persiapan TKA 2026</li>
+      <li>✅ Hanya <strong>Rp 10.000 / bulan</strong> tanpa perpanjangan otomatis</li>
+    </ul>
+    <div id="premModalUserStatus" style="font-size:13.5px;margin-bottom:14px;color:var(--muted)"></div>
+    <div class="prem-modal-actions">
+      <button type="button" class="prem-btn prem-btn-secondary" id="premModalDismiss">Tutup</button>
+      <button type="button" class="prem-btn prem-btn-primary" id="premModalLogin" style="display:none">🔑 Masuk dengan Google</button>
+      <button type="button" class="prem-btn prem-btn-gold" id="premModalCheckout">⭐ Langganan Rp 10.000</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+/* ===== Premium: rumus nomor 1-5 gratis, nomor 6 dst terkunci ===== */
+var FREE_LIMIT = 5;
+var currentUser = null, isPremium = false, premiumUntil = null, authLoaded = false;
+function terkunci(nomor){ return nomor > FREE_LIMIT && !isPremium; }
+
+var firebaseConfig = {
+  apiKey: "AIzaSyCu4GQa-EOaPhpQP_y_QcsJxs05adQU2-M",
+  authDomain: "math314-app.firebaseapp.com",
+  databaseURL: "https://math314-app-default-rtdb.firebaseio.com",
+  projectId: "math314-app",
+  storageBucket: "math314-app.firebasestorage.app",
+  messagingSenderId: "9019551034",
+  appId: "1:9019551034:web:de0c5e2b8b20c18ca0b403"
+};
+if (typeof firebase !== 'undefined' && !firebase.apps.length) firebase.initializeApp(firebaseConfig);
+var auth = typeof firebase !== 'undefined' ? firebase.auth() : null;
+var db = typeof firebase !== 'undefined' ? firebase.database() : null;
+
+function checkPremiumStatus(val){
+  if (!val) return false;
+  var until = Math.max(Number(val.premium_until) || 0, Number(val.premiumExpired) || 0);
+  var now = Date.now();
+  if (until > now) return true;
+  if (val.isPremium === true || val.is_premium === true || val.tka_premium === true) return !until || until > now;
+  return false;
+}
+function namaUser(){ return currentUser ? (currentUser.displayName || currentUser.email) : 'Member'; }
+function esc(t){ var d = document.createElement('div'); d.textContent = t == null ? '' : String(t); return d.innerHTML; }
+
+async function loginGoogle(){
+  if (!auth) return;
+  var provider = new firebase.auth.GoogleAuthProvider();
+  provider.setCustomParameters({prompt: 'select_account'});
+  try { await auth.signInWithPopup(provider); }
+  catch (err) {
+    if (err.code === 'auth/popup-blocked' || err.code === 'auth/operation-not-supported-in-this-environment') {
+      alert('Browser ini memblokir jendela login Google. Salin alamat halaman ini dan buka di Chrome, lalu coba masuk lagi.');
+    } else if (err.code !== 'auth/popup-closed-by-user') {
+      alert('Gagal masuk: ' + (err.message || 'Coba lagi'));
+    }
+  }
+}
+function goToCheckout(){
+  closePremiumModal();
+  var p = {productId: 'premium_1bulan', productName: 'Langganan TKA Premium (1 Bulan)', price: '10000'};
+  if (currentUser && currentUser.displayName) p.name = currentUser.displayName;
+  if (typeof window.bukaCheckout === 'function') window.bukaCheckout(p);
+  else alert('Halaman pembayaran belum siap. Muat ulang aplikasi.');
+}
+function openPremiumModal(){ var m = document.getElementById('premModal'); if (m) m.style.display = 'flex'; renderUserStatus(); }
+function closePremiumModal(){ var m = document.getElementById('premModal'); if (m) m.style.display = 'none'; }
+
+/* Kotak kunci di dalam papan contoh soal */
+function buatKotakKunci(nomor){
+  var box = document.createElement('div'); box.className = 'kunci';
+  box.innerHTML = '<h4>🔒 Pembahasan rumus (' + nomor + ') khusus Premium</h4><p>Langkah penyelesaian dan jawaban dibuka untuk member <strong>TKA Premium</strong>. Pembahasan rumus nomor 1 sampai ' + FREE_LIMIT + ' gratis.</p>';
+  var aksi = document.createElement('div'); aksi.className = 'aksi';
+  if (!currentUser) {
+    var bl = document.createElement('button'); bl.type = 'button'; bl.className = 'prem-btn prem-btn-primary'; bl.textContent = '🔑 Masuk dengan Google';
+    bl.addEventListener('click', loginGoogle); aksi.appendChild(bl);
+  }
+  var bb = document.createElement('button'); bb.type = 'button'; bb.className = 'prem-btn prem-btn-gold'; bb.textContent = '⭐ Langganan Rp 10.000';
+  bb.addEventListener('click', goToCheckout); aksi.appendChild(bb);
+  box.appendChild(aksi);
+  return box;
+}
+
+function renderUserStatus(){
+  var card = document.getElementById('premiumStatusBar');
+  var badge = document.getElementById('premBadge');
+  var text = document.getElementById('premText');
+  var actions = document.getElementById('premActions');
+  var modalLogin = document.getElementById('premModalLogin');
+  var modalStatus = document.getElementById('premModalUserStatus');
+  if (!card || !badge || !text || !actions) return;
+  var bind = function(id, fn){ var b = document.getElementById(id); if (b) b.addEventListener('click', fn); };
+  if (!authLoaded) {
+    badge.className = 'prem-badge load'; badge.textContent = 'Memeriksa';
+    text.textContent = 'Memeriksa status akun dan langganan Anda...'; actions.innerHTML = '';
+    return;
+  }
+  if (isPremium) {
+    card.className = 'prem-card is-premium'; badge.className = 'prem-badge prem'; badge.textContent = '👑 Premium Aktif';
+    var exp = premiumUntil ? ' (s/d ' + new Date(premiumUntil).toLocaleDateString('id-ID', {day: 'numeric', month: 'short', year: 'numeric'}) + ')' : '';
+    text.innerHTML = 'Halo, <strong>' + esc(namaUser()) + '</strong>' + exp + '. Seluruh pembahasan contoh soal terbuka!';
+    actions.innerHTML = '<button type="button" class="prem-btn prem-btn-danger" id="btnLogout">Keluar</button>';
+    bind('btnLogout', function(){ if (auth) auth.signOut(); });
+    if (modalLogin) modalLogin.style.display = 'none';
+    if (modalStatus && currentUser) modalStatus.innerHTML = 'Akun Anda: <strong>' + esc(currentUser.email) + '</strong> (👑 Premium Aktif)';
+  } else if (currentUser) {
+    card.className = 'prem-card not-premium'; badge.className = 'prem-badge free'; badge.textContent = 'Akun Reguler';
+    text.innerHTML = 'Masuk sebagai <strong>' + esc(namaUser()) + '</strong>. Pembahasan rumus nomor ' + (FREE_LIMIT + 1) + ' dan seterusnya dikunci untuk member Premium.';
+    actions.innerHTML = '<button type="button" class="prem-btn prem-btn-gold" id="btnBuyPrem">⭐ Upgrade Premium (Rp 10.000)</button><button type="button" class="prem-btn prem-btn-danger" id="btnLogout">Keluar</button>';
+    bind('btnBuyPrem', goToCheckout); bind('btnLogout', function(){ if (auth) auth.signOut(); });
+    if (modalLogin) modalLogin.style.display = 'none';
+    if (modalStatus) modalStatus.innerHTML = 'Anda masuk sebagai <strong>' + esc(currentUser.email) + '</strong> (belum Premium).';
+  } else {
+    card.className = 'prem-card not-premium'; badge.className = 'prem-badge free'; badge.textContent = '🔒 Belum Login';
+    text.innerHTML = 'Pembahasan rumus nomor 1 sampai ' + FREE_LIMIT + ' gratis. Nomor ' + (FREE_LIMIT + 1) + ' dan seterusnya khusus anggota <strong>TKA Premium</strong>.';
+    actions.innerHTML = '<button type="button" class="prem-btn prem-btn-primary" id="btnLoginTop">🔑 Masuk dengan Google</button><button type="button" class="prem-btn prem-btn-gold" id="btnBuyPrem">⭐ Beli Premium (Rp 10.000)</button>';
+    bind('btnLoginTop', loginGoogle); bind('btnBuyPrem', goToCheckout);
+    if (modalLogin) modalLogin.style.display = 'inline-flex';
+    if (modalStatus) modalStatus.textContent = 'Anda belum login. Masuk atau beli paket untuk membuka pembahasan.';
+  }
+}
+
+function premiumBerubah(){
+  renderUserStatus();
+  if (typeof window.segarkanKunci === 'function') window.segarkanKunci();
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  var on = function(id, fn){ var b = document.getElementById(id); if (b) b.addEventListener('click', fn); };
+  on('premModalClose', closePremiumModal);
+  on('premModalDismiss', closePremiumModal);
+  on('premModalCheckout', goToCheckout);
+  on('premModalLogin', async function(){ await loginGoogle(); closePremiumModal(); });
+  var ov = document.getElementById('premModal');
+  if (ov) ov.addEventListener('click', function(e){ if (e.target.id === 'premModal') closePremiumModal(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closePremiumModal(); });
+  renderUserStatus();
+});
+
+if (auth && db) {
+  var dbRef = null;
+  auth.onAuthStateChanged(function(user){
+    currentUser = user; authLoaded = true;
+    if (dbRef) { dbRef.off(); dbRef = null; }
+    if (user) {
+      dbRef = db.ref('users/' + user.uid);
+      dbRef.on('value', function(snap){
+        var val = snap.val() || {};
+        var until = Math.max(Number(val.premium_until) || 0, Number(val.premiumExpired) || 0);
+        isPremium = checkPremiumStatus(val); premiumUntil = until || null;
+        premiumBerubah();
+      });
+    } else {
+      isPremium = false; premiumUntil = null; premiumBerubah();
+    }
+  });
+} else {
+  authLoaded = true;
+}
+</script>
+<script>
+(function(){
+  var data = JSON.parse(document.getElementById('data').textContent);
+  var list = data.rumus;
+  var root = document.getElementById('isi');
+  var tabsEl = document.getElementById('tabs');
+  var q = document.getElementById('q');
+  var aktif = 'Semua';
+  var kurangGerak = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var WARNA = ['var(--biru)','var(--hijau)','var(--kuning)','var(--oranye)','var(--merah)'];
+
+  document.getElementById('sub').textContent = data.jumlah_rumus + ' rumus, nomor (1) sampai (' + data.jumlah_rumus + '), masing-masing dengan contoh soal';
+
+  var temaBtn = document.getElementById('tema');
+  try { var t = localStorage.getItem('tema'); if (t) document.documentElement.setAttribute('data-theme', t); } catch(e){}
+  temaBtn.addEventListener('click', function(){
+    var cur = document.documentElement.getAttribute('data-theme');
+    var gelapSistem = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches;
+    var kini = cur || (gelapSistem ? 'dark' : 'light');
+    var baru = kini === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', baru);
+    try { localStorage.setItem('tema', baru); } catch(e){}
+  });
+
+  var urutElemen = [], peta = {};
+  list.forEach(function(r){
+    if (!peta[r.elemen]) { peta[r.elemen] = {urut: [], sub: {}}; urutElemen.push(r.elemen); }
+    var e = peta[r.elemen];
+    if (!e.sub[r.subelemen]) { e.sub[r.subelemen] = []; e.urut.push(r.subelemen); }
+    e.sub[r.subelemen].push(r);
+  });
+
+  function el(tag, cls, text){
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function matematika(node, tex, tampilan){
+    if (window.katex) {
+      try { window.katex.render(tex, node, {displayMode: !!tampilan, throwOnError: false}); return; } catch(e){}
+    }
+    node.classList.add('raw');
+    node.textContent = tex;
+  }
+  function teksMath(node){
+    if (window.renderMathInElement) {
+      try { window.renderMathInElement(node, {delimiters: [{left: '$', right: '$', display: false}], throwOnError: false}); } catch(e){}
+    }
+  }
+
+  // ---------- papan animasi ----------
+  function buatPapan(r){
+    var c = r.contoh;
+    var locked = terkunci(r.nomor);
+    var papan = el('div', 'papan');
+    var bar = el('div', 'papan-bar');
+    bar.appendChild(el('span', 'judul', 'Contoh soal'));
+    var bJeda = el('button', null, 'Jeda'); bJeda.type = 'button';
+    var bNext = el('button', null, 'Langkah berikutnya'); bNext.type = 'button';
+    var bUlang = el('button', null, 'Ulang'); bUlang.type = 'button';
+    var bSemua = el('button', null, 'Tampilkan semua'); bSemua.type = 'button';
+    var bCepat = el('button', null, 'Kecepatan 1x'); bCepat.type = 'button';
+    if (!locked) [bJeda, bNext, bUlang, bSemua, bCepat].forEach(function(b){ bar.appendChild(b); });
+    papan.appendChild(bar);
+
+    var items = [];
+    var s = el('div', 'step soal');
+    s.appendChild(el('span', 'label', 'Soal'));
+    var ps = el('p', null, c.soal); teksMath(ps); s.appendChild(ps);
+    papan.appendChild(s); items.push({el: s, tunggu: 2000});
+
+    if (locked) {
+      s.classList.add('show');
+      papan.appendChild(buatKotakKunci(r.nomor));
+      papan._locked = true;
+      papan.mulai = function(){};
+      papan.henti = function(){};
+      return papan;
+    }
+
+    c.langkah.forEach(function(l, i){
+      var st = el('div', 'step langkah');
+      var no = el('div', 'no', String(i + 1)); no.style.setProperty('--c', WARNA[i % WARNA.length]);
+      st.appendChild(no);
+      var badan = el('div', 'badan');
+      var pt = el('p', null, l.teks); teksMath(pt); badan.appendChild(pt);
+      var m = el('div', 'math tulis'); matematika(m, l.tex, true); badan.appendChild(m);
+      st.appendChild(badan);
+      papan.appendChild(st); items.push({el: st, tunggu: 2600});
+    });
+
+    var j = el('div', 'step jawab');
+    var kotak = el('div', 'kotak');
+    kotak.appendChild(el('span', 'label', 'Jawaban'));
+    var nilai = el('span', 'nilai'); matematika(nilai, c.jawaban, false); kotak.appendChild(nilai);
+    j.appendChild(kotak);
+    papan.appendChild(j); items.push({el: j, tunggu: 0});
+
+    var st = {i: 0, main: false, timer: null, cepat: 1};
+    var kecepatan = [1, 1.5, 0.6];
+    var kIdx = 0;
+
+    function perbarui(){
+      bJeda.textContent = st.i >= items.length ? 'Selesai' : (st.main ? 'Jeda' : 'Putar');
+      bJeda.disabled = st.i >= items.length;
+      bNext.disabled = st.i >= items.length;
+    }
+    function tampil(){
+      if (st.i < items.length) { items[st.i].el.classList.add('show'); st.i++; }
+      perbarui();
+    }
+    function langkah(){
+      clearTimeout(st.timer);
+      if (!st.main) return;
+      if (st.i >= items.length) { st.main = false; perbarui(); return; }
+      var item = items[st.i];
+      tampil();
+      if (st.i >= items.length) { st.main = false; perbarui(); return; }
+      st.timer = setTimeout(langkah, item.tunggu / st.cepat);
+    }
+    function putar(tunda){
+      st.main = true; perbarui();
+      clearTimeout(st.timer);
+      st.timer = setTimeout(langkah, tunda || 0);
+    }
+    function jeda(){ st.main = false; clearTimeout(st.timer); perbarui(); }
+    function semua(){ jeda(); while (st.i < items.length) { items[st.i].el.classList.add('show'); st.i++; } perbarui(); }
+    function ulang(){
+      jeda();
+      items.forEach(function(it){ it.el.classList.remove('show'); });
+      st.i = 0;
+      void papan.offsetWidth;
+      putar(250);
+    }
+
+    bJeda.addEventListener('click', function(){ if (st.main) jeda(); else putar(150); });
+    bNext.addEventListener('click', function(){ jeda(); tampil(); });
+    bUlang.addEventListener('click', ulang);
+    bSemua.addEventListener('click', semua);
+    bCepat.addEventListener('click', function(){
+      kIdx = (kIdx + 1) % kecepatan.length; st.cepat = kecepatan[kIdx];
+      bCepat.textContent = 'Kecepatan ' + String(kecepatan[kIdx]).replace('.', ',') + 'x';
+    });
+
+    papan._locked = false;
+    papan.mulai = function(){ if (kurangGerak) semua(); else if (st.i === 0) putar(250); else if (st.i < items.length) putar(100); };
+    papan.henti = jeda;
+    perbarui();
+    return papan;
+  }
+
+  // ---------- kunci premium: segarkan saat status berubah ----------
+  var kunciRegistry = [];
+  window.segarkanKunci = function(){
+    kunciRegistry.forEach(function(it){
+      var terbuka = it.b.getAttribute('aria-expanded') === 'true';
+      if (it.a._papan && it.a._papan._locked !== terkunci(it.r.nomor)) {
+        it.a._papan.henti(); it.a.removeChild(it.a._papan); it.a._papan = null;
+        if (terbuka) { it.a._papan = buatPapan(it.r); it.a.appendChild(it.a._papan); it.a._papan.mulai(); }
+      } else if (it.a._papan && it.a._papan._locked) {
+        var lama = it.a._papan.querySelector('.kunci');
+        if (lama) it.a._papan.replaceChild(buatKotakKunci(it.r.nomor), lama);
+      }
+      if (!terbuka) it.b.textContent = terkunci(it.r.nomor) ? '🔒 Contoh soal' : 'Contoh soal';
+    });
+  };
+
+  // ---------- daftar rumus ----------
+  root.textContent = '';
+  urutElemen.forEach(function(nm){
+    var sec = el('section'); sec.dataset.elemen = nm;
+    sec.appendChild(el('h2', 'elemen', nm));
+    var e = peta[nm];
+    e.urut.forEach(function(sn){
+      var blok = el('div');
+      blok.appendChild(el('div', 'subel', sn));
+      var grid = el('div', 'grid');
+      e.sub[sn].forEach(function(r){
+        var a = el('article', 'rumus');
+        a.style.setProperty('--h', String((r.nomor * 47) % 360));
+        a.dataset.cari = (r.nomor + ' ' + r.nama + ' ' + r.subelemen + ' ' + r.elemen + ' ' + r.keterangan + ' ' + (r.contoh ? r.contoh.soal : '')).toLowerCase();
+        a.appendChild(el('div', 'nomor', '(' + r.nomor + ')'));
+        var isi = el('div', 'isi');
+        isi.appendChild(el('h3', null, r.nama));
+        var m = el('div', 'math'); matematika(m, r.rumus, true); isi.appendChild(m);
+        if (r.keterangan) { var k = el('p', 'ket', r.keterangan); teksMath(k); isi.appendChild(k); }
+        if (r.contoh) {
+          var b = el('button', 'btn-contoh', terkunci(r.nomor) ? '🔒 Contoh soal' : 'Contoh soal'); b.type = 'button';
+          b.setAttribute('aria-expanded', 'false');
+          b.addEventListener('click', function(){
+            var buka = b.getAttribute('aria-expanded') !== 'true';
+            if (buka) {
+              if (a._papan && a._papan._locked !== terkunci(r.nomor)) { a._papan.henti(); a.removeChild(a._papan); a._papan = null; }
+              if (!a._papan) { a._papan = buatPapan(r); a.appendChild(a._papan); }
+              a._papan.hidden = false;
+              a.classList.add('buka');
+              b.setAttribute('aria-expanded', 'true');
+              b.textContent = 'Tutup contoh';
+              a._papan.mulai();
+              try { a.scrollIntoView({block: 'nearest', behavior: kurangGerak ? 'auto' : 'smooth'}); } catch(x){}
+            } else {
+              if (a._papan) { a._papan.henti(); a._papan.hidden = true; }
+              a.classList.remove('buka');
+              b.setAttribute('aria-expanded', 'false');
+              b.textContent = terkunci(r.nomor) ? '🔒 Contoh soal' : 'Contoh soal';
+            }
+          });
+          kunciRegistry.push({r: r, a: a, b: b});
+          isi.appendChild(b);
+        }
+        a.appendChild(isi);
+        grid.appendChild(a);
+      });
+      blok.appendChild(grid);
+      sec.appendChild(blok);
+    });
+    root.appendChild(sec);
+  });
+  var kosong = el('p', 'kosong', 'Tidak ada rumus yang cocok.'); kosong.hidden = true; root.appendChild(kosong);
+
+  function buatTab(label, jumlah){
+    var b = el('button', 'tab'); b.type = 'button';
+    b.setAttribute('aria-pressed', label === aktif ? 'true' : 'false');
+    b.appendChild(document.createTextNode(label));
+    b.appendChild(el('small', null, String(jumlah)));
+    b.addEventListener('click', function(){ aktif = label; terapkan(); });
+    return b;
+  }
+  var tabBtns = [];
+  tabBtns.push({label: 'Semua', b: buatTab('Semua', list.length)});
+  urutElemen.forEach(function(nm){
+    var n = list.filter(function(r){return r.elemen === nm;}).length;
+    tabBtns.push({label: nm, b: buatTab(nm, n)});
+  });
+  tabBtns.forEach(function(t){ tabsEl.appendChild(t.b); });
+
+  function terapkan(){
+    var kata = q.value.trim().toLowerCase();
+    var tampil = 0;
+    tabBtns.forEach(function(t){ t.b.setAttribute('aria-pressed', t.label === aktif ? 'true' : 'false'); });
+    document.querySelectorAll('section').forEach(function(sec){
+      var cocokElemen = aktif === 'Semua' || sec.dataset.elemen === aktif;
+      var adaIsi = false;
+      sec.querySelectorAll('article').forEach(function(a){
+        var ok = cocokElemen && (!kata || a.dataset.cari.indexOf(kata) !== -1);
+        a.hidden = !ok;
+        if (ok) { adaIsi = true; tampil++; }
+      });
+      sec.querySelectorAll('.grid').forEach(function(g){
+        g.parentNode.hidden = !g.querySelector('article:not([hidden])');
+      });
+      sec.hidden = !adaIsi;
+    });
+    kosong.hidden = tampil !== 0;
+  }
+  q.addEventListener('input', terapkan);
+  terapkan();
+  if (typeof window.segarkanKunci === 'function') window.segarkanKunci();
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(function () {
+if (!window.auth || !window.db) {
+  window.bukaCheckout = function () { alert('Layanan pembayaran butuh koneksi internet. Coba lagi setelah online.'); };
+  return;
+}
+
+// ============================================================
+// 📦 CONFIG & DOM
+// ============================================================
+const API_BASE = "https://math315.vercel.app";
+const nameEl = document.getElementById("name");
+const emailEl = document.getElementById("email");
+const phoneEl = document.getElementById("phone");
+const productEl = document.getElementById("product");
+const priceEl = document.getElementById("price");
+const payBtn = document.getElementById("pay");
+const statusEl = document.getElementById("status");
+const formEl = document.getElementById("form");
+const loginSection = document.getElementById("loginSection");
+const loginBtn = document.getElementById("loginBtn");
+
+let currentUser = null;
+let userToken = null;
+let products = {};
+
+// ============================================================
+// 🔍 DATA CHECKOUT (dikirim dari tombol Beli lewat bukaCheckout)
+// ============================================================
+function setCheckoutData(p) {
+  p = p || {};
+  window._checkoutData = {
+    productId: p.productId || null,
+    productName: p.productName || null,
+    price: p.price ? parseInt(p.price) : null,
+    token: p.token ? parseInt(p.token) : null,
+    phone: p.phone || null,
+    name: p.name || null
+  };
+}
+setCheckoutData({});
+
+// ============================================================
+// 🧪 FALLBACK PRODUK
+// ============================================================
+const FALLBACK_PRODUCTS = {
+  "premium_1bulan": {
+    name: "Langganan TKA Premium (1 Bulan)",
+    price: 10000,
+    description: "Akses 5 Sesi Latihan TKA Matematika Selama 1 Bulan",
+    token_amount: 0,
+    type: "subscription"
+  },
+  "token_50": {
+    name: "Starter",
+    price: 10000,
+    description: "50 Token",
+    token_amount: 50
+  },
+  "token_200": {
+    name: "Pro",
+    price: 35000,
+    description: "200 Token",
+    token_amount: 200
+  },
+  "token_500": {
+    name: "Business",
+    price: 75000,
+    description: "500 Token",
+    token_amount: 500
+  },
+  "token_1500": {
+    name: "Enterprise",
+    price: 150000,
+    description: "1500 Token",
+    token_amount: 1500
+  }
+};
+
+// ============================================================
+// 📋 HELPER FUNCTIONS
+// ============================================================
+function setStatus(message, type = "info") {
+  statusEl.innerHTML = message;
+  statusEl.className = `status ${type}`;
+}
+function validPhone(phone) { return /^08[0-9]{8,13}$/.test(phone); }
+function formatRupiah(amount) { return `Rp ${Number(amount).toLocaleString("id-ID")}`; }
+function getTokenAmountFromKey(key) {
+  if (key.startsWith('token_')) {
+    const num = parseInt(key.split('_')[1], 10);
+    return isNaN(num) ? 0 : num;
+  }
+  return 0;
+}
+
+// 🔍 Cari produk berdasarkan berbagai kriteria
+function findProductKey(productData, targetId, targetName, targetPrice) {
+  // 1. Coba berdasarkan ID
+  if (targetId && productData[targetId]) return targetId;
+
+  // 2. Coba berdasarkan nama (case-insensitive)
+  if (targetName) {
+    const normalized = targetName.toLowerCase().trim();
+    for (const key in productData) {
+      if (productData[key].name.toLowerCase() === normalized) {
+        return key;
+      }
+    }
+  }
+
+  // 3. Coba berdasarkan harga
+  if (targetPrice) {
+    for (const key in productData) {
+      if (productData[key].price === targetPrice) {
+        return key;
+      }
+    }
+  }
+
+  return null;
+}
+
+function renderProducts(productData) {
+  // Injeksi produk kustom bila dikirim via URL query (misal: jualan poster / langganan TKA)
+  const data = window._checkoutData;
+  if (data && (data.productId || data.productName)) {
+    const customKey = data.productId || 'custom_order';
+    if (!productData[customKey]) {
+      const isPremium = customKey === 'premium_1bulan' || customKey.includes('premium');
+      productData[customKey] = {
+        name: data.productName || (isPremium ? 'Langganan TKA Premium (1 Bulan)' : 'Paket Pesanan Khusus'),
+        price: data.price || (isPremium ? 10000 : 0),
+        token_amount: data.token || 0,
+        description: data.productName || (isPremium ? 'Akses 5 Sesi Latihan TKA Matematika Selama 1 Bulan' : 'Pesanan Khusus'),
+        type: isPremium ? 'subscription' : 'one_time'
+      };
+    }
+  }
+
+  productEl.innerHTML = '<option value="">-- Pilih Produk --</option>';
+  let hasProduct = false;
+  for (const key in productData) {
+    const p = productData[key];
+    if (p && p.name && p.price) {
+      hasProduct = true;
+      const opt = document.createElement("option");
+      opt.value = key;
+      opt.textContent = `${p.name} - ${formatRupiah(p.price)}`;
+      productEl.appendChild(opt);
+    }
+  }
+  if (!hasProduct) {
+    productEl.innerHTML = '<option value="">❌ Tidak ada produk tersedia</option>';
+    setStatus("⚠️ Belum ada produk yang tersedia", "warning");
+  }
+
+  // ======================= OTOMATIS PILIH PRODUK =======================
+  if (data && (data.productId || data.productName || data.price)) {
+    const foundKey = findProductKey(productData, data.productId, data.productName, data.price);
+    if (foundKey) {
+      productEl.value = foundKey;
+      productEl.disabled = true;
+      productEl.dispatchEvent(new Event('change'));
+      validateForm();
+    }
+  }
+}
+
+// ============================================================
+// 👤 TAMPILKAN FORM & LOAD USER DATA
+// ============================================================
+function enableCheckout(user) {
+  nameEl.value = user.displayName || user.name || window._checkoutData.name || "User";
+  emailEl.value = user.email || "";
+  if (window._checkoutData.phone) {
+    phoneEl.value = window._checkoutData.phone;
+  }
+  formEl.style.display = 'block';
+  loginSection.style.display = 'none';
+  const displayName = user.displayName || user.name || 'Pengguna';
+  setStatus(`✅ Login berhasil sebagai <strong>${displayName}</strong>`, 'success');
+
+  if (user.uid) {
+    const userRef = db.ref(`users/${user.uid}`);
+    userRef.once('value').then(snap => {
+      const data = snap.val() || {};
+      const badge = document.getElementById('creditBadge');
+      if (typeof data.credits === 'number') {
+        window._userCredits = data.credits;
+        if (badge) {
+          badge.style.display = 'block';
+          badge.textContent = `Kredit saat ini: ${data.credits}`;
+        }
+      }
+      if (data.phone && !phoneEl.value) {
+        phoneEl.value = data.phone;
+      }
+      validateForm();
+    }).catch(err => {
+      console.warn("Gagal membaca profil user:", err);
+    });
+  }
+
+  loadProducts();
+  validateForm();
+}
+
+function showLoginRequired() {
+  formEl.style.display = 'none';
+  loginSection.style.display = 'block';
+  setStatus('🔐 Login diperlukan untuk melanjutkan pembayaran', 'warning');
+}
+
+// ============================================================
+// 🔐 AUTH STATE (memakai auth & db milik halaman utama)
+// ============================================================
+let viewOpen = false;
+auth.onAuthStateChanged(async user => {
+  currentUser = user || null;
+  userToken = null;
+  if (user) {
+    try { userToken = await user.getIdToken(); } catch (err) { console.warn("Gagal get token:", err); }
+  }
+  if (!viewOpen) return;
+  if (user) enableCheckout(user);
+  else { showLoginRequired(); loadProducts(); }
+});
+
+// ============================================================
+// 📦 LOAD PRODUCTS
+// ============================================================
+async function loadProducts() {
+  try {
+    const snap = await Promise.race([
+      db.ref("product").once("value"),
+      new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), 2500))
+    ]);
+    const data = snap.val() || {};
+    if (data && Object.keys(data).length > 0) {
+      for (const key in data) {
+        if (!data[key].token_amount) data[key].token_amount = getTokenAmountFromKey(key);
+      }
+      products = { ...FALLBACK_PRODUCTS, ...data };
+      renderProducts(products);
+    } else {
+      products = { ...FALLBACK_PRODUCTS };
+      renderProducts(products);
+    }
+  } catch (err) {
+    products = { ...FALLBACK_PRODUCTS };
+    renderProducts(products);
+  }
+  validateForm();
+}
+
+// ============================================================
+// ============================================================
+// ✅ QRIS DANA DINAMIS (EMVCo Toko Poster Math315)
+// ============================================================
+const QRIS_STATIC_DANA = "00020101021126570011ID.DANA.WWW011893600915383556205402098355620540303UMI51440014ID.CO.QRIS.WWW0215ID10253755165860303UMI5204899953033605802ID5919Toko Poster Math3156014Kota Pekanbaru6105393936304DC0D";
+
+function calculateCRC16(str) {
+  let crc = 0xFFFF;
+  for (let i = 0; i < str.length; i++) {
+    crc ^= str.charCodeAt(i) << 8;
+    for (let j = 0; j < 8; j++) {
+      if ((crc & 0x8000) !== 0) {
+        crc = ((crc << 1) ^ 0x1021) & 0xFFFF;
+      } else {
+        crc = (crc << 1) & 0xFFFF;
+      }
+    }
+  }
+  return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+}
+
+function generateDynamicQris(nominal) {
+  let qris = QRIS_STATIC_DANA.trim();
+  if (qris.includes('6304')) {
+    qris = qris.substring(0, qris.lastIndexOf('6304'));
+  }
+  qris = qris.replace("010211", "010212");
+
+  const nominalStr = parseInt(nominal, 10).toString();
+  const lenStr = nominalStr.length.toString().padStart(2, '0');
+  const tag54 = `54${lenStr}${nominalStr}`;
+
+  const parts = qris.split("5802ID");
+  const newQrisWithoutCrc = `${parts[0]}${tag54}5802ID${parts[1]}6304`;
+  const newCrc = calculateCRC16(newQrisWithoutCrc);
+
+  return `${newQrisWithoutCrc}${newCrc}`;
+}
+
+let currentInvoiceNo = null;
+let currentQrisAmount = 0;
+let currentShippingCost = 0;
+let selectedShippingService = null;
+
+// ============================================================
+// 🚚 LOGIKA RAJAONGKIR PENGIRIMAN FISIK
+// ============================================================
+const needShippingEl = document.getElementById("needShipping");
+const shippingSectionEl = document.getElementById("shippingSection");
+const shippingProvinceEl = document.getElementById("shippingProvince");
+const shippingCityEl = document.getElementById("shippingCity");
+const shippingCourierEl = document.getElementById("shippingCourier");
+const shippingServiceEl = document.getElementById("shippingService");
+const shippingCostSummaryEl = document.getElementById("shippingCostSummary");
+const summaryProductPriceEl = document.getElementById("summaryProductPrice");
+const summaryShippingCostEl = document.getElementById("summaryShippingCost");
+const summaryTotalPriceEl = document.getElementById("summaryTotalPrice");
+
+const SHIPPING_API_BASE = window.location.origin.includes("localhost") || window.location.origin.includes("127.0.0.1")
+  ? "http://localhost:5000"
+  : "";
+
+const CLIENT_PROVINCES = [
+  { province_id: "1", province: "Bali" },
+  { province_id: "2", province: "Bangka Belitung" },
+  { province_id: "3", province: "Banten" },
+  { province_id: "4", province: "Bengkulu" },
+  { province_id: "5", province: "DI Yogyakarta" },
+  { province_id: "6", province: "DKI Jakarta" },
+  { province_id: "7", province: "Gorontalo" },
+  { province_id: "8", province: "Jambi" },
+  { province_id: "9", province: "Jawa Barat" },
+  { province_id: "10", province: "Jawa Tengah" },
+  { province_id: "11", province: "Jawa Timur" },
+  { province_id: "12", province: "Kalimantan Barat" },
+  { province_id: "13", province: "Kalimantan Selatan" },
+  { province_id: "14", province: "Kalimantan Tengah" },
+  { province_id: "15", province: "Kalimantan Timur" },
+  { province_id: "16", province: "Kalimantan Utara" },
+  { province_id: "17", province: "Kepulauan Riau" },
+  { province_id: "18", province: "Lampung" },
+  { province_id: "19", province: "Maluku" },
+  { province_id: "20", province: "Maluku Utara" },
+  { province_id: "21", province: "Nanggroe Aceh Darussalam (NAD)" },
+  { province_id: "22", province: "Nusa Tenggara Barat (NTB)" },
+  { province_id: "23", province: "Nusa Tenggara Timur (NTT)" },
+  { province_id: "24", province: "Papua" },
+  { province_id: "25", province: "Papua Barat" },
+  { province_id: "26", province: "Riau" },
+  { province_id: "27", province: "Sulawesi Barat" },
+  { province_id: "28", province: "Sulawesi Selatan" },
+  { province_id: "29", province: "Sulawesi Tengah" },
+  { province_id: "30", province: "Sulawesi Tenggara" },
+  { province_id: "31", province: "Sulawesi Utara" },
+  { province_id: "32", province: "Sumatera Barat" },
+  { province_id: "33", province: "Sumatera Selatan" },
+  { province_id: "34", province: "Sumatera Utara" }
+];
+
+const CLIENT_CITIES = [
+  // DKI Jakarta (6)
+  { city_id: "151", province_id: "6", province: "DKI Jakarta", type: "Kota", city_name: "Jakarta Barat" },
+  { city_id: "152", province_id: "6", province: "DKI Jakarta", type: "Kota", city_name: "Jakarta Pusat" },
+  { city_id: "153", province_id: "6", province: "DKI Jakarta", type: "Kota", city_name: "Jakarta Selatan" },
+  { city_id: "154", province_id: "6", province: "DKI Jakarta", type: "Kota", city_name: "Jakarta Timur" },
+  { city_id: "155", province_id: "6", province: "DKI Jakarta", type: "Kota", city_name: "Jakarta Utara" },
+
+  // Jawa Barat (9)
+  { city_id: "22", province_id: "9", province: "Jawa Barat", type: "Kota", city_name: "Bandung" },
+  { city_id: "23", province_id: "9", province: "Jawa Barat", type: "Kabupaten", city_name: "Bandung" },
+  { city_id: "54", province_id: "9", province: "Jawa Barat", type: "Kota", city_name: "Bekasi" },
+  { city_id: "55", province_id: "9", province: "Jawa Barat", type: "Kabupaten", city_name: "Bekasi" },
+  { city_id: "78", province_id: "9", province: "Jawa Barat", type: "Kota", city_name: "Bogor" },
+  { city_id: "79", province_id: "9", province: "Jawa Barat", type: "Kabupaten", city_name: "Bogor" },
+  { city_id: "115", province_id: "9", province: "Jawa Barat", type: "Kota", city_name: "Depok" },
+  { city_id: "468", province_id: "9", province: "Jawa Barat", type: "Kota", city_name: "Tasikmalaya" },
+  { city_id: "108", province_id: "9", province: "Jawa Barat", type: "Kota", city_name: "Cirebon" },
+
+  // Banten (3)
+  { city_id: "455", province_id: "3", province: "Banten", type: "Kota", city_name: "Tangerang" },
+  { city_id: "456", province_id: "3", province: "Banten", type: "Kota", city_name: "Tangerang Selatan" },
+  { city_id: "457", province_id: "3", province: "Banten", type: "Kabupaten", city_name: "Tangerang" },
+  { city_id: "402", province_id: "3", province: "Banten", type: "Kota", city_name: "Serang" },
+  { city_id: "106", province_id: "3", province: "Banten", type: "Kota", city_name: "Cilegon" },
+
+  // Jawa Tengah (10)
+  { city_id: "398", province_id: "10", province: "Jawa Tengah", type: "Kota", city_name: "Semarang" },
+  { city_id: "399", province_id: "10", province: "Jawa Tengah", type: "Kabupaten", city_name: "Semarang" },
+  { city_id: "444", province_id: "10", province: "Jawa Tengah", type: "Kota", city_name: "Surakarta (Solo)" },
+  { city_id: "74", province_id: "10", province: "Jawa Tengah", type: "Kabupaten", city_name: "Banyumas (Purwokerto)" },
+  { city_id: "249", province_id: "10", province: "Jawa Tengah", type: "Kota", city_name: "Magelang" },
+  { city_id: "427", province_id: "10", province: "Jawa Tengah", type: "Kabupaten", city_name: "Sragen" },
+  { city_id: "433", province_id: "10", province: "Jawa Tengah", type: "Kabupaten", city_name: "Sukoharjo" },
+
+  // DI Yogyakarta (5)
+  { city_id: "501", province_id: "5", province: "DI Yogyakarta", type: "Kota", city_name: "Yogyakarta" },
+  { city_id: "419", province_id: "5", province: "DI Yogyakarta", type: "Kabupaten", city_name: "Sleman" },
+  { city_id: "39", province_id: "5", province: "DI Yogyakarta", type: "Kabupaten", city_name: "Bantul" },
+  { city_id: "135", province_id: "5", province: "DI Yogyakarta", type: "Kabupaten", city_name: "Gunung Kidul" },
+  { city_id: "210", province_id: "5", province: "DI Yogyakarta", type: "Kabupaten", city_name: "Kulon Progo" },
+
+  // Jawa Timur (11)
+  { city_id: "444", province_id: "11", province: "Jawa Timur", type: "Kota", city_name: "Surabaya" },
+  { city_id: "255", province_id: "11", province: "Jawa Timur", type: "Kota", city_name: "Malang" },
+  { city_id: "409", province_id: "11", province: "Jawa Timur", type: "Kabupaten", city_name: "Sidoarjo" },
+  { city_id: "133", province_id: "11", province: "Jawa Timur", type: "Kabupaten", city_name: "Gresik" },
+  { city_id: "178", province_id: "11", province: "Jawa Timur", type: "Kota", city_name: "Kediri" },
+  { city_id: "250", province_id: "11", province: "Jawa Timur", type: "Kota", city_name: "Madiun" },
+
+  // Bali (1)
+  { city_id: "114", province_id: "1", province: "Bali", type: "Kota", city_name: "Denpasar" },
+  { city_id: "17", province_id: "1", province: "Bali", type: "Kabupaten", city_name: "Badung" },
+
+  // Sumatera & Lainnya
+  { city_id: "278", province_id: "34", province: "Sumatera Utara", type: "Kota", city_name: "Medan" },
+  { city_id: "318", province_id: "32", province: "Sumatera Barat", type: "Kota", city_name: "Padang" },
+  { city_id: "350", province_id: "26", province: "Riau", type: "Kota", city_name: "Pekanbaru" },
+  { city_id: "327", province_id: "33", province: "Sumatera Selatan", type: "Kota", city_name: "Palembang" },
+  { city_id: "21", province_id: "18", province: "Lampung", type: "Kota", city_name: "Bandar Lampung" },
+  { city_id: "254", province_id: "28", province: "Sulawesi Selatan", type: "Kota", city_name: "Makassar" },
+  { city_id: "387", province_id: "15", province: "Kalimantan Timur", type: "Kota", city_name: "Samarinda" },
+  { city_id: "19", province_id: "15", province: "Kalimantan Timur", type: "Kota", city_name: "Balikpapan" }
+];
+
+let provincesLoaded = false;
+
+async function loadProvinces() {
+  if (provincesLoaded) return;
+  shippingProvinceEl.innerHTML = '<option value="">⏳ Memuat daftar provinsi...</option>';
+  
+  let list = [];
+  try {
+    if (SHIPPING_API_BASE) {
+      const res = await fetch(`${SHIPPING_API_BASE}/api/shipping/provinces`);
+      if (res.ok) {
+        list = await res.json();
+      }
+    }
+  } catch (err) {
+    console.warn("Backend shipping endpoint offline, using client data:", err);
+  }
+
+  if (!list || !list.length) {
+    list = CLIENT_PROVINCES;
+  }
+
+  shippingProvinceEl.innerHTML = '<option value="">-- Pilih Provinsi --</option>';
+  list.forEach(prov => {
+    const opt = document.createElement("option");
+    opt.value = prov.province_id;
+    opt.textContent = prov.province;
+    shippingProvinceEl.appendChild(opt);
+  });
+  provincesLoaded = true;
+}
+
+async function loadCities(provinceId) {
+  if (!provinceId) {
+    shippingCityEl.innerHTML = '<option value="">-- Pilih Kota --</option>';
+    shippingCityEl.disabled = true;
+    return;
+  }
+  shippingCityEl.disabled = true;
+  shippingCityEl.innerHTML = '<option value="">⏳ Memuat kota/kabupaten...</option>';
+
+  let list = [];
+  try {
+    if (SHIPPING_API_BASE) {
+      const res = await fetch(`${SHIPPING_API_BASE}/api/shipping/cities?provinceId=${provinceId}`);
+      if (res.ok) {
+        list = await res.json();
+      }
+    }
+  } catch (err) {
+    console.warn("Backend cities endpoint offline, using client data:", err);
+  }
+
+  if (!list || !list.length) {
+    list = CLIENT_CITIES.filter(c => String(c.province_id) === String(provinceId));
+    if (list.length === 0) {
+      list = [{ city_id: "0", province_id: provinceId, type: "Wilayah", city_name: "Semua Kota di Provinsi Ini" }];
+    }
+  }
+
+  shippingCityEl.innerHTML = '<option value="">-- Pilih Kota / Kabupaten --</option>';
+  list.forEach(city => {
+    const opt = document.createElement("option");
+    opt.value = city.city_id;
+    opt.textContent = `${city.type || 'Kota'} ${city.city_name}`;
+    shippingCityEl.appendChild(opt);
+  });
+  shippingCityEl.disabled = false;
+}
+
+async function calculateShipping() {
+  const destinationCityId = shippingCityEl.value;
+  const courier = shippingCourierEl.value;
+  if (!destinationCityId) {
+    shippingServiceEl.innerHTML = '<option value="">-- Pilih Layanan Kurir --</option>';
+    shippingServiceEl.disabled = true;
+    currentShippingCost = 0;
+    updateShippingSummary();
+    updateQrisDisplay();
+    return;
+  }
+
+  shippingServiceEl.disabled = true;
+  shippingServiceEl.innerHTML = '<option value="">⏳ Menghitung ongkir...</option>';
+
+  let costs = [];
+  try {
+    if (SHIPPING_API_BASE) {
+      const res = await fetch(`${SHIPPING_API_BASE}/api/shipping/cost`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          destinationCityId,
+          courier,
+          customWeightInGram: 1000
+        })
+      });
+      if (res.ok) {
+        const result = await res.json();
+        costs = result.results?.[0]?.costs || [];
+      }
+    }
+  } catch (err) {
+    console.warn("Backend cost calculation offline, using standard rate table:", err);
+  }
+
+  // Fallback standar bila live tanpa server backend terpisah
+  if (!costs || !costs.length) {
+    const baseRate = courier === 'pos' ? 18000 : courier === 'tiki' ? 22000 : 20000;
+    costs = [
+      { service: 'REG', description: 'Layanan Reguler', cost: [{ value: baseRate, etd: '2-4' }] },
+      { service: 'EXP', description: 'Layanan Cepat / Express', cost: [{ value: baseRate + 12000, etd: '1-2' }] }
+    ];
+  }
+
+  shippingServiceEl.innerHTML = '<option value="">-- Pilih Layanan Pengiriman --</option>';
+  costs.forEach((c, idx) => {
+    const costVal = c.cost?.[0]?.value || 0;
+    const etd = c.cost?.[0]?.etd ? ` (${c.cost[0].etd} hari)` : '';
+    const opt = document.createElement("option");
+    opt.value = costVal;
+    opt.dataset.service = c.service;
+    opt.dataset.desc = c.description;
+    opt.textContent = `${c.service} - ${formatRupiah(costVal)}${etd}`;
+    shippingServiceEl.appendChild(opt);
+    if (idx === 0) {
+      opt.selected = true;
+      currentShippingCost = costVal;
+      selectedShippingService = `${courier.toUpperCase()} ${c.service}`;
+    }
+  });
+  shippingServiceEl.disabled = false;
+
+  updateShippingSummary();
+  updateQrisDisplay();
+  validateForm();
+}
+
+function updateShippingSummary() {
+  const selectedKey = productEl.value;
+  const product = products[selectedKey];
+  const productPrice = product ? Number(product.price) : 0;
+
+  if (needShippingEl.checked && currentShippingCost > 0) {
+    shippingCostSummaryEl.style.display = "block";
+    summaryProductPriceEl.textContent = formatRupiah(productPrice);
+    summaryShippingCostEl.textContent = `+ ${formatRupiah(currentShippingCost)}`;
+    summaryTotalPriceEl.textContent = formatRupiah(productPrice + currentShippingCost);
+  } else {
+    shippingCostSummaryEl.style.display = "none";
+  }
+}
+
+needShippingEl.addEventListener("change", () => {
+  if (needShippingEl.checked) {
+    shippingSectionEl.style.display = "block";
+    loadProvinces();
+  } else {
+    shippingSectionEl.style.display = "none";
+    currentShippingCost = 0;
+    selectedShippingService = null;
+  }
+  updateShippingSummary();
+  updateQrisDisplay();
+  validateForm();
+});
+
+shippingProvinceEl.addEventListener("change", (e) => {
+  loadCities(e.target.value);
+  currentShippingCost = 0;
+  updateShippingSummary();
+  updateQrisDisplay();
+});
+
+shippingCityEl.addEventListener("change", calculateShipping);
+shippingCourierEl.addEventListener("change", calculateShipping);
+shippingServiceEl.addEventListener("change", (e) => {
+  currentShippingCost = Number(e.target.value) || 0;
+  const opt = e.target.selectedOptions[0];
+  if (opt && opt.dataset.service) {
+    selectedShippingService = `${shippingCourierEl.value.toUpperCase()} ${opt.dataset.service}`;
+  }
+  updateShippingSummary();
+  updateQrisDisplay();
+  validateForm();
+});
+
+function getSelectedPaymentChannel() {
+  const radio = document.querySelector('input[name="payment_channel"]:checked');
+  return radio ? radio.value : 'qris';
+}
+
+function updateQrisDisplay() {
+  const selectedKey = productEl.value;
+  const product = products[selectedKey];
+  const channel = getSelectedPaymentChannel();
+  const qrisContainer = document.getElementById("qrisContainer");
+
+  if (channel === 'qris' && product && currentUser) {
+    qrisContainer.style.display = 'block';
+    payBtn.style.display = 'none';
+
+    if (!currentInvoiceNo) {
+      currentInvoiceNo = `INV-DANA-${Date.now().toString().slice(-6)}-${Math.floor(100 + Math.random() * 900)}`;
+    }
+    
+    // Total QRIS = Harga Produk + Ongkos Kirim (bila ada)
+    currentQrisAmount = Number(product.price) + (needShippingEl.checked ? currentShippingCost : 0);
+
+    document.getElementById("qrisAmountDisplay").textContent = formatRupiah(currentQrisAmount);
+    const shippingInfo = (needShippingEl.checked && selectedShippingService) ? ` + Ongkir ${selectedShippingService}` : '';
+    document.getElementById("qrisInvoiceDisplay").textContent = `${currentInvoiceNo} • ${product.name}${shippingInfo}`;
+
+    // Render QRCode QRIS DANA Dinamis (Standar EMVCo Bank Indonesia)
+    const qrDisplay = document.getElementById("qrisQrDisplay");
+    qrDisplay.innerHTML = "";
+    
+    const qrContent = generateDynamicQris(currentQrisAmount);
+    
+    new QRCode(qrDisplay, {
+      text: qrContent,
+      width: 170,
+      height: 170,
+      colorDark : "#000000",
+      colorLight : "#ffffff",
+      correctLevel : QRCode.CorrectLevel.M
+    });
+
+    // Simpan transaksi pending QRIS DANA ke Firebase
+    savePendingQrisTransaction(currentInvoiceNo, product, selectedKey);
+  } else {
+    qrisContainer.style.display = 'none';
+    payBtn.style.display = 'block';
+  }
+}
+
+let currentTxListener = null;
+
+function listenToTransactionStatus(invoiceNo) {
+  if (!invoiceNo) return;
+  if (currentTxListener) {
+    db.ref(`transactions/${currentTxListener}`).off();
+  }
+  currentTxListener = invoiceNo;
+  db.ref(`transactions/${invoiceNo}`).on('value', (snap) => {
+    const val = snap.val();
+    if (val && (val.status === 'paid' || val.status === 'success' || val.status === 'settlement')) {
+      setStatus("🎉 Pembayaran berhasil diverifikasi! Langganan Anda telah aktif.", "success");
+      const selectedKey = productEl.value;
+      const isSub = selectedKey === 'premium_1bulan' || (val.product_id && val.product_id.includes('premium'));
+      setTimeout(() => {
+        if (isSub) {
+          window.tutupCheckout();
+        } else {
+          window.tutupCheckout();
+        }
+      }, 2000);
+    }
+  });
+}
+
+async function savePendingQrisTransaction(invoiceNo, product, selectedKey) {
+  if (!currentUser) return;
+  try {
+    const isSubscription = selectedKey === 'premium_1bulan' || (selectedKey && selectedKey.includes('premium'));
+    await db.ref(`transactions/${invoiceNo}`).update({
+      customer_name: nameEl.value.trim() || currentUser.displayName || 'Customer',
+      customer_email: emailEl.value.trim() || currentUser.email || '',
+      product_name: product.name,
+      product_id: selectedKey,
+      product_type: isSubscription ? 'subscription' : 'token',
+      subscription_period_months: isSubscription ? 1 : 0,
+      amount: product.price,
+      token_amount: product.token_amount || 0,
+      payment_provider: 'QRIS_DANA',
+      payment_method: 'QRIS',
+      status: 'pending',
+      uid: currentUser.uid,
+      user_id: currentUser.uid,
+      created_at: Date.now()
+    });
+    listenToTransactionStatus(invoiceNo);
+  } catch (e) {
+    console.warn("Gagal auto-record transaksi pending QRIS:", e);
+  }
+}
+
+// Handler Download Gambar QRIS ke Galeri (Solusi A)
+document.getElementById("downloadQrisBtn").addEventListener("click", () => {
+  const container = document.getElementById("qrisQrDisplay");
+  const qrCanvas = container.querySelector("canvas");
+  const qrImg = container.querySelector("img");
+
+  if (!qrCanvas && (!qrImg || !qrImg.src)) {
+    alert("⚠️ Kode QR belum selesai dimuat. Silakan tunggu sebentar.");
+    return;
+  }
+
+  // Buat canvas gambar estetik untuk disimpan ke galeri
+  const exportCanvas = document.createElement("canvas");
+  const ctx = exportCanvas.getContext("2d");
+  exportCanvas.width = 320;
+  exportCanvas.height = 420;
+
+  // Background putih bersih dengan border halus
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, 320, 420);
+
+  // Header Title
+  ctx.fillStyle = "#0f172a";
+  ctx.font = "bold 16px sans-serif";
+  ctx.textAlign = "center";
+  ctx.fillText("QRIS Toko Math315", 160, 32);
+
+  ctx.fillStyle = "#64748b";
+  ctx.font = "11px sans-serif";
+  ctx.fillText("Scan / Upload dari Galeri E-Wallet", 160, 50);
+
+  // Gambar QR Code di tengah
+  const drawQR = (source) => {
+    ctx.drawImage(source, 70, 68, 180, 180);
+
+    // Box Nominal
+    ctx.fillStyle = "#f1f5f9";
+    ctx.fillRect(20, 262, 280, 64);
+
+    ctx.fillStyle = "#0284c7";
+    ctx.font = "bold 20px sans-serif";
+    ctx.fillText(formatRupiah(currentQrisAmount), 160, 292);
+
+    ctx.fillStyle = "#64748b";
+    ctx.font = "11px monospace";
+    ctx.fillText(currentInvoiceNo || "INV-QRIS-DANA", 160, 314);
+
+    // Footer Info
+    ctx.fillStyle = "#94a3b8";
+    ctx.font = "10px sans-serif";
+    ctx.fillText("BCA • Mandiri • BRI • DANA • GoPay • OVO", 160, 354);
+    ctx.fillText("1. Buka App E-Wallet > Scan > Pilih Galeri", 160, 374);
+    ctx.fillText("2. Upload foto QR ini untuk menyelesaikan bayar", 160, 390);
+
+    // Eksekusi Download File
+    const link = document.createElement("a");
+    link.download = `QRIS-${currentInvoiceNo || 'Math315'}.png`;
+    link.href = exportCanvas.toDataURL("image/png");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    setStatus("✅ Gambar QRIS berhasil diunduh ke galeri! Buka aplikasi e-wallet Anda lalu upload dari galeri.", "success");
+  };
+
+  if (qrCanvas) {
+    drawQR(qrCanvas);
+  } else if (qrImg && qrImg.src) {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => drawQR(img);
+    img.src = qrImg.src;
+  }
+});
+
+// Handler WhatsApp Konfirmasi
+document.getElementById("confirmWaBtn").addEventListener("click", () => {
+  if (!currentUser || !currentInvoiceNo) return;
+  const selectedKey = productEl.value;
+  const product = products[selectedKey] || { name: 'Langganan TKA Premium (1 Bulan)', price: currentQrisAmount };
+  const adminWa = "6282170505306"; // Nomor WhatsApp Admin
+  const isSub = selectedKey === 'premium_1bulan' || (selectedKey && selectedKey.includes('premium'));
+
+  const text = `Halo Admin Portal Matematika, saya ingin membayar melalui QRIS.\n\n` +
+    `📄 *No Invoice:* ${currentInvoiceNo}\n` +
+    `👤 *Nama:* ${nameEl.value.trim() || currentUser.displayName || 'User'}\n` +
+    `📧 *Email:* ${emailEl.value.trim() || currentUser.email || ''}\n` +
+    `📦 *Paket:* ${product.name}\n` +
+    `💰 *Nominal:* ${formatRupiah(currentQrisAmount || product.price)}\n` +
+    `🆔 *UID:* ${currentUser.uid}\n\n` +
+    `Mohon kirimkan gambar QRIS untuk pembayaran ini. Setelah membayar, saya akan mengirim bukti transaksi. Terima kasih!`;
+
+  window.open(`https://wa.me/${adminWa}?text=${encodeURIComponent(text)}`, '_blank');
+});
+
+document.querySelectorAll('input[name="payment_channel"]').forEach(r => {
+  r.addEventListener('change', () => {
+    updateQrisDisplay();
+    validateForm();
+  });
+});
+
+function validateForm() {
+  const phoneOk = validPhone(phoneEl.value.trim());
+  const productSelected = productEl.value !== "" && productEl.value !== null;
+  const userLoggedIn = currentUser !== null;
+
+  payBtn.disabled = !(phoneOk && productSelected && userLoggedIn);
+  phoneEl.style.borderColor = (!phoneOk && phoneEl.value) ? "#dc3545" : "#e0e0e0";
+}
+
+phoneEl.addEventListener("input", validateForm);
+productEl.addEventListener("change", () => {
+  const selectedKey = productEl.value;
+  const product = products[selectedKey];
+  if (selectedKey && product) {
+    priceEl.innerHTML = `${formatRupiah(product.price)}<br><small>${product.name}</small>`;
+  } else {
+    priceEl.innerHTML = "Rp -";
+  }
+  currentInvoiceNo = null; // reset invoice untuk produk baru
+
+  // Sembunyikan opsi pengiriman fisik jika produk adalah digital (langganan atau token)
+  const isDigital = selectedKey === 'premium_1bulan' || selectedKey.startsWith('token_') || (product && product.type === 'subscription');
+  const shippingToggle = document.getElementById("shippingToggleSection");
+  if (shippingToggle) {
+    shippingToggle.style.display = isDigital ? 'none' : 'block';
+    if (isDigital && needShippingEl && needShippingEl.checked) {
+      needShippingEl.checked = false;
+      document.getElementById("shippingSection").style.display = 'none';
+      currentShippingCost = 0;
+      selectedShippingService = null;
+    }
+  }
+
+  updateQrisDisplay();
+  validateForm();
+});
+
+// ============================================================
+// 🔐 TOMBOL LOGIN GOOGLE
+// ============================================================
+loginBtn.addEventListener('click', async () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  loginBtn.disabled = true;
+  loginBtn.textContent = '⏳ Memproses...';
+  setStatus('⏳ Mengarahkan ke Google...', 'info');
+  try {
+    await auth.signInWithPopup(provider);
+  } catch (error) {
+    console.error('❌ Login gagal:', error);
+    let errorMsg = error.message;
+    if (error.code === 'auth/popup-blocked') errorMsg = 'Popup diblokir oleh browser. Izinkan popup untuk situs ini.';
+    else if (error.code === 'auth/popup-closed-by-user') errorMsg = 'Popup ditutup sebelum login selesai. Coba lagi.';
+    setStatus(`❌ ${errorMsg}`, 'error');
+    loginBtn.disabled = false;
+    loginBtn.textContent = 'Login dengan Google';
+  }
+});
+
+// ============================================================
+// 💳 SUBMIT PEMBAYARAN GATEWAY
+// ============================================================
+document.getElementById("form").addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!currentUser) { alert("Anda belum login. Silakan login terlebih dahulu."); return; }
+  try { userToken = await currentUser.getIdToken(true); } catch (err) {}
+  if (!userToken) { alert("Token autentikasi tidak tersedia. Refresh halaman."); return; }
+  const selectedKey = productEl.value;
+  if (!selectedKey) { alert("Pilih produk terlebih dahulu."); return; }
+  const selectedProduct = products[selectedKey];
+  if (!selectedProduct) { alert("Produk tidak valid."); return; }
+  const phone = phoneEl.value.trim();
+  if (!validPhone(phone)) { alert("Nomor WhatsApp tidak valid. Gunakan format 08xxxxxxxxxx"); return; }
+
+  payBtn.disabled = true;
+  setStatus('<span class="loading"></span> Memproses transaksi...', "info");
+
+  try {
+    await db.ref(`users/${currentUser.uid}`).update({
+      phone, name: nameEl.value.trim(), updated_at: Date.now()
+    });
+    const timestamp = Date.now();
+    const invoice = `INV${timestamp.toString().slice(-8)}${Math.random().toString(36).substring(2, 5).toUpperCase()}`;
+    const sanitizedProductName = (selectedProduct.name || "Product")
+      .replace(/[^a-zA-Z0-9 ]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, 50) || "Product";
+
+    const amount = Number(selectedProduct.price);
+    const tokenAmount = selectedProduct.token_amount || 0;
+
+    const apiPayload = {
+      invoice_no: invoice,
+      amount,
+      cust_name: nameEl.value.trim(),
+      cust_email: emailEl.value.trim(),
+      msisdn: phone,
+      uid: currentUser.uid,
+      product_id: selectedKey,
+      token_amount: tokenAmount,
+      item: [{ product: sanitizedProductName, qty: 1, amount }]
+    };
+
+    const res = await fetch(`${API_BASE}/api/create-transaction`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${userToken}` },
+      body: JSON.stringify(apiPayload)
+    });
+    const responseText = await res.text();
+    let data;
+    try { data = JSON.parse(responseText); } catch (parseError) { throw new Error(`Server error: ${responseText.substring(0, 100)}`); }
+    if (!res.ok || !data.success) throw new Error(data.message || `Transaksi gagal (${res.status})`);
+    if (!data.payment_url) throw new Error("Payment URL tidak ditemukan dalam response");
+
+    const billNo = data.bill_no || invoice;
+    await db.ref(`transactions/${billNo}`).update({
+      product_id: selectedKey, user_id: currentUser.uid, status: 'pending', created_at: Date.now()
+    });
+
+    setStatus("✅ Transaksi berhasil! Mengarahkan ke halaman pembayaran...", "success");
+    localStorage.setItem("last_bill_no", billNo);
+    localStorage.setItem("last_trx_id", data.trx_id || billNo);
+    setTimeout(() => { window.location.href = data.payment_url; }, 1500);
+  } catch (err) {
+    console.error("❌ Error transaksi:", err);
+    let errorMessage = err.message;
+    if (errorMessage.includes("Failed to connect") || errorMessage.includes("fetch")) {
+      errorMessage = "Gagal terhubung ke server pembayaran. Silakan coba lagi.";
+    }
+    setStatus(`❌ ${errorMessage}`, "error");
+    payBtn.disabled = false;
+    validateForm();
+  }
+});
+
+// ============================================================
+// 🚀 BUKA / TUTUP CHECKOUT
+// ============================================================
+const viewEl = document.getElementById("checkoutView");
+
+window.bukaCheckout = function (p) {
+  setCheckoutData(p);
+  productEl.disabled = false;
+  currentInvoiceNo = null;
+  currentShippingCost = 0;
+  selectedShippingService = null;
+  document.getElementById("qrisContainer").style.display = 'none';
+  payBtn.style.display = 'block';
+  priceEl.innerHTML = "Rp -";
+  viewOpen = true;
+  viewEl.style.display = 'flex';
+  viewEl.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+  if (currentUser) enableCheckout(currentUser);
+  else { showLoginRequired(); loadProducts(); }
+  const d = window._checkoutData;
+  if (d && d.productId) {
+    setStatus(`📦 Produk yang dipilih: ${d.productName || 'Langganan TKA Premium (1 Bulan)'} - ${formatRupiah(d.price || 10000)}`, "info");
+  }
+};
+
+window.tutupCheckout = function () {
+  viewOpen = false;
+  viewEl.style.display = 'none';
+  document.body.style.overflow = '';
+  if (currentTxListener) { db.ref(`transactions/${currentTxListener}`).off(); currentTxListener = null; }
+};
+
+document.getElementById("backLink").addEventListener("click", e => { e.preventDefault(); window.tutupCheckout(); });
+console.log("🚀 Checkout Math315 (QRIS DANA + Faspay) siap!");
+
+})();
+</script>
+</body>
+</html>

@@ -8,11 +8,11 @@
     "android:debug": "cd android && ./gradlew assembleDebug"
   },
   "dependencies": {
-    "@capacitor/android": "^7.4.3",
-    "@capacitor/core": "^7.4.3"
+    "@capacitor/android": "^7.6.10",
+    "@capacitor/core": "^7.6.10"
   },
   "devDependencies": {
-    "@capacitor/cli": "^7.4.3",
+    "@capacitor/cli": "^7.6.10",
     "typescript": "^7.0.2"
   }
 }
