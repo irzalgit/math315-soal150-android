@@ -2,9 +2,16 @@ name: Build Android APK
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Versi release, contoh v1.0.4'
+        required: true
+      catatan:
+        description: 'Catatan singkat, contoh Tambah halaman SD'
+        required: false
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -34,14 +41,12 @@ jobs:
         env:
           KS: ${{ secrets.DEBUG_KEYSTORE_BASE64 }}
         run: |
-          echo "panjang secret: ${#KS}"
           if [ -z "$KS" ]; then
             echo "Secret DEBUG_KEYSTORE_BASE64 kosong atau tidak terbaca"
             exit 1
           fi
           mkdir -p ~/.android
           echo "$KS" | tr -d ' \r\n' | base64 -d > ~/.android/debug.keystore
-          ls -l ~/.android/debug.keystore
 
       - name: Build debug APK
         run: cd android && ./gradlew assembleDebug
@@ -52,3 +57,10 @@ jobs:
           name: math315-soal150-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
+
+      - name: Buat Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.version }}
+          name: Soal 150 SMP APK ${{ inputs.version }} ${{ inputs.catatan && format('({0})', inputs.catatan) || '' }}
+          files: android/app/build/outputs/apk/debug/app-debug.apk
