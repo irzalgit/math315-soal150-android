@@ -11,6 +11,7 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(GoogleAuth.class);
+        registerPlugin(SoalKotlinPlugin.class);
         super.onCreate(savedInstanceState);
     }
 
