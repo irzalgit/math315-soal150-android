@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rumus Matematika SMP</title>
+<script src="capacitor.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css">
 <style>
 :root{
@@ -210,6 +211,10 @@ footer{max-width:1100px;margin:10px auto 40px;padding:0 16px;color:var(--muted);
 <body>
 <header>
   <div class="wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <a href="index.html" style="color:var(--accent);text-decoration:none;font-weight:bold;font-size:0.85rem;">← Menu Utama</a>
+      <a href="login.html?redirect=soal.html" style="color:var(--accent);text-decoration:none;font-weight:bold;font-size:0.85rem;" id="navAuthLink">👤 Akun & Login</a>
+    </div>
     <div>
       <h1>Rumus Matematika SMP</h1>
       <div class="sub" id="sub"></div>
@@ -368,8 +373,11 @@ footer{max-width:1100px;margin:10px auto 40px;padding:0 16px;color:var(--muted);
   <div id="status" class="status info"><span class="loading"></span>Memeriksa login...</div>
 
   <div id="loginSection" style="display: none; text-align: center; margin-top: 20px;">
-    <p style="color: #333; margin-bottom: 15px;">🔐 Silakan login untuk melanjutkan pembayaran</p>
-    <button id="loginBtn" class="google-btn">Login dengan Google</button>
+    <p style="color: #333; margin-bottom: 12px;">🔐 Silakan masuk untuk melanjutkan transaksi</p>
+    <div style="display:flex;flex-direction:column;gap:8px;max-width:320px;margin:0 auto;">
+      <a href="login.html?redirect=soal.html" class="prem-btn prem-btn-primary" style="display:block;text-align:center;text-decoration:none;padding:12px;font-weight:bold;">📱 Masuk via WhatsApp / Email</a>
+      <button id="loginBtn" class="google-btn" style="margin:0;">Login dengan Google</button>
+    </div>
   </div>
 </div>
 </div>
@@ -386,7 +394,7 @@ footer{max-width:1100px;margin:10px auto 40px;padding:0 16px;color:var(--muted);
     <div id="premModalUserStatus" style="font-size:13.5px;margin-bottom:14px;color:var(--muted)"></div>
     <div class="prem-modal-actions">
       <button type="button" class="prem-btn prem-btn-secondary" id="premModalDismiss">Tutup</button>
-      <button type="button" class="prem-btn prem-btn-primary" id="premModalLogin" style="display:none">🔑 Masuk dengan Google</button>
+      <a href="login.html?redirect=soal.html" class="prem-btn prem-btn-primary" id="premModalLogin" style="display:none;text-decoration:none;align-items:center;justify-content:center;">🔑 Masuk / Aktivasi</a>
       <button type="button" class="prem-btn prem-btn-gold" id="premModalCheckout">⭐ Langganan Rp 10.000</button>
     </div>
   </div>
@@ -395,6 +403,7 @@ footer{max-width:1100px;margin:10px auto 40px;padding:0 16px;color:var(--muted);
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="auth.js"></script>
 <script>
 /* ===== Premium: rumus nomor 1-5 gratis, nomor 6 dst terkunci ===== */
 var FREE_LIMIT = 5;
@@ -426,7 +435,59 @@ function namaUser(){ return currentUser ? (currentUser.displayName || currentUse
 function esc(t){ var d = document.createElement('div'); d.textContent = t == null ? '' : String(t); return d.innerHTML; }
 
 async function loginGoogle(){
-  if (!auth) return;
+  if (!auth) {
+    alert('Firebase Auth belum siap. Silakan muat ulang aplikasi.');
+    return;
+  }
+
+  // Cek apakah berjalan di Capacitor Android / Native
+  var isNative = (typeof window.Capacitor !== 'undefined' && 
+                  typeof window.Capacitor.isNativePlatform === 'function' && 
+                  window.Capacitor.isNativePlatform()) ||
+                 (typeof window.androidBridge !== 'undefined');
+
+  if (isNative) {
+    try {
+      var GoogleAuth = (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.GoogleAuth) || 
+                       (window.Capacitor && typeof window.Capacitor.registerPlugin === 'function' && window.Capacitor.registerPlugin('GoogleAuth')) ||
+                       (window.Plugins && window.Plugins.GoogleAuth);
+
+      if (!GoogleAuth) {
+        throw new Error('Plugin GoogleAuth belum terdeteksi di native.');
+      }
+
+      try {
+        await GoogleAuth.initialize({
+          clientId: '9019551034-tt3010rv8bbltqtoe5jmj9uvj1m6chia.apps.googleusercontent.com',
+          scopes: ['profile', 'email'],
+          grantOfflineAccess: true
+        });
+      } catch (e) {
+        console.warn('GoogleAuth.initialize warn:', e);
+      }
+
+      var googleUser = await GoogleAuth.signIn();
+      var idToken = (googleUser && googleUser.authentication && googleUser.authentication.idToken) || 
+                    (googleUser && googleUser.idToken);
+
+      if (!idToken) {
+        throw new Error('Token autentikasi Google tidak ditemukan.');
+      }
+
+      var credential = firebase.auth.GoogleAuthProvider.credential(idToken);
+      await auth.signInWithCredential(credential);
+      return;
+    } catch (err) {
+      console.error('Login native Google gagal:', err);
+      var msg = err && err.message ? err.message : String(err);
+      if (msg.includes('cancel') || msg.includes('12501') || msg.includes('closed')) {
+        return; // Dibatalkan oleh user
+      }
+      alert('Login Google gagal: ' + msg);
+      return;
+    }
+  }
+
   var provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({prompt: 'select_account'});
   try { await auth.signInWithPopup(provider); }
@@ -454,11 +515,15 @@ function buatKotakKunci(nomor){
   box.innerHTML = '<h4>🔒 Pembahasan rumus (' + nomor + ') khusus Premium</h4><p>Langkah penyelesaian dan jawaban dibuka untuk member <strong>TKA Premium</strong>. Pembahasan rumus nomor 1 sampai ' + FREE_LIMIT + ' gratis.</p>';
   var aksi = document.createElement('div'); aksi.className = 'aksi';
   if (!currentUser) {
-    var bl = document.createElement('button'); bl.type = 'button'; bl.className = 'prem-btn prem-btn-primary'; bl.textContent = '🔑 Masuk dengan Google';
-    bl.addEventListener('click', loginGoogle); aksi.appendChild(bl);
+    var bl = document.createElement('a'); bl.className = 'prem-btn prem-btn-primary'; bl.textContent = '🔑 Masuk / Akun';
+    bl.href = 'login.html?redirect=soal.html'; bl.style.textDecoration = 'none';
+    aksi.appendChild(bl);
   }
   var bb = document.createElement('button'); bb.type = 'button'; bb.className = 'prem-btn prem-btn-gold'; bb.textContent = '⭐ Langganan Rp 10.000';
   bb.addEventListener('click', goToCheckout); aksi.appendChild(bb);
+  var bv = document.createElement('a'); bv.className = 'prem-btn'; bv.style.background = '#5c6bc0'; bv.style.color = '#fff'; bv.style.textDecoration = 'none'; bv.textContent = '🎫 Voucher';
+  bv.href = 'login.html?tab=tab-voucher&redirect=soal.html';
+  aksi.appendChild(bv);
   box.appendChild(aksi);
   return box;
 }
@@ -470,6 +535,7 @@ function renderUserStatus(){
   var actions = document.getElementById('premActions');
   var modalLogin = document.getElementById('premModalLogin');
   var modalStatus = document.getElementById('premModalUserStatus');
+  var navLink = document.getElementById('navAuthLink');
   if (!card || !badge || !text || !actions) return;
   var bind = function(id, fn){ var b = document.getElementById(id); if (b) b.addEventListener('click', fn); };
   if (!authLoaded) {
@@ -477,26 +543,29 @@ function renderUserStatus(){
     text.textContent = 'Memeriksa status akun dan langganan Anda...'; actions.innerHTML = '';
     return;
   }
+  if (navLink) {
+    navLink.textContent = currentUser ? ('👤 ' + namaUser()) : '🔑 Masuk / Akun';
+  }
   if (isPremium) {
     card.className = 'prem-card is-premium'; badge.className = 'prem-badge prem'; badge.textContent = '👑 Premium Aktif';
     var exp = premiumUntil ? ' (s/d ' + new Date(premiumUntil).toLocaleDateString('id-ID', {day: 'numeric', month: 'short', year: 'numeric'}) + ')' : '';
     text.innerHTML = 'Halo, <strong>' + esc(namaUser()) + '</strong>' + exp + '. Seluruh pembahasan contoh soal terbuka!';
     actions.innerHTML = '<button type="button" class="prem-btn prem-btn-danger" id="btnLogout">Keluar</button>';
-    bind('btnLogout', function(){ if (auth) auth.signOut(); });
+    bind('btnLogout', function(){ if (typeof MathAuth !== 'undefined') MathAuth.logout(); else if (auth) auth.signOut(); });
     if (modalLogin) modalLogin.style.display = 'none';
-    if (modalStatus && currentUser) modalStatus.innerHTML = 'Akun Anda: <strong>' + esc(currentUser.email) + '</strong> (👑 Premium Aktif)';
+    if (modalStatus && currentUser) modalStatus.innerHTML = 'Akun Anda: <strong>' + esc(currentUser.email || namaUser()) + '</strong> (👑 Premium Aktif)';
   } else if (currentUser) {
     card.className = 'prem-card not-premium'; badge.className = 'prem-badge free'; badge.textContent = 'Akun Reguler';
     text.innerHTML = 'Masuk sebagai <strong>' + esc(namaUser()) + '</strong>. Pembahasan rumus nomor ' + (FREE_LIMIT + 1) + ' dan seterusnya dikunci untuk member Premium.';
-    actions.innerHTML = '<button type="button" class="prem-btn prem-btn-gold" id="btnBuyPrem">⭐ Upgrade Premium (Rp 10.000)</button><button type="button" class="prem-btn prem-btn-danger" id="btnLogout">Keluar</button>';
-    bind('btnBuyPrem', goToCheckout); bind('btnLogout', function(){ if (auth) auth.signOut(); });
+    actions.innerHTML = '<button type="button" class="prem-btn prem-btn-gold" id="btnBuyPrem">⭐ Upgrade Premium (Rp 10.000)</button><a href="login.html?tab=tab-voucher&redirect=soal.html" class="prem-btn" style="background:#5c6bc0;color:white;text-decoration:none;display:inline-flex;align-items:center;">🎫 Voucher</a><button type="button" class="prem-btn prem-btn-danger" id="btnLogout">Keluar</button>';
+    bind('btnBuyPrem', goToCheckout); bind('btnLogout', function(){ if (typeof MathAuth !== 'undefined') MathAuth.logout(); else if (auth) auth.signOut(); });
     if (modalLogin) modalLogin.style.display = 'none';
-    if (modalStatus) modalStatus.innerHTML = 'Anda masuk sebagai <strong>' + esc(currentUser.email) + '</strong> (belum Premium).';
+    if (modalStatus) modalStatus.innerHTML = 'Anda masuk sebagai <strong>' + esc(currentUser.email || namaUser()) + '</strong> (belum Premium).';
   } else {
     card.className = 'prem-card not-premium'; badge.className = 'prem-badge free'; badge.textContent = '🔒 Belum Login';
     text.innerHTML = 'Pembahasan rumus nomor 1 sampai ' + FREE_LIMIT + ' gratis. Nomor ' + (FREE_LIMIT + 1) + ' dan seterusnya khusus anggota <strong>TKA Premium</strong>.';
-    actions.innerHTML = '<button type="button" class="prem-btn prem-btn-primary" id="btnLoginTop">🔑 Masuk dengan Google</button><button type="button" class="prem-btn prem-btn-gold" id="btnBuyPrem">⭐ Beli Premium (Rp 10.000)</button>';
-    bind('btnLoginTop', loginGoogle); bind('btnBuyPrem', goToCheckout);
+    actions.innerHTML = '<a href="login.html?redirect=soal.html" class="prem-btn prem-btn-primary" id="btnLoginTop" style="text-decoration:none;">🔑 Masuk / Buat Akun</a><button type="button" class="prem-btn prem-btn-gold" id="btnBuyPrem">⭐ Beli Premium (Rp 10.000)</button><a href="login.html?tab=tab-voucher&redirect=soal.html" class="prem-btn" style="background:#5c6bc0;color:white;text-decoration:none;display:inline-flex;align-items:center;">🎫 Voucher</a>';
+    bind('btnBuyPrem', goToCheckout);
     if (modalLogin) modalLogin.style.display = 'inline-flex';
     if (modalStatus) modalStatus.textContent = 'Anda belum login. Masuk atau beli paket untuk membuka pembahasan.';
   }
@@ -1652,18 +1721,18 @@ productEl.addEventListener("change", () => {
 // 🔐 TOMBOL LOGIN GOOGLE
 // ============================================================
 loginBtn.addEventListener('click', async () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
   loginBtn.disabled = true;
   loginBtn.textContent = '⏳ Memproses...';
   setStatus('⏳ Mengarahkan ke Google...', 'info');
   try {
-    await auth.signInWithPopup(provider);
+    await loginGoogle();
   } catch (error) {
     console.error('❌ Login gagal:', error);
     let errorMsg = error.message;
     if (error.code === 'auth/popup-blocked') errorMsg = 'Popup diblokir oleh browser. Izinkan popup untuk situs ini.';
     else if (error.code === 'auth/popup-closed-by-user') errorMsg = 'Popup ditutup sebelum login selesai. Coba lagi.';
     setStatus(`❌ ${errorMsg}`, 'error');
+  } finally {
     loginBtn.disabled = false;
     loginBtn.textContent = 'Login dengan Google';
   }

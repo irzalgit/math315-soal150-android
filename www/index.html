@@ -4,7 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#102b50">
-<title>Portal Matematika</title>
+<title>Portal Matematika - Math315</title>
+<script src="capacitor.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="auth.js"></script>
 
 <style>
 *{box-sizing:border-box}
@@ -18,7 +23,7 @@ header{
  background:linear-gradient(135deg,#102b50,#1766a5);
  color:white;
  text-align:center;
- padding:48px 20px 55px;
+ padding:40px 20px 48px;
  border-radius:0 0 28px 28px;
 }
 .logo{
@@ -28,24 +33,116 @@ header{
  color:#a9d8ff;
 }
 h1{
- font-size:32px;
- margin:18px 0 10px;
+ font-size:28px;
+ margin:14px 0 8px;
 }
 header p{
- font-size:15px;
- line-height:1.6;
+ font-size:14px;
+ line-height:1.5;
  color:#dcecff;
+ margin:0 auto;
+ max-width:480px;
 }
+
 main{
  max-width:650px;
- margin:-20px auto 0;
+ margin:-24px auto 0;
  padding:0 18px 35px;
 }
+
+/* User Profile & Auth Status Card */
+.auth-status-card{
+ background:white;
+ border-radius:18px;
+ padding:16px 20px;
+ margin-bottom:20px;
+ box-shadow:0 6px 18px rgba(24,49,83,0.08);
+ border:1px solid #e4ebf4;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ flex-wrap:wrap;
+ gap:12px;
+}
+.auth-left{
+ display:flex;
+ align-items:center;
+ gap:12px;
+}
+.auth-avatar{
+ width:42px;
+ height:42px;
+ border-radius:12px;
+ background:#e8f3ff;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:22px;
+}
+.auth-title{
+ font-size:14px;
+ font-weight:bold;
+ color:#102b50;
+ margin-bottom:2px;
+}
+.auth-sub{
+ font-size:12px;
+ color:#61748d;
+ display:flex;
+ align-items:center;
+ gap:6px;
+}
+.badge-status{
+ display:inline-block;
+ padding:2px 8px;
+ border-radius:12px;
+ font-size:11px;
+ font-weight:bold;
+}
+.badge-prem{
+ background:#fff3cd;
+ color:#856404;
+}
+.badge-reg{
+ background:#e2eaf4;
+ color:#2d4360;
+}
+.auth-actions{
+ display:flex;
+ align-items:center;
+ gap:8px;
+}
+.btn-auth{
+ display:inline-block;
+ padding:8px 14px;
+ font-size:12.5px;
+ font-weight:bold;
+ border-radius:10px;
+ text-decoration:none;
+ border:none;
+ cursor:pointer;
+ transition:background 0.2s;
+}
+.btn-auth-primary{
+ background:#1766a5;
+ color:white;
+}
+.btn-auth-gold{
+ background:#e69500;
+ color:white;
+}
+.btn-auth-outline{
+ background:#f0f4f9;
+ color:#475b75;
+}
+
 .intro{
  text-align:center;
- font-size:17px;
+ font-size:16px;
  font-weight:bold;
- margin:30px 0 20px;
+ margin:24px 0 16px;
+ color:#354a67;
+ letter-spacing:0.5px;
 }
 .card{
  background:white;
@@ -88,6 +185,7 @@ h2{margin:0 0 8px;font-size:22px}
  padding:15px;
  border-radius:12px;
  font-weight:bold;
+ font-size:15px;
 }
 .sd .btn{background:#16965b}
 footer{
@@ -109,6 +207,20 @@ footer{
 </header>
 
 <main>
+ <!-- STATUS AKUN & LOGIN -->
+ <div class="auth-status-card" id="authStatusCard">
+   <div class="auth-left">
+     <div class="auth-avatar" id="authAvatar">👤</div>
+     <div>
+       <div class="auth-title" id="authTitle">Memeriksa Akun...</div>
+       <div class="auth-sub" id="authSub">Silakan tunggu sebentar</div>
+     </div>
+   </div>
+   <div class="auth-actions" id="authActions">
+     <a href="login.html?redirect=index.html" class="btn-auth btn-auth-primary">🔑 Masuk / Daftar</a>
+   </div>
+ </div>
+
  <div class="intro">PILIH MATERI BELAJAR</div>
 
  <section class="card sd">
@@ -139,6 +251,40 @@ footer{
 <footer>
  Math315 · Portal Belajar Matematika
 </footer>
+
+<script>
+MathAuth.onStateChange(function(st) {
+  var avatar = document.getElementById('authAvatar');
+  var title = document.getElementById('authTitle');
+  var sub = document.getElementById('authSub');
+  var actions = document.getElementById('authActions');
+
+  if (st.user || st.isPremium) {
+    avatar.textContent = st.isPremium ? '👑' : '🎓';
+    title.textContent = 'Halo, ' + MathAuth.getUserName();
+    
+    if (st.isPremium) {
+      var expStr = st.premiumUntil ? ' · s/d ' + new Date(st.premiumUntil).toLocaleDateString('id-ID', {day:'numeric',month:'short'}) : '';
+      sub.innerHTML = '<span class="badge-status badge-prem">👑 Premium Aktif' + expStr + '</span>';
+      actions.innerHTML = '<button type="button" class="btn-auth btn-auth-outline" onclick="logoutConfirm()">Keluar</button>';
+    } else {
+      sub.innerHTML = '<span class="badge-status badge-reg">Akun Reguler</span> <a href="login.html?tab=tab-voucher&redirect=index.html" style="font-size:12px;color:#1766a5;text-decoration:none;">(Punya Voucher?)</a>';
+      actions.innerHTML = '<a href="login.html?tab=tab-voucher&redirect=index.html" class="btn-auth btn-auth-gold">🎫 Voucher</a><button type="button" class="btn-auth btn-auth-outline" onclick="logoutConfirm()">Keluar</button>';
+    }
+  } else {
+    avatar.textContent = '🔒';
+    title.textContent = 'Belum Masuk';
+    sub.innerHTML = 'Masuk untuk membuka seluruh pembahasan';
+    actions.innerHTML = '<a href="login.html?redirect=index.html" class="btn-auth btn-auth-primary">🔑 Masuk / Daftar</a>';
+  }
+});
+
+function logoutConfirm() {
+  if (confirm('Yakin ingin keluar dari akun?')) {
+    MathAuth.logout();
+  }
+}
+</script>
 
 </body>
 </html>

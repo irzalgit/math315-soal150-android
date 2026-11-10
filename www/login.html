@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#102b50">
+<title>Masuk / Aktivasi Akun - Math315</title>
+<script src="capacitor.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="auth.js"></script>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f1f5fb;
+  color:#183153;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+header{
+  background:linear-gradient(135deg,#102b50,#1766a5);
+  color:white;
+  padding:24px 20px 30px;
+  border-radius:0 0 24px 24px;
+  position:relative;
+}
+.back-link{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  color:#cce4ff;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:bold;
+  margin-bottom:12px;
+}
+.logo-badge{
+  font-size:12px;
+  letter-spacing:2px;
+  font-weight:bold;
+  color:#a9d8ff;
+  text-transform:uppercase;
+}
+h1{
+  font-size:24px;
+  margin:6px 0 4px;
+}
+header p{
+  margin:0;
+  font-size:13px;
+  color:#dcecff;
+}
+
+main{
+  max-width:520px;
+  width:100%;
+  margin:-15px auto 30px;
+  padding:0 16px;
+  flex:1;
+}
+
+.auth-card{
+  background:white;
+  border-radius:20px;
+  box-shadow:0 8px 24px rgba(24,49,83,0.08);
+  border:1px solid #e2eaf4;
+  overflow:hidden;
+}
+
+/* Tab Navigation */
+.tabs{
+  display:flex;
+  background:#edf4fc;
+  border-bottom:1px solid #e0e9f5;
+}
+.tab-btn{
+  flex:1;
+  padding:14px 6px;
+  border:none;
+  background:transparent;
+  font-size:13px;
+  font-weight:bold;
+  color:#61748d;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  transition:all 0.2s;
+  border-bottom:3px solid transparent;
+}
+.tab-btn .tab-icon{
+  font-size:18px;
+}
+.tab-btn.active{
+  color:#102b50;
+  background:white;
+  border-bottom-color:#1766a5;
+}
+
+.tab-content{
+  padding:24px 20px;
+  display:none;
+}
+.tab-content.active{
+  display:block;
+}
+
+/* Forms */
+.form-group{
+  margin-bottom:16px;
+}
+label{
+  display:block;
+  font-size:13px;
+  font-weight:bold;
+  color:#2d4360;
+  margin-bottom:6px;
+}
+.input-wrap{
+  position:relative;
+}
+input[type="text"], input[type="email"], input[type="password"], input[type="tel"]{
+  width:100%;
+  padding:12px 14px;
+  font-size:15px;
+  border:1.5px solid #cfdceb;
+  border-radius:12px;
+  background:#f8fbfe;
+  color:#183153;
+  outline:none;
+  transition:border-color 0.2s, background 0.2s;
+}
+input:focus{
+  border-color:#1766a5;
+  background:white;
+  box-shadow:0 0 0 3px rgba(23,102,165,0.12);
+}
+.help-text{
+  font-size:11.5px;
+  color:#7388a1;
+  margin-top:4px;
+  line-height:1.4;
+}
+
+/* Buttons */
+.btn-primary{
+  width:100%;
+  padding:14px;
+  font-size:15px;
+  font-weight:bold;
+  background:#1766a5;
+  color:white;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  transition:background 0.2s, transform 0.1s;
+}
+.btn-primary:active{
+  background:#0f4977;
+  transform:scale(0.99);
+}
+.btn-gold{
+  background:linear-gradient(135deg,#e69500,#f7b500);
+  color:#311b00;
+}
+.btn-gold:active{
+  background:#c77d00;
+}
+.btn-google{
+  background:white;
+  color:#3c4043;
+  border:1.5px solid #dadce0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  font-weight:bold;
+  font-size:14px;
+  padding:12px;
+  border-radius:12px;
+  width:100%;
+  cursor:pointer;
+  box-shadow:0 2px 4px rgba(0,0,0,0.04);
+}
+.btn-google:active{
+  background:#f1f3f4;
+}
+
+/* Sub-pilihan Email */
+.sub-toggle{
+  display:flex;
+  gap:10px;
+  margin-bottom:18px;
+  background:#edf4fc;
+  padding:4px;
+  border-radius:10px;
+}
+.sub-toggle button{
+  flex:1;
+  padding:8px;
+  border:none;
+  background:transparent;
+  font-size:13px;
+  font-weight:bold;
+  color:#61748d;
+  border-radius:8px;
+  cursor:pointer;
+}
+.sub-toggle button.active{
+  background:white;
+  color:#102b50;
+  box-shadow:0 2px 5px rgba(0,0,0,0.06);
+}
+
+/* Notification & Status */
+.alert{
+  padding:12px 14px;
+  border-radius:10px;
+  font-size:13px;
+  margin-bottom:16px;
+  display:none;
+  line-height:1.4;
+}
+.alert-info{background:#e5f2ff;color:#0b4d8c;border:1px solid #b8daff;}
+.alert-success{background:#e6f9ed;color:#0e693b;border:1px solid #b7ebd0;}
+.alert-error{background:#fde8e8;color:#9b1c1c;border:1px solid #f8b4b4;}
+
+/* Logged-in Banner */
+.user-banner{
+  background:#f6faff;
+  border:1.5px dashed #a4c9ee;
+  border-radius:14px;
+  padding:16px;
+  margin-bottom:20px;
+  text-align:center;
+  display:none;
+}
+.user-banner.active{
+  display:block;
+}
+.user-badge{
+  display:inline-block;
+  padding:4px 10px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
+  margin-bottom:6px;
+}
+.user-badge.premium{
+  background:#ffeaa7;
+  color:#915c00;
+}
+.user-badge.regular{
+  background:#e2eaf4;
+  color:#3b5270;
+}
+.btn-logout{
+  display:inline-block;
+  margin-top:10px;
+  padding:8px 16px;
+  background:#ffebee;
+  color:#c62828;
+  border:none;
+  border-radius:8px;
+  font-size:12px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+footer{
+  text-align:center;
+  color:#8290a3;
+  font-size:12px;
+  padding:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a href="javascript:goBack()" class="back-link">← Kembali</a>
+  <div class="logo-badge">MATH315</div>
+  <h1>Akun & Akses Belajar</h1>
+  <p>Pilih cara masuk yang paling mudah untuk Anda</p>
+</header>
+
+<main>
+  <!-- Banner status jika sudah login -->
+  <div id="userBanner" class="user-banner">
+    <div id="userBadge" class="user-badge regular">Memeriksa Akun...</div>
+    <div id="userInfoText" style="font-size:14px;font-weight:bold;color:#102b50;margin:4px 0;"></div>
+    <div id="userSubText" style="font-size:12px;color:#61748d;"></div>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:12px;">
+      <button type="button" class="btn-primary" style="padding:8px 16px;font-size:13px;width:auto;" onclick="goBack()">Lanjut Belajar →</button>
+      <button type="button" class="btn-logout" onclick="handleLogout()">Keluar Akun</button>
+    </div>
+  </div>
+
+  <div class="auth-card">
+    <!-- Tabs Navigasi -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('tab-wa')">
+        <span class="tab-icon">📱</span>
+        <span>WhatsApp</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-email')">
+        <span class="tab-icon">✉️</span>
+        <span>Email</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-voucher')">
+        <span class="tab-icon">🎫</span>
+        <span>Voucher</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('tab-google')">
+        <span class="tab-icon">🌐</span>
+        <span>Google</span>
+      </button>
+    </div>
+
+    <!-- Alert Box Pesan -->
+    <div style="padding:16px 20px 0;">
+      <div id="alertBox" class="alert"></div>
+    </div>
+
+    <!-- ================= TAB 1: WHATSAPP ================= -->
+    <div id="tab-wa" class="tab-content active">
+      <p style="font-size:13px;color:#5a6e85;margin-top:0;line-height:1.5;">
+        <strong>Cara Paling Praktis untuk Siswa:</strong> Masukkan nomor WhatsApp & PIN. Jika baru pertama kali, akun otomatis dibuatkan!
+      </p>
+
+      <form id="waForm" onsubmit="handleWaSubmit(event)">
+        <div class="form-group">
+          <label for="waName">Nama Lengkap Siswa</label>
+          <input type="text" id="waName" placeholder="Contoh: Budi Santoso" required>
+        </div>
+
+        <div class="form-group">
+          <label for="waPhone">Nomor WhatsApp / HP</label>
+          <input type="tel" id="waPhone" placeholder="Contoh: 08123456789" required>
+          <div class="help-text">Nomor digunakan untuk identifikasi akun & bukti pembelian paket.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="waPin">PIN Akses (Minimal 6 Angka/Karakter)</label>
+          <input type="password" id="waPin" placeholder="Buat PIN Anda (contoh: 123456)" required minlength="6">
+          <div class="help-text">Ingat PIN ini untuk masuk kembali di perangkat lain.</div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="btnWaSubmit">Masuk / Buat Akun WhatsApp</button>
+      </form>
+    </div>
+
+    <!-- ================= TAB 2: EMAIL & PASSWORD ================= -->
+    <div id="tab-email" class="tab-content">
+      <div class="sub-toggle">
+        <button type="button" id="toggleLogin" class="active" onclick="setEmailMode('login')">Masuk</button>
+        <button type="button" id="toggleRegister" onclick="setEmailMode('register')">Daftar Baru</button>
+      </div>
+
+      <form id="emailForm" onsubmit="handleEmailSubmit(event)">
+        <div class="form-group" id="grpName" style="display:none;">
+          <label for="emailName">Nama Lengkap</label>
+          <input type="text" id="emailName" placeholder="Nama Anda">
+        </div>
+
+        <div class="form-group">
+          <label for="emailVal">Alamat Email</label>
+          <input type="email" id="emailVal" placeholder="nama@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="emailPass">Password</label>
+          <input type="password" id="emailPass" placeholder="Minimal 6 karakter" required minlength="6">
+          <div id="forgotPassWrap" style="text-align:right;margin-top:6px;">
+            <a href="javascript:handleForgotPassword()" style="font-size:12px;color:#1766a5;text-decoration:none;">Lupa password?</a>
+          </div>
+        </div>
+
+        <div class="form-group" id="grpPhone" style="display:none;">
+          <label for="emailPhone">Nomor WhatsApp (Opsional)</label>
+          <input type="tel" id="emailPhone" placeholder="08xxxxxxxxxx">
+        </div>
+
+        <button type="submit" class="btn-primary" id="btnEmailSubmit">Masuk dengan Email</button>
+      </form>
+    </div>
+
+    <!-- ================= TAB 3: KODE VOUCHER ================= -->
+    <div id="tab-voucher" class="tab-content">
+      <p style="font-size:13px;color:#5a6e85;margin-top:0;line-height:1.5;">
+        Punya <strong>Kode Voucher / Lisensi Belajar</strong> dari guru, sekolah, atau admin? Masukkan kodenya di bawah untuk langsung membuka akses Premium!
+      </p>
+
+      <form id="voucherForm" onsubmit="handleVoucherSubmit(event)">
+        <div class="form-group">
+          <label for="voucherCode">Kode Voucher / Lisensi</label>
+          <input type="text" id="voucherCode" placeholder="Contoh: MATH315JUARA" style="text-transform:uppercase;font-weight:bold;letter-spacing:1.5px;" required>
+          <div class="help-text">Kode voucher tidak terpengaruh huruf besar/kecil.</div>
+        </div>
+
+        <button type="submit" class="btn-primary btn-gold" id="btnVoucherSubmit">⭐ Aktifkan Voucher Premium</button>
+      </form>
+
+      <div style="margin-top:16px;padding:12px;background:#f8fbfe;border-radius:10px;font-size:12px;color:#516985;line-height:1.5;">
+        💡 <strong>Info:</strong> Jika Anda belum memiliki voucher, Anda dapat membeli langganan langsung lewat menu pembahasan soal atau menghubungi admin.
+      </div>
+    </div>
+
+    <!-- ================= TAB 4: GOOGLE SIGN-IN ================= -->
+    <div id="tab-google" class="tab-content">
+      <p style="font-size:13px;color:#5a6e85;margin-top:0;line-height:1.5;">
+        Masuk menggunakan akun Google Anda. Cocok untuk penggunaan di browser laptop/Chrome.
+      </p>
+
+      <div style="margin:24px 0 16px;">
+        <button type="button" class="btn-google" onclick="handleGoogleSubmit()">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.79l7.97-6.2z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          Masuk dengan Akun Google
+        </button>
+      </div>
+
+      <div style="padding:12px;background:#fff8e6;border:1px solid #ffe399;border-radius:10px;font-size:12px;color:#7a5300;line-height:1.4;">
+        ⚠️ <strong>Catatan Aplikasi Android:</strong> Jika masuk Google mengalami kendala di dalam aplikasi ini, silakan gunakan tab <strong>📱 WhatsApp</strong> atau <strong>✉️ Email</strong> di samping.
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  Math315 · Portal Belajar Matematika Mandiri
+</footer>
+
+<script>
+var emailMode = 'login';
+var urlParams = new URLSearchParams(window.location.search);
+var redirectUrl = urlParams.get('redirect') || 'index.html';
+var initialTab = urlParams.get('tab') || 'tab-wa';
+
+function showAlert(msg, type) {
+  var b = document.getElementById('alertBox');
+  b.className = 'alert alert-' + (type || 'info');
+  b.innerHTML = msg;
+  b.style.display = 'block';
+}
+
+function clearAlert() {
+  var b = document.getElementById('alertBox');
+  b.style.display = 'none';
+  b.innerHTML = '';
+}
+
+function switchTab(tabId) {
+  clearAlert();
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('.tab-content').forEach(function(c){ c.classList.remove('active'); });
+  
+  var targetContent = document.getElementById(tabId);
+  if (targetContent) targetContent.classList.add('active');
+  
+  var idx = ['tab-wa', 'tab-email', 'tab-voucher', 'tab-google'].indexOf(tabId);
+  var btns = document.querySelectorAll('.tab-btn');
+  if (idx >= 0 && btns[idx]) btns[idx].classList.add('active');
+}
+
+function setEmailMode(mode) {
+  emailMode = mode;
+  var tl = document.getElementById('toggleLogin');
+  var tr = document.getElementById('toggleRegister');
+  var gn = document.getElementById('grpName');
+  var gp = document.getElementById('grpPhone');
+  var fp = document.getElementById('forgotPassWrap');
+  var btn = document.getElementById('btnEmailSubmit');
+
+  if (mode === 'register') {
+    tl.classList.remove('active');
+    tr.classList.add('active');
+    gn.style.display = 'block';
+    gp.style.display = 'block';
+    fp.style.display = 'none';
+    btn.textContent = 'Daftar Akun Baru';
+  } else {
+    tr.classList.remove('active');
+    tl.classList.add('active');
+    gn.style.display = 'none';
+    gp.style.display = 'none';
+    fp.style.display = 'block';
+    btn.textContent = 'Masuk dengan Email';
+  }
+}
+
+function goBack() {
+  if (redirectUrl && redirectUrl !== 'login.html') {
+    window.location.href = redirectUrl;
+  } else if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.href = 'index.html';
+  }
+}
+
+// 1. SUBMIT WHATSAPP
+async function handleWaSubmit(e) {
+  e.preventDefault();
+  clearAlert();
+  var name = document.getElementById('waName').value.trim();
+  var phone = document.getElementById('waPhone').value.trim();
+  var pin = document.getElementById('waPin').value.trim();
+  var btn = document.getElementById('btnWaSubmit');
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Memproses...';
+  try {
+    showAlert('⏳ Memverifikasi akun WhatsApp...', 'info');
+    await MathAuth.loginWithWhatsApp(phone, pin, name);
+    showAlert('✅ Berhasil masuk! Mengalihkan...', 'success');
+    setTimeout(goBack, 1000);
+  } catch (err) {
+    showAlert('❌ ' + (err.message || 'Gagal masuk.'), 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Masuk / Buat Akun WhatsApp';
+  }
+}
+
+// 2. SUBMIT EMAIL
+async function handleEmailSubmit(e) {
+  e.preventDefault();
+  clearAlert();
+  var email = document.getElementById('emailVal').value.trim();
+  var pass = document.getElementById('emailPass').value;
+  var name = document.getElementById('emailName').value.trim();
+  var phone = document.getElementById('emailPhone').value.trim();
+  var btn = document.getElementById('btnEmailSubmit');
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Memproses...';
+  try {
+    if (emailMode === 'register') {
+      showAlert('⏳ Mendaftarkan akun baru...', 'info');
+      await MathAuth.registerWithEmail(email, pass, name, phone);
+      showAlert('✅ Pendaftaran berhasil! Mengalihkan...', 'success');
+    } else {
+      showAlert('⏳ Masuk ke akun...', 'info');
+      await MathAuth.loginWithEmail(email, pass);
+      showAlert('✅ Login berhasil! Mengalihkan...', 'success');
+    }
+    setTimeout(goBack, 1000);
+  } catch (err) {
+    var msg = err.message || 'Gagal memproses.';
+    if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') msg = 'Email atau password salah.';
+    else if (err.code === 'auth/email-already-in-use') msg = 'Email sudah terdaftar. Silakan pilih tab "Masuk".';
+    else if (err.code === 'auth/invalid-email') msg = 'Format email tidak valid.';
+    showAlert('❌ ' + msg, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = emailMode === 'register' ? 'Daftar Akun Baru' : 'Masuk dengan Email';
+  }
+}
+
+// LUPA PASSWORD
+async function handleForgotPassword() {
+  var email = document.getElementById('emailVal').value.trim();
+  if (!email) {
+    showAlert('Masukkan email Anda terlebih dahulu pada kolom di atas untuk reset password.', 'error');
+    return;
+  }
+  try {
+    showAlert('⏳ Mengirimkan tautan reset password ke ' + email + '...', 'info');
+    await MathAuth.resetPassword(email);
+    showAlert('✅ Link reset password telah dikirim ke email Anda. Silakan periksa inbox / spam.', 'success');
+  } catch (err) {
+    showAlert('❌ Gagal mengirim email reset: ' + err.message, 'error');
+  }
+}
+
+// 3. SUBMIT VOUCHER
+async function handleVoucherSubmit(e) {
+  e.preventDefault();
+  clearAlert();
+  var code = document.getElementById('voucherCode').value.trim();
+  var btn = document.getElementById('btnVoucherSubmit');
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Memeriksa Voucher...';
+  try {
+    var res = await MathAuth.activateVoucher(code);
+    showAlert('🎉 <strong>Selamat!</strong> Voucher berhasil diaktifkan untuk ' + res.days + ' hari. Mengalihkan ke materi...', 'success');
+    setTimeout(goBack, 1500);
+  } catch (err) {
+    showAlert('❌ ' + (err.message || 'Gagal mengaktifkan voucher.'), 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '⭐ Aktifkan Voucher Premium';
+  }
+}
+
+// 4. SUBMIT GOOGLE
+async function handleGoogleSubmit() {
+  clearAlert();
+  showAlert('⏳ Menghubungkan ke Akun Google...', 'info');
+  try {
+    var user = await MathAuth.loginWithGoogle();
+    if (user) {
+      showAlert('✅ Berhasil masuk dengan Google! Mengalihkan...', 'success');
+      setTimeout(goBack, 1000);
+    } else {
+      clearAlert();
+    }
+  } catch (err) {
+    showAlert('❌ ' + err.message, 'error');
+  }
+}
+
+// 5. LOGOUT
+async function handleLogout() {
+  if (confirm('Yakin ingin keluar dari akun ini?')) {
+    await MathAuth.logout();
+    showAlert('Anda telah keluar dari akun.', 'info');
+  }
+}
+
+// Render status login jika sudah masuk
+MathAuth.onStateChange(function(st) {
+  var ub = document.getElementById('userBanner');
+  var badge = document.getElementById('userBadge');
+  var text = document.getElementById('userInfoText');
+  var sub = document.getElementById('userSubText');
+
+  if (st.user || st.isPremium) {
+    ub.classList.add('active');
+    text.textContent = 'Halo, ' + MathAuth.getUserName();
+    if (st.isPremium) {
+      badge.className = 'user-badge premium';
+      badge.textContent = '👑 Premium Aktif';
+      var expStr = st.premiumUntil ? 'Berlaku s/d ' + new Date(st.premiumUntil).toLocaleDateString('id-ID', {day:'numeric',month:'short',year:'numeric'}) : 'Aktif';
+      sub.textContent = 'Seluruh pembahasan soal SD & SMP terbuka (' + expStr + ')';
+    } else {
+      badge.className = 'user-badge regular';
+      badge.textContent = 'Akun Reguler';
+      sub.textContent = 'Akses nomor 1-5 gratis. Masukkan voucher atau beli paket untuk membuka semua.';
+    }
+  } else {
+    ub.classList.remove('active');
+  }
+});
+
+// Buka tab awal jika ada param
+if (initialTab && document.getElementById(initialTab)) {
+  switchTab(initialTab);
+}
+</script>
+
+</body>
+</html>

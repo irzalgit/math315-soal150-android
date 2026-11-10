@@ -2,8 +2,15 @@
   "appId": "id.math315.soal150",
   "appName": "Math315 Soal150",
   "webDir": "www",
-  "bundledWebRuntime": false,
+  "bundledWebRuntime": true,
   "server": {
     "androidScheme": "https"
+  },
+  "plugins": {
+    "GoogleAuth": {
+      "scopes": ["profile", "email"],
+      "serverClientId": "9019551034-tt3010rv8bbltqtoe5jmj9uvj1m6chia.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
+    }
   }
 }
