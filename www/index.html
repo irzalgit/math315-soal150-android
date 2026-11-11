@@ -244,7 +244,7 @@ footer{
    </div>
   </div>
   <div class="count">LATIHAN SOAL VERSI KOTLIN</div>
-  <button class="btn" type="button" onclick="window.Capacitor.Plugins.SoalKotlin.open()">MULAI SOAL KOTLIN →</button>
+  <button class="btn" type="button" onclick="bukaSoalKotlin()">MULAI SOAL KOTLIN →</button>
  </section>
 
  <section class="card">
@@ -296,6 +296,34 @@ function logoutConfirm() {
     MathAuth.logout();
   }
 }
+
+function bukaSoalKotlin() {
+    var auth = window.MathAuth;
+
+    if (!auth) {
+        alert('Sistem login belum siap.');
+        return;
+    }
+
+    var state = auth.getState();
+
+    if (!state.authLoaded) {
+        alert('Mohon tunggu, sedang memeriksa akun.');
+        return;
+    }
+
+    if (!state.user) {
+        alert('Silakan login terlebih dahulu.');
+        return;
+    }
+
+    window.Capacitor.Plugins.SoalKotlin.open({
+        uid: state.user.uid,
+        isPremium: state.isPremium === true,
+        premiumUntil: state.premiumUntil || 0
+    });
+}
+
 </script>
 
 </body>
