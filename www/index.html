@@ -330,6 +330,28 @@ async function bukaSoalKotlin() {
     }
 }
 
+
+// MATH315 PAYMENT DEEP LINK
+(function registerPaymentDeepLink() {
+    var appPlugin = window.Capacitor &&
+        window.Capacitor.Plugins &&
+        window.Capacitor.Plugins.App;
+
+    if (!appPlugin || typeof appPlugin.addListener !== 'function') {
+        console.warn('Capacitor App plugin belum tersedia.');
+        return;
+    }
+
+    appPlugin.addListener('appUrlOpen', function(event) {
+        var url = event && event.url ? event.url : '';
+
+        if (url.indexOf('math315://payment-success') === 0) {
+            console.log('Kembali dari pembayaran Faspay.');
+            window.location.reload();
+        }
+    });
+})();
+
 </script>
 
 </body>

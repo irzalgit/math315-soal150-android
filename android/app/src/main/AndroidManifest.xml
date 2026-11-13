@@ -9,7 +9,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".SoalKotlinActivity" android:exported="false" android:theme="@style/AppTheme" />
+        <activity
+            android:name=".SoalKotlinActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="math315"
+                    android:host="payment-success" />
+            </intent-filter>
+        </activity>
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation"
             android:name=".MainActivity"
@@ -21,16 +34,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-            <!-- Math315 Payment Deep Link -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:scheme="math315soal150"
-                    android:host="payment-success" />
             </intent-filter>
 
         </activity>
