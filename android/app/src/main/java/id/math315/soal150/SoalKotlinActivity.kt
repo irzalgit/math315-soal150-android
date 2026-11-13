@@ -123,6 +123,24 @@ class SoalKotlinActivity : AppCompatActivity() {
         val status = if (premiumActive()) "✓ PREMIUM AKTIF" else "AKSES GRATIS: RUMUS 1–5"
         txt(content, "$status  |  ${formulas.size} rumus", 14f, colorBlue, true, Gravity.CENTER)
 
+        // Tombol aktivasi lisensi Premium Offline
+        val offlineButton = Button(this).apply {
+            text = if (PremiumOffline.isActive(this@SoalKotlinActivity, uid))
+                "PERBARUI LISENSI OFFLINE"
+            else
+                "AKTIFKAN OFFLINE"
+
+            isEnabled = uid.isNotBlank() && idToken.isNotBlank()
+            setOnClickListener { activateOffline(this) }
+        }
+        content.addView(offlineButton)
+
+        if (uid.isBlank() || idToken.isBlank()) {
+            txt(content, "Silakan login kembali untuk mengaktifkan Premium Offline.",
+                12f, Color.DKGRAY)
+        }
+
+
         if (formulas.isEmpty()) {
             txt(content, "Data rumus belum berhasil dimuat.", 16f, Color.RED, true)
         }
@@ -170,6 +188,86 @@ class SoalKotlinActivity : AppCompatActivity() {
         scroll.addView(content)
         rootView.addView(scroll, fullHeightParams())
         setContentView(rootView)
+    }
+
+    // Aktivasi lisensi Premium Offline melalui server Math315
+    private fun activateOffline(button: Button) {
+        if (uid.isBlank() || idToken.isBlank()) {
+            Toast.makeText(this, "Silakan login kembali.", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        button.isEnabled = false
+        button.text = "MENGAKTIFKAN..."
+
+        Thread {
+            var berhasil = false
+            var pesan = "Aktivasi gagal."
+
+            try {
+                val conn = java.net.URL(
+                    "https://math315.vercel.app/api/offline-license"
+                ).openConnection() as java.net.HttpURLConnection
+
+                conn.requestMethod = "POST"
+                conn.connectTimeout = 15000
+                conn.readTimeout = 15000
+                conn.doOutput = true
+                conn.setRequestProperty("Authorization", "Bearer $idToken")
+                conn.setRequestProperty("Content-Type", "application/json")
+
+                conn.outputStream.use {
+                    it.write("{}".toByteArray(Charsets.UTF_8))
+                }
+
+                val code = conn.responseCode
+                val stream = if (code in 200..299) {
+                    conn.inputStream
+                } else {
+                    conn.errorStream
+                }
+
+                val body = stream?.bufferedReader(Charsets.UTF_8)
+                    ?.use { it.readText() } ?: "{}"
+
+                val result = JSONObject(body)
+
+                if (code == 200 && result.optBoolean("success")) {
+                    val license = result.optString("license", "")
+                    val until = result.optLong("expiresAt", 0L)
+
+                    if (license.isNotBlank() &&
+                        PremiumOffline.save(this, uid, until, license)) {
+                        berhasil = true
+                    } else {
+                        pesan = "Verifikasi lisensi gagal. Periksa kunci publik RSA."
+                    }
+                } else {
+                    pesan = result.optString("error", "Server menolak aktivasi (HTTP $code).")
+                }
+
+                conn.disconnect()
+
+            } catch (e: Exception) {
+                pesan = "Koneksi gagal: ${e.message ?: "periksa internet"}"
+            }
+
+            runOnUiThread {
+                button.isEnabled = true
+
+                if (berhasil) {
+                    Toast.makeText(
+                        this,
+                        "Premium Offline berhasil diaktifkan!",
+                        Toast.LENGTH_LONG
+                    ).show()
+                    showFormulaList()
+                } else {
+                    button.text = "AKTIFKAN OFFLINE"
+                    Toast.makeText(this, pesan, Toast.LENGTH_LONG).show()
+                }
+            }
+        }.start()
     }
 
     // =========================================================================
