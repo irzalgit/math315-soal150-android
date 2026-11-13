@@ -297,7 +297,7 @@ function logoutConfirm() {
   }
 }
 
-function bukaSoalKotlin() {
+async function bukaSoalKotlin() {
     var auth = window.MathAuth;
 
     if (!auth) {
@@ -317,11 +317,17 @@ function bukaSoalKotlin() {
         return;
     }
 
-    window.Capacitor.Plugins.SoalKotlin.open({
-        uid: state.user.uid,
-        isPremium: state.isPremium === true,
-        premiumUntil: state.premiumUntil || 0
-    });
+    try {
+        var idToken = await auth.getIdToken();
+        await window.Capacitor.Plugins.SoalKotlin.open({
+            uid: state.user.uid,
+            idToken: idToken,
+            isPremium: state.isPremium === true,
+            premiumUntil: state.premiumUntil || 0
+        });
+    } catch (e) {
+        alert('Gagal membuka soal: ' + e.message);
+    }
 }
 
 </script>

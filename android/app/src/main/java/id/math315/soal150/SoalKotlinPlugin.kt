@@ -13,11 +13,18 @@ class SoalKotlinPlugin : Plugin() {
     fun open(call: PluginCall) {
         try {
             val uid = call.getString("uid") ?: ""
+            val idToken = call.getString("idToken") ?: ""
             val isPremium = call.getBoolean("isPremium") ?: false
             val premiumUntil = call.getLong("premiumUntil", 0L)
 
+            if (uid.isBlank()) {
+                call.reject("UID pengguna tidak ditemukan.")
+                return
+            }
+
             val intent = Intent(activity, SoalKotlinActivity::class.java).apply {
                 putExtra("uid", uid)
+                putExtra("idToken", idToken)
                 putExtra("isPremium", isPremium)
                 putExtra("premiumUntil", premiumUntil)
             }

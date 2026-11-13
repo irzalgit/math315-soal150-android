@@ -164,6 +164,13 @@
       return state;
     },
 
+    getIdToken: async function () {
+      if (!auth || !auth.currentUser) {
+        throw new Error('Silakan login terlebih dahulu.');
+      }
+      return await auth.currentUser.getIdToken(true);
+    },
+
     onStateChange: function (fn) {
       listeners.push(fn);
       if (state.authLoaded) {

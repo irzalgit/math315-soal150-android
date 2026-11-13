@@ -29,6 +29,7 @@ class SoalKotlinActivity : AppCompatActivity() {
 
     private val formulas = mutableListOf<Rumus>()
     private var uid = ""
+    private var idToken = ""
     private var isPremium = false
     private var premiumUntil = 0L
 
@@ -43,6 +44,7 @@ class SoalKotlinActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         uid          = intent.getStringExtra("uid") ?: ""
+        idToken      = intent.getStringExtra("idToken") ?: ""
         isPremium    = intent.getBooleanExtra("isPremium", false)
         premiumUntil = intent.getLongExtra("premiumUntil", 0L)
         loadFormulas()
@@ -51,8 +53,17 @@ class SoalKotlinActivity : AppCompatActivity() {
 
     // ── Premium ───────────────────────────────────────────────────────────────
 
-    private fun premiumActive() =
-        uid.isNotBlank() && isPremium && premiumUntil > System.currentTimeMillis()
+    private fun premiumActive(): Boolean {
+        val onlineActive =
+            uid.isNotBlank() &&
+            isPremium &&
+            premiumUntil > System.currentTimeMillis()
+
+        val offlineActive =
+            PremiumOffline.isActive(this, uid)
+
+        return onlineActive || offlineActive
+    }
 
     // ── Load JSON ─────────────────────────────────────────────────────────────
 
