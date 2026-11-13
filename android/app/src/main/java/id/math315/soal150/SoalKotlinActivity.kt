@@ -1,8 +1,6 @@
 package id.math315.soal150
 
 import android.os.Bundle
-import android.content.Intent
-import android.net.Uri
 import android.graphics.Color
 import android.graphics.Typeface
 import android.view.Gravity
@@ -30,10 +28,6 @@ class SoalKotlinActivity : AppCompatActivity() {
     // ── State ─────────────────────────────────────────────────────────────────
 
     private val formulas = mutableListOf<Rumus>()
-    private var uid = ""
-    private var idToken = ""
-    private var isPremium = false
-    private var premiumUntil = 0L
 
     private val colorNavy = Color.rgb(16, 43, 80)
     private val colorBlue = Color.rgb(35, 105, 190)
@@ -45,122 +39,10 @@ class SoalKotlinActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        uid          = intent.getStringExtra("uid") ?: ""
-        idToken      = intent.getStringExtra("idToken") ?: ""
-        isPremium    = intent.getBooleanExtra("isPremium", false)
-        premiumUntil = intent.getLongExtra("premiumUntil", 0L)
         loadFormulas()
         showFormulaList()
-
-        if (isPaymentReturn(intent)) {
-            refreshPremiumFromFirebase()
-        }
     }
 
-    override fun onNewIntent(intent: Intent) {
-        super.onNewIntent(intent)
-        setIntent(intent)
-
-        if (isPaymentReturn(intent)) {
-            refreshPremiumFromFirebase()
-        }
-    }
-
-    private fun isPaymentReturn(intent: Intent?): Boolean {
-        val data = intent?.data
-        return data?.scheme == "math315" &&
-            data.host == "payment-success"
-    }
-
-    // Periksa ulang hak Premium dari Firebase setelah kembali dari pembayaran.
-    private fun refreshPremiumFromFirebase() {
-        if (uid.isBlank() || idToken.isBlank()) {
-            Toast.makeText(this, "Silakan login kembali untuk memeriksa Premium.",
-                Toast.LENGTH_LONG).show()
-            return
-        }
-
-        Toast.makeText(this, "Memeriksa status pembayaran...", Toast.LENGTH_SHORT).show()
-
-        Thread {
-            try {
-                val token = java.net.URLEncoder.encode(idToken, "UTF-8")
-                val user = java.net.URLEncoder.encode(uid, "UTF-8")
-                val url = "https://math314-app-default-rtdb.firebaseio.com/users/$user.json?auth=$token"
-
-                val conn = java.net.URL(url).openConnection()
-                    as java.net.HttpURLConnection
-
-                conn.requestMethod = "GET"
-                conn.connectTimeout = 15000
-                conn.readTimeout = 15000
-
-                val code = conn.responseCode
-                val stream = if (code in 200..299) conn.inputStream
-                    else conn.errorStream
-
-                val body = stream?.bufferedReader(Charsets.UTF_8)
-                    ?.use { it.readText() } ?: "null"
-
-                conn.disconnect()
-
-                if (code !in 200..299) {
-                    throw Exception("HTTP $code")
-                }
-
-                val data = if (body.trim() == "null") JSONObject()
-                    else JSONObject(body)
-
-                val until = maxOf(
-                    data.optLong("premium_until", 0L),
-                    data.optLong("premiumExpired", 0L)
-                )
-
-                val premiumFlag =
-                    data.optBoolean("isPremium") ||
-                    data.optBoolean("is_premium") ||
-                    data.optBoolean("tka_premium")
-
-                val active = until > System.currentTimeMillis() ||
-                    (premiumFlag && until <= 0L)
-
-                runOnUiThread {
-                    isPremium = active
-                    premiumUntil = until
-                    showFormulaList()
-
-                    Toast.makeText(
-                        this,
-                        if (premiumActive()) "Premium aktif. Rumus telah terbuka."
-                        else "Premium belum aktif. Pembayaran masih perlu diverifikasi.",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            } catch (e: Exception) {
-                runOnUiThread {
-                    Toast.makeText(
-                        this,
-                        "Gagal memeriksa Premium: ${e.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
-        }.start()
-    }
-
-    // ── Premium ───────────────────────────────────────────────────────────────
-
-    private fun premiumActive(): Boolean {
-        val onlineActive =
-            uid.isNotBlank() &&
-            isPremium &&
-            (premiumUntil <= 0L || premiumUntil > System.currentTimeMillis())
-
-        val offlineActive =
-            PremiumOffline.isActive(this, uid)
-
-        return onlineActive || offlineActive
-    }
 
     // ── Load JSON ─────────────────────────────────────────────────────────────
 
@@ -217,41 +99,14 @@ class SoalKotlinActivity : AppCompatActivity() {
         txt(content, "MATH315\n155 RUMUS MATEMATIKA SMP", 23f, colorNavy, true,  Gravity.CENTER)
         txt(content, "Latihan Matematika Native Kotlin",  14f, Color.DKGRAY, false, Gravity.CENTER)
 
-        val status = if (premiumActive()) "✓ PREMIUM AKTIF" else "AKSES GRATIS: RUMUS 1–5"
+        val status = "MODE OFFLINE • SEMUA RUMUS TERBUKA"
         txt(content, "$status  |  ${formulas.size} rumus", 14f, colorBlue, true, Gravity.CENTER)
-
-        // Tombol pembelian Premium melalui Faspay
-        val purchaseButton = Button(this).apply {
-            text = "BELI / PERPANJANG PREMIUM – Rp10.000"
-            isEnabled = uid.isNotBlank() && idToken.isNotBlank()
-            setOnClickListener { purchasePremium(this) }
-        }
-        content.addView(purchaseButton)
-
-        // Tombol aktivasi lisensi Premium Offline
-        val offlineButton = Button(this).apply {
-            text = if (PremiumOffline.isActive(this@SoalKotlinActivity, uid))
-                "PERBARUI LISENSI OFFLINE"
-            else
-                "AKTIFKAN OFFLINE"
-
-            isEnabled = uid.isNotBlank() && idToken.isNotBlank()
-            setOnClickListener { activateOffline(this) }
-        }
-        content.addView(offlineButton)
-
-        if (uid.isBlank() || idToken.isBlank()) {
-            txt(content, "Silakan login kembali untuk mengaktifkan Premium Offline.",
-                12f, Color.DKGRAY)
-        }
-
 
         if (formulas.isEmpty()) {
             txt(content, "Data rumus belum berhasil dimuat.", 16f, Color.RED, true)
         }
 
         formulas.forEach { f ->
-            val unlocked = f.nomor <= 5 || premiumActive()
 
             val card = LinearLayout(this).apply {
                 orientation = LinearLayout.VERTICAL
@@ -269,10 +124,9 @@ class SoalKotlinActivity : AppCompatActivity() {
             txt(card, preview, 13f, colorBlue)
 
             val btn = Button(this).apply {
-                text = if (unlocked) "BUKA RUMUS" else "🔒 PREMIUM – BUKA"
+                text = "BUKA RUMUS"
                 setOnClickListener {
-                    if (unlocked) showFormulaDetail(f)
-                    else purchasePremium()
+                    showFormulaDetail(f)
                 }
             }
             card.addView(btn)
@@ -289,175 +143,6 @@ class SoalKotlinActivity : AppCompatActivity() {
         scroll.addView(content)
         rootView.addView(scroll, fullHeightParams())
         setContentView(rootView)
-    }
-
-    // Aktivasi lisensi Premium Offline melalui server Math315
-    private fun activateOffline(button: Button) {
-        if (uid.isBlank() || idToken.isBlank()) {
-            Toast.makeText(this, "Silakan login kembali.", Toast.LENGTH_LONG).show()
-            return
-        }
-
-        button.isEnabled = false
-        button.text = "MENGAKTIFKAN..."
-
-        Thread {
-            var berhasil = false
-            var pesan = "Aktivasi gagal."
-
-            try {
-                val conn = java.net.URL(
-                    "https://math315.vercel.app/api/offline-license"
-                ).openConnection() as java.net.HttpURLConnection
-
-                conn.requestMethod = "POST"
-                conn.connectTimeout = 15000
-                conn.readTimeout = 15000
-                conn.doOutput = true
-                conn.setRequestProperty("Authorization", "Bearer $idToken")
-                conn.setRequestProperty("Content-Type", "application/json")
-
-                conn.outputStream.use {
-                    it.write("{}".toByteArray(Charsets.UTF_8))
-                }
-
-                val code = conn.responseCode
-                val stream = if (code in 200..299) {
-                    conn.inputStream
-                } else {
-                    conn.errorStream
-                }
-
-                val body = stream?.bufferedReader(Charsets.UTF_8)
-                    ?.use { it.readText() } ?: "{}"
-
-                val result = JSONObject(body)
-
-                if (code == 200 && result.optBoolean("success")) {
-                    val license = result.optString("license", "")
-                    val until = result.optLong("expiresAt", 0L)
-
-                    if (license.isNotBlank() &&
-                        PremiumOffline.save(this, uid, until, license)) {
-                        berhasil = true
-                    } else {
-                        pesan = "Verifikasi lisensi gagal. Periksa kunci publik RSA."
-                    }
-                } else {
-                    pesan = result.optString("error", "Server menolak aktivasi (HTTP $code).")
-                }
-
-                conn.disconnect()
-
-            } catch (e: Exception) {
-                pesan = "Koneksi gagal: ${e.message ?: "periksa internet"}"
-            }
-
-            runOnUiThread {
-                button.isEnabled = true
-
-                if (berhasil) {
-                    Toast.makeText(
-                        this,
-                        "Premium Offline berhasil diaktifkan!",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    showFormulaList()
-                } else {
-                    button.text = "AKTIFKAN OFFLINE"
-                    Toast.makeText(this, pesan, Toast.LENGTH_LONG).show()
-                }
-            }
-        }.start()
-    }
-
-    // Pembelian Premium 1 bulan melalui API Faspay
-    private fun purchasePremium(button: Button? = null) {
-        if (uid.isBlank() || idToken.isBlank()) {
-            Toast.makeText(this, "Silakan login kembali.", Toast.LENGTH_LONG).show()
-            return
-        }
-
-        button?.isEnabled = false
-        button?.text = "MEMBUAT TRANSAKSI..."
-
-        Thread {
-            var paymentUrl = ""
-            var pesan = "Gagal membuat transaksi."
-
-            try {
-                val conn = java.net.URL(
-                    "https://math315.vercel.app/api/create-transaction"
-                ).openConnection() as java.net.HttpURLConnection
-
-                conn.requestMethod = "POST"
-                conn.connectTimeout = 20000
-                conn.readTimeout = 20000
-                conn.doOutput = true
-                conn.setRequestProperty("Authorization", "Bearer $idToken")
-                conn.setRequestProperty("Content-Type", "application/json")
-
-                val payload = JSONObject()
-                    .put("uid", uid)
-                    .put("product_id", "premium_1bulan")
-                    .put("amount", 10000)
-                    .put("source", "app")
-
-                conn.outputStream.use {
-                    it.write(payload.toString().toByteArray(Charsets.UTF_8))
-                }
-
-                val code = conn.responseCode
-                val stream = if (code in 200..299) {
-                    conn.inputStream
-                } else {
-                    conn.errorStream
-                }
-
-                val body = stream?.bufferedReader(Charsets.UTF_8)
-                    ?.use { it.readText() } ?: "{}"
-
-                val result = JSONObject(body)
-
-                if (code in 200..299 && result.optBoolean("success")) {
-                    paymentUrl = result.optString("payment_url", "")
-                    if (paymentUrl.isBlank()) {
-                        pesan = "URL pembayaran tidak diberikan oleh Faspay."
-                    }
-                } else {
-                    pesan = result.optString(
-                        "message",
-                        "Transaksi gagal dibuat (HTTP $code)."
-                    )
-                }
-
-                conn.disconnect()
-
-            } catch (e: Exception) {
-                pesan = "Koneksi gagal: ${e.message ?: "periksa internet"}"
-            }
-
-            runOnUiThread {
-                button?.isEnabled = true
-                button?.text = "BELI / PERPANJANG PREMIUM – Rp10.000"
-
-                if (paymentUrl.isNotBlank()) {
-                    try {
-                        startActivity(
-                            Intent(Intent.ACTION_VIEW, Uri.parse(paymentUrl))
-                        )
-                    } catch (e: Exception) {
-                        Toast.makeText(
-                            this,
-                            "Tidak dapat membuka halaman pembayaran.",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                } else {
-                    Toast.makeText(this, pesan, Toast.LENGTH_LONG).show()
-                }
-            }
-        }.start()
     }
 
     // =========================================================================
